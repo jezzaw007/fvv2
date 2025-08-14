@@ -1,0 +1,1907 @@
+﻿// Decompiled with JetBrains decompiler
+// Type: TRCC.KVMALED6.FormKVMALED6
+// Assembly: TRCC, Version=2.0.4.0, Culture=neutral, PublicKeyToken=null
+// MVID: CB0A5FF9-0AB9-4D2F-A637-515F7C378183
+// Assembly location: C:\Program Files (x86)\TRCCCAPEN\TRCC.exe
+
+using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.IO;
+using System.Threading;
+using System.Windows.Forms;
+using TRCC.DCUserControl;
+using TRCC.Properties;
+
+#nullable disable
+namespace TRCC.KVMALED6;
+
+public class FormKVMALED6 : Form
+{
+  public FormKVMALED6.delegateFormKVMALED6 delegateForm;
+  private bool my_6_10_Ch = false;
+  public const ushort USB_ID = 1;
+  public const byte USB_PACKED_Head = 220;
+  public const byte USB_PACKED_Head1 = 221;
+  public const byte USB_PACKED_ONOFF = 0;
+  public const byte USB_PACKED_STATE = 1;
+  public const byte USB_PACKED_LEDMS = 104;
+  private const byte USB_PACKED_FAN = 6;
+  private const byte USB_PACKED_LED = 16 /*0x10*/;
+  private const byte USB_PACKED_GET_STATE = 2;
+  private const byte USB_PACKED_AUDIO = 4;
+  private const byte USB_LED_COUNT = 10;
+  private const byte USB_LED_RGB = 3;
+  private const string KVMALED6_ML = "Data\\KVMALED6\\";
+  private const string FileName = "proMode.dc";
+  private string KVMALED6_All_ML;
+  public byte myBrightness = 100;
+  public byte mySpeed = 1;
+  public int myMode = 2;
+  public int rgbR1 = (int) byte.MaxValue;
+  public int rgbG1 = 0;
+  public int rgbB1 = 0;
+  public byte[] myChannel = new byte[10]
+  {
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 0,
+    (byte) 1
+  };
+  public byte[] myOnOff = new byte[10]
+  {
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1
+  };
+  public byte[] myModeS = new byte[10]
+  {
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1,
+    (byte) 1
+  };
+  public byte[] myBrightnessS = new byte[10]
+  {
+    (byte) 100,
+    (byte) 100,
+    (byte) 100,
+    (byte) 100,
+    (byte) 100,
+    (byte) 100,
+    (byte) 100,
+    (byte) 100,
+    (byte) 100,
+    (byte) 100
+  };
+  public byte[,] myRGB = new byte[10, 3]
+  {
+    {
+      byte.MaxValue,
+      (byte) 0,
+      (byte) 0
+    },
+    {
+      byte.MaxValue,
+      (byte) 0,
+      (byte) 0
+    },
+    {
+      byte.MaxValue,
+      (byte) 0,
+      (byte) 0
+    },
+    {
+      byte.MaxValue,
+      (byte) 0,
+      (byte) 0
+    },
+    {
+      byte.MaxValue,
+      (byte) 0,
+      (byte) 0
+    },
+    {
+      byte.MaxValue,
+      (byte) 0,
+      (byte) 0
+    },
+    {
+      byte.MaxValue,
+      (byte) 0,
+      (byte) 0
+    },
+    {
+      byte.MaxValue,
+      (byte) 0,
+      (byte) 0
+    },
+    {
+      byte.MaxValue,
+      (byte) 0,
+      (byte) 0
+    },
+    {
+      byte.MaxValue,
+      (byte) 0,
+      (byte) 0
+    }
+  };
+  private bool isSendData = false;
+  private bool keyRDown = false;
+  private int longTimer = 0;
+  private int nowButton = 0;
+  private bool isStartTimer = false;
+  private int hideCount = 0;
+  private IContainer components = (IContainer) null;
+  private Button buttonPower;
+  private Button buttonDGJH;
+  private Button buttonWBSR;
+  private Button button1;
+  private Button button2;
+  private Button button3;
+  private Button button4;
+  private Button button5;
+  private Button button6;
+  private Button button7;
+  private Button button8;
+  private Button button9;
+  private Button button10;
+  private Button button11;
+  private Button button12;
+  private Button buttonDGX1;
+  private Button buttonDGX2;
+  private Button buttonDGX3;
+  private Button buttonTK0;
+  private Button buttonTK1;
+  private Button buttonTK2;
+  private Button buttonTK3;
+  private Button buttonTK4;
+  private Button buttonKJMS;
+  private Button buttonMS1;
+  private Button buttonMS2;
+  private Button buttonMS3;
+  private Button buttonMS4;
+  private Button buttonC1;
+  private Button buttonC2;
+  private Button buttonC3;
+  private Button buttonC4;
+  private Button buttonC5;
+  private Button buttonC6;
+  private Button buttonC7;
+  private Button buttonC8;
+  private Label label1;
+  private UCScrollA ucScrollAR;
+  private UCScrollA ucScrollAG;
+  private UCScrollA ucScrollAB;
+  private UCScrollA ucScrollA;
+  public Label labelB;
+  public Label labelG;
+  public Label labelR;
+  private UCColorA ucColorA1;
+
+  private void ClearButtonBouns()
+  {
+    this.buttonPower.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonTK0.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonTK1.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonTK2.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonTK3.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonTK4.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonDGJH.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonWBSR.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.button1.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.button2.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.button3.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.button4.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.button5.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.button6.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.button7.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.button8.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.button9.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.button10.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.button11.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.button12.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonDGX1.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonDGX2.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonDGX3.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonC1.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonC2.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonC3.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonC4.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonC5.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonC6.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonC7.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonC8.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonKJMS.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonMS1.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonMS2.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonMS3.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonMS4.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+  }
+
+  private void InitControl()
+  {
+    this.ucScrollAG.SetUCScrollA(0);
+    this.ucScrollAB.SetUCScrollA(0);
+    this.ucScrollA.SetUCScrollA((int) byte.MaxValue);
+    this.ucColorA1.upDateUCColor = new UCColorA.delegate_UCColorA(this.ucColor1Delegate);
+    this.ucColorA1.upDateUCColorOnoff = new UCColorA.delegate_UCColorOnoff(this.ucColor2Delegate);
+    this.ucScrollAR.upDateUCScroll = new UCScrollA.delegate_UCScrollA(this.ucScrollRDelegate);
+    this.ucScrollAG.upDateUCScroll = new UCScrollA.delegate_UCScrollA(this.ucScrollGDelegate);
+    this.ucScrollAB.upDateUCScroll = new UCScrollA.delegate_UCScrollA(this.ucScrollBDelegate);
+    this.ucScrollA.upDateUCScroll = new UCScrollA.delegate_UCScrollA(this.ucScrollWDelegate);
+  }
+
+  public FormKVMALED6()
+  {
+    this.InitializeComponent();
+    this.ClearButtonBouns();
+    this.CheckDirectoryExist();
+    this.InitData();
+    this.InitControl();
+  }
+
+  protected override CreateParams CreateParams
+  {
+    get
+    {
+      CreateParams createParams = base.CreateParams;
+      createParams.ExStyle |= 33554432 /*0x02000000*/;
+      return createParams;
+    }
+  }
+
+  private void buttonPower_Click(object sender, EventArgs e)
+  {
+    FormKVMALED6.delegateFormKVMALED6 delegateForm = this.delegateForm;
+    if (delegateForm == null)
+      return;
+    delegateForm((int) byte.MaxValue);
+  }
+
+  private void buttonPower_MouseEnter(object sender, EventArgs e)
+  {
+    this.buttonPower.BackgroundImage = (Image) Resources.Alogout选中;
+  }
+
+  private void buttonPower_MouseLeave(object sender, EventArgs e)
+  {
+    this.buttonPower.BackgroundImage = (Image) Resources.Alogout默认;
+  }
+
+  private void FormKVMALED6_MouseDown(object sender, MouseEventArgs e)
+  {
+    FormKVMALED6.delegateFormKVMALED6 delegateForm = this.delegateForm;
+    if (delegateForm == null)
+      return;
+    delegateForm(241, data: (object) e);
+  }
+
+  private void FormKVMALED6_MouseMove(object sender, MouseEventArgs e)
+  {
+    FormKVMALED6.delegateFormKVMALED6 delegateForm = this.delegateForm;
+    if (delegateForm == null)
+      return;
+    delegateForm(242, data: (object) e);
+  }
+
+  private void FormKVMALED6_MouseUp(object sender, MouseEventArgs e)
+  {
+    FormKVMALED6.delegateFormKVMALED6 delegateForm = this.delegateForm;
+    if (delegateForm == null)
+      return;
+    delegateForm(243, data: (object) e);
+  }
+
+  public void SetMyChannel()
+  {
+    for (int index = 0; index < this.myChannel.Length - 2; ++index)
+      this.myChannel[index] = (byte) 1;
+    this.buttonTK0.BackgroundImage = (Image) Resources.D1头盔1;
+    this.buttonTK1.BackgroundImage = (Image) Resources.D1头盔2;
+    this.buttonTK2.BackgroundImage = (Image) Resources.D1头盔3;
+    this.buttonTK3.BackgroundImage = (Image) Resources.D1头盔4;
+    this.buttonTK4.BackgroundImage = (Image) Resources.D1头盔5;
+    this.buttonDGJH.BackgroundImage = (Image) Resources.D1灯光聚合a;
+  }
+
+  public void ClrMyChannel()
+  {
+    for (int index = 0; index < this.myChannel.Length - 2; ++index)
+      this.myChannel[index] = (byte) 0;
+    this.buttonTK0.BackgroundImage = (Image) null;
+    this.buttonTK1.BackgroundImage = (Image) null;
+    this.buttonTK2.BackgroundImage = (Image) null;
+    this.buttonTK3.BackgroundImage = (Image) null;
+    this.buttonTK4.BackgroundImage = (Image) null;
+    this.buttonDGJH.BackgroundImage = (Image) Resources.D1灯光聚合;
+  }
+
+  private void buttonTK0_Click(object sender, EventArgs e)
+  {
+    if (this.myChannel[0] == (byte) 1)
+    {
+      this.myChannel[0] = (byte) 0;
+      this.buttonTK0.BackgroundImage = (Image) null;
+    }
+    else
+    {
+      this.myChannel[0] = (byte) 1;
+      this.buttonTK0.BackgroundImage = (Image) Resources.D1头盔1;
+    }
+    if (this.myChannel[0] == (byte) 1 && this.myChannel[1] == (byte) 1 && this.myChannel[2] == (byte) 1 && this.myChannel[3] == (byte) 1 && this.myChannel[4] == (byte) 1)
+      this.buttonDGJH.BackgroundImage = (Image) Resources.D1灯光聚合a;
+    else
+      this.buttonDGJH.BackgroundImage = (Image) Resources.D1灯光聚合;
+    if (!this.my_6_10_Ch)
+      return;
+    this.buttonWBSR_Click((object) null, (EventArgs) null);
+  }
+
+  private void buttonTK1_Click(object sender, EventArgs e)
+  {
+    if (this.myChannel[1] == (byte) 1)
+    {
+      this.myChannel[1] = (byte) 0;
+      this.buttonTK1.BackgroundImage = (Image) null;
+    }
+    else
+    {
+      this.myChannel[1] = (byte) 1;
+      this.buttonTK1.BackgroundImage = (Image) Resources.D1头盔2;
+    }
+    if (this.myChannel[0] == (byte) 1 && this.myChannel[1] == (byte) 1 && this.myChannel[2] == (byte) 1 && this.myChannel[3] == (byte) 1 && this.myChannel[4] == (byte) 1)
+      this.buttonDGJH.BackgroundImage = (Image) Resources.D1灯光聚合a;
+    else
+      this.buttonDGJH.BackgroundImage = (Image) Resources.D1灯光聚合;
+    if (!this.my_6_10_Ch)
+      return;
+    this.buttonWBSR_Click((object) null, (EventArgs) null);
+  }
+
+  private void buttonTK2_Click(object sender, EventArgs e)
+  {
+    if (this.myChannel[2] == (byte) 1)
+    {
+      this.myChannel[2] = (byte) 0;
+      this.buttonTK2.BackgroundImage = (Image) null;
+    }
+    else
+    {
+      this.myChannel[2] = (byte) 1;
+      this.buttonTK2.BackgroundImage = (Image) Resources.D1头盔3;
+    }
+    if (this.myChannel[0] == (byte) 1 && this.myChannel[1] == (byte) 1 && this.myChannel[2] == (byte) 1 && this.myChannel[3] == (byte) 1 && this.myChannel[4] == (byte) 1)
+      this.buttonDGJH.BackgroundImage = (Image) Resources.D1灯光聚合a;
+    else
+      this.buttonDGJH.BackgroundImage = (Image) Resources.D1灯光聚合;
+    if (!this.my_6_10_Ch)
+      return;
+    this.buttonWBSR_Click((object) null, (EventArgs) null);
+  }
+
+  private void buttonTK3_Click(object sender, EventArgs e)
+  {
+    if (this.myChannel[3] == (byte) 1)
+    {
+      this.myChannel[3] = (byte) 0;
+      this.buttonTK3.BackgroundImage = (Image) null;
+    }
+    else
+    {
+      this.myChannel[3] = (byte) 1;
+      this.buttonTK3.BackgroundImage = (Image) Resources.D1头盔4;
+    }
+    if (this.myChannel[0] == (byte) 1 && this.myChannel[1] == (byte) 1 && this.myChannel[2] == (byte) 1 && this.myChannel[3] == (byte) 1 && this.myChannel[4] == (byte) 1)
+      this.buttonDGJH.BackgroundImage = (Image) Resources.D1灯光聚合a;
+    else
+      this.buttonDGJH.BackgroundImage = (Image) Resources.D1灯光聚合;
+    if (!this.my_6_10_Ch)
+      return;
+    this.buttonWBSR_Click((object) null, (EventArgs) null);
+  }
+
+  private void buttonTK4_Click(object sender, EventArgs e)
+  {
+    if (this.myChannel[4] == (byte) 1)
+    {
+      this.myChannel[4] = (byte) 0;
+      this.buttonTK4.BackgroundImage = (Image) null;
+    }
+    else
+    {
+      this.myChannel[4] = (byte) 1;
+      this.buttonTK4.BackgroundImage = (Image) Resources.D1头盔5;
+    }
+    if (this.myChannel[0] == (byte) 1 && this.myChannel[1] == (byte) 1 && this.myChannel[2] == (byte) 1 && this.myChannel[3] == (byte) 1 && this.myChannel[4] == (byte) 1)
+      this.buttonDGJH.BackgroundImage = (Image) Resources.D1灯光聚合a;
+    else
+      this.buttonDGJH.BackgroundImage = (Image) Resources.D1灯光聚合;
+    if (!this.my_6_10_Ch)
+      return;
+    this.buttonWBSR_Click((object) null, (EventArgs) null);
+  }
+
+  private void buttonDGJH_Click(object sender, EventArgs e)
+  {
+    this.SetMyChannel();
+    if (!this.my_6_10_Ch)
+      return;
+    this.buttonWBSR_Click((object) null, (EventArgs) null);
+  }
+
+  private void buttonWBSR_Click(object sender, EventArgs e)
+  {
+    if (this.my_6_10_Ch)
+    {
+      this.my_6_10_Ch = false;
+      this.buttonWBSR.BackgroundImage = (Image) Resources.D1外部输出;
+      this.myChannel[8] = (byte) 0;
+    }
+    else
+    {
+      this.my_6_10_Ch = true;
+      this.buttonWBSR.BackgroundImage = (Image) Resources.D1外部输出a;
+      this.myChannel[8] = (byte) 1;
+      this.ClrMyChannel();
+    }
+    FormKVMALED6.delegateFormKVMALED6 delegateForm = this.delegateForm;
+    if (delegateForm == null)
+      return;
+    delegateForm(this.my_6_10_Ch ? 161 : 160 /*0xA0*/);
+  }
+
+  private void ucColor1Delegate(int r, int b, int g)
+  {
+    this.rgbR1 = r;
+    this.rgbG1 = g;
+    this.rgbB1 = b;
+    this.labelR.Text = r.ToString();
+    this.labelG.Text = g.ToString();
+    this.labelB.Text = b.ToString();
+    this.ucScrollAR.SetUCScrollA(r);
+    this.ucScrollAG.SetUCScrollA(g);
+    this.ucScrollAB.SetUCScrollA(b);
+    this.SendLEDData();
+  }
+
+  private void ucColor2Delegate(byte onOff)
+  {
+    for (int index = 0; index < 10; ++index)
+    {
+      if (this.myChannel[index] == (byte) 1)
+        this.myOnOff[index] = onOff;
+    }
+    this.SendLEDDataOnOff();
+  }
+
+  private void ucScrollRDelegate(int val)
+  {
+    this.rgbR1 = val;
+    this.labelR.Text = val.ToString();
+    this.SendLEDData();
+  }
+
+  private void ucScrollGDelegate(int val)
+  {
+    this.rgbG1 = val;
+    this.labelG.Text = val.ToString();
+    this.SendLEDData();
+  }
+
+  private void ucScrollBDelegate(int val)
+  {
+    this.rgbB1 = val;
+    this.labelB.Text = val.ToString();
+    this.SendLEDData();
+  }
+
+  private void ucScrollWDelegate(int val)
+  {
+    this.myBrightness = (byte) (val * 100 / (int) byte.MaxValue);
+    this.SendLEDData();
+  }
+
+  private void buttonC1_Click(object sender, EventArgs e)
+  {
+    this.ucColor1Delegate((int) byte.MaxValue, 42, 0);
+  }
+
+  private void buttonC2_Click(object sender, EventArgs e)
+  {
+    this.ucColor1Delegate((int) byte.MaxValue, 0, 110);
+  }
+
+  private void buttonC3_Click(object sender, EventArgs e)
+  {
+    this.ucColor1Delegate((int) byte.MaxValue, 0, (int) byte.MaxValue);
+  }
+
+  private void buttonC4_Click(object sender, EventArgs e)
+  {
+    this.ucColor1Delegate(0, 0, (int) byte.MaxValue);
+  }
+
+  private void buttonC5_Click(object sender, EventArgs e)
+  {
+    this.ucColor1Delegate(0, (int) byte.MaxValue, (int) byte.MaxValue);
+  }
+
+  private void buttonC6_Click(object sender, EventArgs e)
+  {
+    this.ucColor1Delegate(0, (int) byte.MaxValue, 91);
+  }
+
+  private void buttonC7_Click(object sender, EventArgs e)
+  {
+    this.ucColor1Delegate(214, (int) byte.MaxValue, 0);
+  }
+
+  private void buttonC8_Click(object sender, EventArgs e)
+  {
+    this.ucColor1Delegate((int) byte.MaxValue, (int) byte.MaxValue, (int) byte.MaxValue);
+  }
+
+  private void CheckDirectoryExist()
+  {
+    this.KVMALED6_All_ML = Application.StartupPath + "\\Data\\KVMALED6\\";
+    if (Directory.Exists(this.KVMALED6_All_ML))
+      return;
+    Directory.CreateDirectory(this.KVMALED6_All_ML);
+  }
+
+  private void InitData()
+  {
+    FileStream input = new FileStream(this.KVMALED6_All_ML + "proMode.dc", FileMode.OpenOrCreate);
+    BinaryReader binaryReader = new BinaryReader((Stream) input);
+    try
+    {
+      if (binaryReader.ReadByte() == (byte) 220)
+      {
+        this.myOnOff = binaryReader.ReadBytes(10);
+        this.myModeS = binaryReader.ReadBytes(10);
+        this.myBrightnessS = binaryReader.ReadBytes(10);
+        for (int index1 = 0; index1 < 10; ++index1)
+        {
+          for (int index2 = 0; index2 < 3; ++index2)
+            this.myRGB[index1, index2] = binaryReader.ReadByte();
+        }
+        binaryReader.Close();
+        binaryReader.Dispose();
+        input.Close();
+        input.Dispose();
+      }
+      else
+      {
+        binaryReader.Close();
+        binaryReader.Dispose();
+        input.Close();
+        input.Dispose();
+        this.SaveData();
+      }
+    }
+    catch
+    {
+      binaryReader.Close();
+      binaryReader.Dispose();
+      input.Close();
+      input.Dispose();
+      this.SaveData();
+    }
+  }
+
+  private void SaveData()
+  {
+    FileStream output = new FileStream(this.KVMALED6_All_ML + "proMode.dc", FileMode.OpenOrCreate);
+    BinaryWriter binaryWriter = new BinaryWriter((Stream) output);
+    binaryWriter.Write((byte) 220);
+    binaryWriter.Write(this.myOnOff);
+    binaryWriter.Write(this.myModeS);
+    binaryWriter.Write(this.myBrightnessS);
+    for (int index1 = 0; index1 < 10; ++index1)
+    {
+      for (int index2 = 0; index2 < 3; ++index2)
+        binaryWriter.Write(this.myRGB[index1, index2]);
+    }
+    binaryWriter.Flush();
+    binaryWriter.Close();
+    binaryWriter.Dispose();
+    output.Close();
+    output.Dispose();
+  }
+
+  private void GetMSData(string str)
+  {
+    FileStream input = new FileStream(str, FileMode.OpenOrCreate);
+    BinaryReader binaryReader = new BinaryReader((Stream) input);
+    try
+    {
+      if (binaryReader.ReadByte() == (byte) 220)
+      {
+        this.myOnOff = binaryReader.ReadBytes(10);
+        this.myModeS = binaryReader.ReadBytes(10);
+        this.myBrightnessS = binaryReader.ReadBytes(10);
+        for (int index1 = 0; index1 < 10; ++index1)
+        {
+          for (int index2 = 0; index2 < 3; ++index2)
+            this.myRGB[index1, index2] = binaryReader.ReadByte();
+        }
+        binaryReader.Close();
+        binaryReader.Dispose();
+        input.Close();
+        input.Dispose();
+      }
+      else
+      {
+        binaryReader.Close();
+        binaryReader.Dispose();
+        input.Close();
+        input.Dispose();
+      }
+    }
+    catch
+    {
+      binaryReader.Close();
+      binaryReader.Dispose();
+      input.Close();
+      input.Dispose();
+    }
+  }
+
+  private void SaveMSData(string str)
+  {
+    FileStream output = new FileStream(str, FileMode.OpenOrCreate);
+    BinaryWriter binaryWriter = new BinaryWriter((Stream) output);
+    binaryWriter.Write((byte) 220);
+    binaryWriter.Write(this.myOnOff);
+    binaryWriter.Write(this.myModeS);
+    binaryWriter.Write(this.myBrightnessS);
+    for (int index1 = 0; index1 < 10; ++index1)
+    {
+      for (int index2 = 0; index2 < 3; ++index2)
+        binaryWriter.Write(this.myRGB[index1, index2]);
+    }
+    binaryWriter.Close();
+    binaryWriter.Dispose();
+    output.Close();
+    output.Dispose();
+  }
+
+  public void ReceivedDeviceData(byte[] data)
+  {
+  }
+
+  private void SendDeviceData(byte cmd, byte ch, byte mode, byte[] data)
+  {
+    byte[] info = new byte[3]{ cmd, ch, mode };
+    FormKVMALED6.delegateFormKVMALED6 delegateForm = this.delegateForm;
+    if (delegateForm == null)
+      return;
+    delegateForm(16 /*0x10*/, (object) info, (object) data, (object) this);
+  }
+
+  private void SendLEDDataOnOff()
+  {
+    if (this.isSendData)
+      Thread.Sleep(1);
+    this.isSendData = true;
+    this.SendDeviceData((byte) 0, (byte) 0, (byte) this.myMode, new byte[10]
+    {
+      this.myOnOff[0],
+      this.myOnOff[1],
+      this.myOnOff[2],
+      this.myOnOff[3],
+      this.myOnOff[4],
+      this.myOnOff[5],
+      this.myOnOff[6],
+      this.myOnOff[7],
+      this.myOnOff[8],
+      this.myOnOff[9]
+    });
+    this.isSendData = false;
+    this.SaveData();
+  }
+
+  private void SendLEDData()
+  {
+    if (this.isSendData)
+      Thread.Sleep(1);
+    this.isSendData = true;
+    this.SendDeviceData((byte) 16 /*0x10*/, (byte) 0, (byte) this.myMode, new byte[18]
+    {
+      this.myBrightness,
+      this.mySpeed,
+      (byte) this.rgbR1,
+      (byte) this.rgbG1,
+      (byte) this.rgbB1,
+      (byte) 0,
+      (byte) 0,
+      (byte) 0,
+      this.myChannel[0],
+      this.myChannel[1],
+      this.myChannel[2],
+      this.myChannel[3],
+      this.myChannel[4],
+      this.myChannel[5],
+      this.myChannel[6],
+      this.myChannel[7],
+      this.myChannel[8],
+      this.myChannel[9]
+    });
+    this.isSendData = false;
+    for (int index = 0; index < 10; ++index)
+    {
+      if (this.myChannel[index] > (byte) 0)
+      {
+        this.myModeS[index] = (byte) this.myMode;
+        this.myBrightnessS[index] = this.myBrightness;
+        this.myRGB[index, 0] = (byte) this.rgbR1;
+        this.myRGB[index, 1] = (byte) this.rgbG1;
+        this.myRGB[index, 2] = (byte) this.rgbB1;
+      }
+    }
+    this.SaveData();
+  }
+
+  private void SendLEDMSData(int m)
+  {
+    if (this.isSendData)
+      Thread.Sleep(1);
+    this.isSendData = true;
+    byte[] data = new byte[60]
+    {
+      this.myOnOff[0],
+      this.myOnOff[1],
+      this.myOnOff[2],
+      this.myOnOff[3],
+      this.myOnOff[4],
+      this.myOnOff[5],
+      this.myOnOff[6],
+      this.myOnOff[7],
+      this.myOnOff[8],
+      this.myOnOff[9],
+      this.myModeS[0],
+      this.myModeS[1],
+      this.myModeS[2],
+      this.myModeS[3],
+      this.myModeS[4],
+      this.myModeS[5],
+      this.myModeS[6],
+      this.myModeS[7],
+      this.myModeS[8],
+      this.myModeS[9],
+      this.myBrightnessS[0],
+      this.myBrightnessS[1],
+      this.myBrightnessS[2],
+      this.myBrightnessS[3],
+      this.myBrightnessS[4],
+      this.myBrightnessS[5],
+      this.myBrightnessS[6],
+      this.myBrightnessS[7],
+      this.myBrightnessS[8],
+      this.myBrightnessS[9],
+      this.myRGB[0, 0],
+      this.myRGB[0, 1],
+      this.myRGB[0, 2],
+      this.myRGB[1, 0],
+      this.myRGB[1, 1],
+      this.myRGB[1, 2],
+      this.myRGB[2, 0],
+      this.myRGB[2, 1],
+      this.myRGB[2, 2],
+      this.myRGB[3, 0],
+      this.myRGB[3, 1],
+      this.myRGB[3, 2],
+      this.myRGB[4, 0],
+      this.myRGB[4, 1],
+      this.myRGB[4, 2],
+      this.myRGB[5, 0],
+      this.myRGB[5, 1],
+      this.myRGB[5, 2],
+      this.myRGB[6, 0],
+      this.myRGB[6, 1],
+      this.myRGB[6, 2],
+      this.myRGB[7, 0],
+      this.myRGB[7, 1],
+      this.myRGB[7, 2],
+      this.myRGB[8, 0],
+      this.myRGB[8, 1],
+      this.myRGB[8, 2],
+      this.myRGB[9, 0],
+      this.myRGB[9, 1],
+      this.myRGB[9, 2]
+    };
+    this.SendDeviceData((byte) 104, (byte) m, this.myModeS[0], data);
+    this.isSendData = false;
+  }
+
+  public void SendStateData()
+  {
+    if (this.isSendData)
+      return;
+    this.isSendData = true;
+    this.SendDeviceData((byte) 1, (byte) 0, (byte) 0, (byte[]) null);
+    this.isSendData = false;
+  }
+
+  private void ButtonMode_Click(int mode)
+  {
+    this.button1.BackgroundImage = (Image) Resources.D2灯光1;
+    this.button2.BackgroundImage = (Image) Resources.D2灯光2;
+    this.button3.BackgroundImage = (Image) Resources.D2灯光3;
+    this.button4.BackgroundImage = (Image) Resources.D2灯光4;
+    this.button5.BackgroundImage = (Image) Resources.D2灯光5;
+    this.button6.BackgroundImage = (Image) Resources.D2灯光6;
+    this.button7.BackgroundImage = (Image) Resources.D2灯光7;
+    this.button8.BackgroundImage = (Image) Resources.D2灯光8;
+    this.button9.BackgroundImage = (Image) Resources.D2灯光9;
+    this.button10.BackgroundImage = (Image) Resources.D2灯光10;
+    this.button11.BackgroundImage = (Image) Resources.D2灯光11;
+    this.button12.BackgroundImage = (Image) Resources.D2灯光12;
+    this.buttonDGX1.BackgroundImage = (Image) Resources.D3灯光秀1;
+    this.buttonDGX2.BackgroundImage = (Image) Resources.D3灯光秀2;
+    this.buttonDGX3.BackgroundImage = (Image) Resources.D3灯光秀3;
+    switch (mode)
+    {
+      case 0:
+        this.button2.BackgroundImage = (Image) Resources.D2灯光2a;
+        break;
+      case 1:
+        this.button3.BackgroundImage = (Image) Resources.D2灯光3a;
+        break;
+      case 2:
+        this.button4.BackgroundImage = (Image) Resources.D2灯光4a;
+        break;
+      case 3:
+        this.button9.BackgroundImage = (Image) Resources.D2灯光9a;
+        break;
+      case 4:
+        this.button8.BackgroundImage = (Image) Resources.D2灯光8a;
+        break;
+      case 5:
+        this.button7.BackgroundImage = (Image) Resources.D2灯光7a;
+        break;
+      case 6:
+        this.button6.BackgroundImage = (Image) Resources.D2灯光6a;
+        break;
+      case 7:
+        this.button5.BackgroundImage = (Image) Resources.D2灯光5a;
+        break;
+      case 8:
+        this.button12.BackgroundImage = (Image) Resources.D2灯光12a;
+        break;
+      case 9:
+        this.button11.BackgroundImage = (Image) Resources.D2灯光11a;
+        break;
+      case 10:
+        this.button10.BackgroundImage = (Image) Resources.D2灯光10a;
+        break;
+      case 100:
+        this.button1.BackgroundImage = (Image) Resources.D2灯光1a;
+        break;
+      case 201:
+        this.buttonDGX1.BackgroundImage = (Image) Resources.D3灯光秀1a;
+        break;
+      case 202:
+        this.buttonDGX2.BackgroundImage = (Image) Resources.D3灯光秀2a;
+        break;
+      case 203:
+        this.buttonDGX3.BackgroundImage = (Image) Resources.D3灯光秀3a;
+        break;
+    }
+  }
+
+  private void button1_Click(object sender, EventArgs e)
+  {
+    this.myMode = 100;
+    this.ButtonMode_Click(this.myMode);
+    this.rgbR1 = (int) byte.MaxValue;
+    this.rgbG1 = 175;
+    this.rgbB1 = 100;
+    this.myMode = 0;
+    this.SendLEDData();
+  }
+
+  private void button2_Click(object sender, EventArgs e)
+  {
+    this.myMode = 0;
+    this.ButtonMode_Click(this.myMode);
+    this.SendLEDData();
+  }
+
+  private void button3_Click(object sender, EventArgs e)
+  {
+    this.myMode = 1;
+    this.ButtonMode_Click(this.myMode);
+    this.SendLEDData();
+  }
+
+  private void button4_Click(object sender, EventArgs e)
+  {
+    this.myMode = 2;
+    this.ButtonMode_Click(this.myMode);
+    this.SendLEDData();
+  }
+
+  private void button5_Click(object sender, EventArgs e)
+  {
+    this.myMode = 7;
+    this.ButtonMode_Click(this.myMode);
+    this.SendLEDData();
+  }
+
+  private void button6_Click(object sender, EventArgs e)
+  {
+    this.myMode = 6;
+    this.ButtonMode_Click(this.myMode);
+    this.SendLEDData();
+  }
+
+  private void button7_Click(object sender, EventArgs e)
+  {
+    this.myMode = 5;
+    this.ButtonMode_Click(this.myMode);
+    this.SendLEDData();
+  }
+
+  private void button8_Click(object sender, EventArgs e)
+  {
+    this.myMode = 4;
+    this.ButtonMode_Click(this.myMode);
+    this.SendLEDData();
+  }
+
+  private void button9_Click(object sender, EventArgs e)
+  {
+    this.myMode = 3;
+    this.ButtonMode_Click(this.myMode);
+    this.SendLEDData();
+  }
+
+  private void button10_Click(object sender, EventArgs e)
+  {
+    this.myMode = 10;
+    this.ButtonMode_Click(this.myMode);
+    this.SendLEDData();
+  }
+
+  private void button11_Click(object sender, EventArgs e)
+  {
+    this.myMode = 9;
+    this.ButtonMode_Click(this.myMode);
+    this.SendLEDData();
+  }
+
+  private void button12_Click(object sender, EventArgs e)
+  {
+    this.myMode = 8;
+    this.ButtonMode_Click(this.myMode);
+    this.SendLEDData();
+  }
+
+  private void buttonDGX1_Click(object sender, EventArgs e)
+  {
+    if (this.my_6_10_Ch)
+      return;
+    this.myMode = 201;
+    this.ButtonMode_Click(this.myMode);
+    this.SendLEDData();
+  }
+
+  private void buttonDGX2_Click(object sender, EventArgs e)
+  {
+    if (this.my_6_10_Ch)
+      return;
+    this.myMode = 202;
+    this.ButtonMode_Click(this.myMode);
+    this.SendLEDData();
+  }
+
+  private void buttonDGX3_Click(object sender, EventArgs e)
+  {
+    if (this.my_6_10_Ch)
+      return;
+    this.myMode = 203;
+    this.ButtonMode_Click(this.myMode);
+    this.SendLEDData();
+  }
+
+  private void buttonKJMS_Click(object sender, EventArgs e)
+  {
+    this.GetMSData(this.KVMALED6_All_ML + "0proMode.dc");
+    this.SendLEDMSData(0);
+  }
+
+  private void buttonMS_Click(int m)
+  {
+    this.buttonMS1.BackgroundImage = (Image) Resources.D4模式1;
+    this.buttonMS2.BackgroundImage = (Image) Resources.D4模式2;
+    this.buttonMS3.BackgroundImage = (Image) Resources.D4模式3;
+    this.buttonMS4.BackgroundImage = (Image) Resources.D4模式4;
+    switch (m)
+    {
+      case 1:
+        this.buttonMS1.BackgroundImage = (Image) Resources.D4模式1a;
+        break;
+      case 2:
+        this.buttonMS2.BackgroundImage = (Image) Resources.D4模式2a;
+        break;
+      case 3:
+        this.buttonMS3.BackgroundImage = (Image) Resources.D4模式3a;
+        break;
+      case 4:
+        this.buttonMS4.BackgroundImage = (Image) Resources.D4模式4a;
+        break;
+    }
+  }
+
+  private void buttonMS1_Click(object sender, EventArgs e)
+  {
+    this.buttonMS_Click(1);
+    this.GetMSData(this.KVMALED6_All_ML + "1proMode.dc");
+    this.SendLEDMSData(1);
+  }
+
+  private void buttonMS2_Click(object sender, EventArgs e)
+  {
+    this.buttonMS_Click(2);
+    this.GetMSData(this.KVMALED6_All_ML + "2proMode.dc");
+    this.SendLEDMSData(2);
+  }
+
+  private void buttonMS3_Click(object sender, EventArgs e)
+  {
+    this.buttonMS_Click(3);
+    this.GetMSData(this.KVMALED6_All_ML + "3proMode.dc");
+    this.SendLEDMSData(3);
+  }
+
+  private void buttonMS4_Click(object sender, EventArgs e)
+  {
+    this.buttonMS_Click(4);
+    this.GetMSData(this.KVMALED6_All_ML + "4proMode.dc");
+    this.SendLEDMSData(4);
+  }
+
+  private void SaveButtonMouseDown(object sender, MouseEventArgs e)
+  {
+    if (this.keyRDown || e.Button != MouseButtons.Right)
+      return;
+    this.keyRDown = true;
+    this.longTimer = 0;
+    this.isStartTimer = true;
+    Point location = ((Control) sender).Location;
+    int x1 = location.X;
+    location = this.buttonKJMS.Location;
+    int x2 = location.X;
+    if (x1 == x2)
+    {
+      this.nowButton = 0;
+    }
+    else
+    {
+      location = ((Control) sender).Location;
+      int x3 = location.X;
+      location = this.buttonMS1.Location;
+      int x4 = location.X;
+      if (x3 == x4)
+      {
+        this.nowButton = 1;
+      }
+      else
+      {
+        location = ((Control) sender).Location;
+        int x5 = location.X;
+        location = this.buttonMS2.Location;
+        int x6 = location.X;
+        if (x5 == x6)
+        {
+          this.nowButton = 2;
+        }
+        else
+        {
+          location = ((Control) sender).Location;
+          int x7 = location.X;
+          location = this.buttonMS3.Location;
+          int x8 = location.X;
+          if (x7 == x8)
+          {
+            this.nowButton = 3;
+          }
+          else
+          {
+            location = ((Control) sender).Location;
+            int x9 = location.X;
+            location = this.buttonMS4.Location;
+            int x10 = location.X;
+            if (x9 == x10)
+              this.nowButton = 4;
+          }
+        }
+      }
+    }
+  }
+
+  private void SaveButtonMouseMove(object sender, MouseEventArgs e)
+  {
+    if (!this.keyRDown || e.X >= 0 && e.X <= ((Control) sender).Width && e.Y >= 0 && e.Y <= ((Control) sender).Height)
+      return;
+    this.keyRDown = false;
+    this.isStartTimer = false;
+    this.longTimer = 0;
+  }
+
+  private void SaveButtonMouseUp(object sender, MouseEventArgs e)
+  {
+    if (!this.keyRDown)
+      return;
+    this.keyRDown = false;
+    this.isStartTimer = false;
+    this.longTimer = 0;
+  }
+
+  public void MyTimer_Event()
+  {
+    if (this.isStartTimer)
+    {
+      ++this.longTimer;
+      if (this.longTimer >= 16 /*0x10*/)
+      {
+        this.isStartTimer = false;
+        this.longTimer = 0;
+        this.SaveMSData($"{this.KVMALED6_All_ML}{this.nowButton.ToString()}proMode.dc");
+        this.label1.Show();
+        this.hideCount = 8;
+      }
+    }
+    else if (this.hideCount > 0)
+    {
+      --this.hideCount;
+      if (this.hideCount == 0)
+        this.label1.Hide();
+    }
+    this.SendStateData();
+  }
+
+  protected override void Dispose(bool disposing)
+  {
+    if (disposing && this.components != null)
+      this.components.Dispose();
+    base.Dispose(disposing);
+  }
+
+  private void InitializeComponent()
+  {
+    ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof (FormKVMALED6));
+    this.buttonPower = new Button();
+    this.buttonDGJH = new Button();
+    this.buttonWBSR = new Button();
+    this.button1 = new Button();
+    this.button2 = new Button();
+    this.button3 = new Button();
+    this.button4 = new Button();
+    this.button5 = new Button();
+    this.button6 = new Button();
+    this.button7 = new Button();
+    this.button8 = new Button();
+    this.button9 = new Button();
+    this.button10 = new Button();
+    this.button11 = new Button();
+    this.button12 = new Button();
+    this.buttonDGX1 = new Button();
+    this.buttonDGX2 = new Button();
+    this.buttonDGX3 = new Button();
+    this.buttonTK0 = new Button();
+    this.buttonTK1 = new Button();
+    this.buttonTK2 = new Button();
+    this.buttonTK3 = new Button();
+    this.buttonTK4 = new Button();
+    this.buttonKJMS = new Button();
+    this.buttonMS1 = new Button();
+    this.buttonMS2 = new Button();
+    this.buttonMS3 = new Button();
+    this.buttonMS4 = new Button();
+    this.buttonC1 = new Button();
+    this.buttonC2 = new Button();
+    this.buttonC3 = new Button();
+    this.buttonC4 = new Button();
+    this.buttonC5 = new Button();
+    this.buttonC6 = new Button();
+    this.buttonC7 = new Button();
+    this.buttonC8 = new Button();
+    this.label1 = new Label();
+    this.labelB = new Label();
+    this.labelG = new Label();
+    this.labelR = new Label();
+    this.ucColorA1 = new UCColorA();
+    this.ucScrollA = new UCScrollA();
+    this.ucScrollAB = new UCScrollA();
+    this.ucScrollAG = new UCScrollA();
+    this.ucScrollAR = new UCScrollA();
+    this.SuspendLayout();
+    this.buttonPower.BackColor = Color.Transparent;
+    this.buttonPower.BackgroundImage = (Image) Resources.Alogout默认;
+    this.buttonPower.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonPower.FlatAppearance.BorderSize = 0;
+    this.buttonPower.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonPower.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonPower.FlatStyle = FlatStyle.Flat;
+    this.buttonPower.Location = new Point(1212, 24);
+    this.buttonPower.Margin = new Padding(0);
+    this.buttonPower.Name = "buttonPower";
+    this.buttonPower.Size = new Size(40, 40);
+    this.buttonPower.TabIndex = 136;
+    this.buttonPower.UseVisualStyleBackColor = false;
+    this.buttonPower.Click += new EventHandler(this.buttonPower_Click);
+    this.buttonPower.MouseEnter += new EventHandler(this.buttonPower_MouseEnter);
+    this.buttonPower.MouseLeave += new EventHandler(this.buttonPower_MouseLeave);
+    this.buttonDGJH.BackColor = Color.Transparent;
+    this.buttonDGJH.BackgroundImage = (Image) Resources.D1灯光聚合a;
+    this.buttonDGJH.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonDGJH.FlatAppearance.BorderSize = 0;
+    this.buttonDGJH.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonDGJH.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonDGJH.FlatStyle = FlatStyle.Flat;
+    this.buttonDGJH.Location = new Point(210, 718);
+    this.buttonDGJH.Margin = new Padding(0);
+    this.buttonDGJH.Name = "buttonDGJH";
+    this.buttonDGJH.Size = new Size(93, 33);
+    this.buttonDGJH.TabIndex = 137;
+    this.buttonDGJH.UseVisualStyleBackColor = false;
+    this.buttonDGJH.Click += new EventHandler(this.buttonDGJH_Click);
+    this.buttonWBSR.BackColor = Color.Transparent;
+    this.buttonWBSR.BackgroundImage = (Image) Resources.D1外部输出;
+    this.buttonWBSR.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonWBSR.FlatAppearance.BorderSize = 0;
+    this.buttonWBSR.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonWBSR.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonWBSR.FlatStyle = FlatStyle.Flat;
+    this.buttonWBSR.Location = new Point(349, 718);
+    this.buttonWBSR.Margin = new Padding(0);
+    this.buttonWBSR.Name = "buttonWBSR";
+    this.buttonWBSR.Size = new Size(93, 33);
+    this.buttonWBSR.TabIndex = 138;
+    this.buttonWBSR.UseVisualStyleBackColor = false;
+    this.buttonWBSR.Click += new EventHandler(this.buttonWBSR_Click);
+    this.button1.BackColor = Color.Transparent;
+    this.button1.BackgroundImage = (Image) Resources.D2灯光1;
+    this.button1.BackgroundImageLayout = ImageLayout.Stretch;
+    this.button1.FlatAppearance.BorderSize = 0;
+    this.button1.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.button1.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.button1.FlatStyle = FlatStyle.Flat;
+    this.button1.Location = new Point(630, 119);
+    this.button1.Margin = new Padding(0);
+    this.button1.Name = "button1";
+    this.button1.Size = new Size(93, 62);
+    this.button1.TabIndex = 139;
+    this.button1.UseVisualStyleBackColor = false;
+    this.button1.Click += new EventHandler(this.button1_Click);
+    this.button2.BackColor = Color.Transparent;
+    this.button2.BackgroundImage = (Image) Resources.D2灯光2a;
+    this.button2.BackgroundImageLayout = ImageLayout.Stretch;
+    this.button2.FlatAppearance.BorderSize = 0;
+    this.button2.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.button2.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.button2.FlatStyle = FlatStyle.Flat;
+    this.button2.Location = new Point(733, 119);
+    this.button2.Margin = new Padding(0);
+    this.button2.Name = "button2";
+    this.button2.Size = new Size(93, 62);
+    this.button2.TabIndex = 140;
+    this.button2.UseVisualStyleBackColor = false;
+    this.button2.Click += new EventHandler(this.button2_Click);
+    this.button3.BackColor = Color.Transparent;
+    this.button3.BackgroundImage = (Image) Resources.D2灯光3;
+    this.button3.BackgroundImageLayout = ImageLayout.Stretch;
+    this.button3.FlatAppearance.BorderSize = 0;
+    this.button3.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.button3.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.button3.FlatStyle = FlatStyle.Flat;
+    this.button3.Location = new Point(836, 119);
+    this.button3.Margin = new Padding(0);
+    this.button3.Name = "button3";
+    this.button3.Size = new Size(93, 62);
+    this.button3.TabIndex = 141;
+    this.button3.UseVisualStyleBackColor = false;
+    this.button3.Click += new EventHandler(this.button3_Click);
+    this.button4.BackColor = Color.Transparent;
+    this.button4.BackgroundImage = (Image) Resources.D2灯光4;
+    this.button4.BackgroundImageLayout = ImageLayout.Stretch;
+    this.button4.FlatAppearance.BorderSize = 0;
+    this.button4.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.button4.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.button4.FlatStyle = FlatStyle.Flat;
+    this.button4.Location = new Point(939, 119);
+    this.button4.Margin = new Padding(0);
+    this.button4.Name = "button4";
+    this.button4.Size = new Size(93, 62);
+    this.button4.TabIndex = 142;
+    this.button4.UseVisualStyleBackColor = false;
+    this.button4.Click += new EventHandler(this.button4_Click);
+    this.button5.BackColor = Color.Transparent;
+    this.button5.BackgroundImage = (Image) Resources.D2灯光5;
+    this.button5.BackgroundImageLayout = ImageLayout.Stretch;
+    this.button5.FlatAppearance.BorderSize = 0;
+    this.button5.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.button5.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.button5.FlatStyle = FlatStyle.Flat;
+    this.button5.Location = new Point(1042, 119);
+    this.button5.Margin = new Padding(0);
+    this.button5.Name = "button5";
+    this.button5.Size = new Size(93, 62);
+    this.button5.TabIndex = 143;
+    this.button5.UseVisualStyleBackColor = false;
+    this.button5.Click += new EventHandler(this.button5_Click);
+    this.button6.BackColor = Color.Transparent;
+    this.button6.BackgroundImage = (Image) Resources.D2灯光6;
+    this.button6.BackgroundImageLayout = ImageLayout.Stretch;
+    this.button6.FlatAppearance.BorderSize = 0;
+    this.button6.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.button6.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.button6.FlatStyle = FlatStyle.Flat;
+    this.button6.Location = new Point(1145, 119);
+    this.button6.Margin = new Padding(0);
+    this.button6.Name = "button6";
+    this.button6.Size = new Size(93, 62);
+    this.button6.TabIndex = 144 /*0x90*/;
+    this.button6.UseVisualStyleBackColor = false;
+    this.button6.Click += new EventHandler(this.button6_Click);
+    this.button7.BackColor = Color.Transparent;
+    this.button7.BackgroundImage = (Image) Resources.D2灯光7;
+    this.button7.BackgroundImageLayout = ImageLayout.Stretch;
+    this.button7.FlatAppearance.BorderSize = 0;
+    this.button7.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.button7.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.button7.FlatStyle = FlatStyle.Flat;
+    this.button7.Location = new Point(630, 191);
+    this.button7.Margin = new Padding(0);
+    this.button7.Name = "button7";
+    this.button7.Size = new Size(93, 62);
+    this.button7.TabIndex = 145;
+    this.button7.UseVisualStyleBackColor = false;
+    this.button7.Click += new EventHandler(this.button7_Click);
+    this.button8.BackColor = Color.Transparent;
+    this.button8.BackgroundImage = (Image) Resources.D2灯光8;
+    this.button8.BackgroundImageLayout = ImageLayout.Stretch;
+    this.button8.FlatAppearance.BorderSize = 0;
+    this.button8.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.button8.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.button8.FlatStyle = FlatStyle.Flat;
+    this.button8.Location = new Point(733, 191);
+    this.button8.Margin = new Padding(0);
+    this.button8.Name = "button8";
+    this.button8.Size = new Size(93, 62);
+    this.button8.TabIndex = 146;
+    this.button8.UseVisualStyleBackColor = false;
+    this.button8.Click += new EventHandler(this.button8_Click);
+    this.button9.BackColor = Color.Transparent;
+    this.button9.BackgroundImage = (Image) Resources.D2灯光9;
+    this.button9.BackgroundImageLayout = ImageLayout.Stretch;
+    this.button9.FlatAppearance.BorderSize = 0;
+    this.button9.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.button9.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.button9.FlatStyle = FlatStyle.Flat;
+    this.button9.Location = new Point(836, 191);
+    this.button9.Margin = new Padding(0);
+    this.button9.Name = "button9";
+    this.button9.Size = new Size(93, 62);
+    this.button9.TabIndex = 147;
+    this.button9.UseVisualStyleBackColor = false;
+    this.button9.Click += new EventHandler(this.button9_Click);
+    this.button10.BackColor = Color.Transparent;
+    this.button10.BackgroundImage = (Image) Resources.D2灯光10;
+    this.button10.BackgroundImageLayout = ImageLayout.Stretch;
+    this.button10.FlatAppearance.BorderSize = 0;
+    this.button10.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.button10.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.button10.FlatStyle = FlatStyle.Flat;
+    this.button10.Location = new Point(939, 191);
+    this.button10.Margin = new Padding(0);
+    this.button10.Name = "button10";
+    this.button10.Size = new Size(93, 62);
+    this.button10.TabIndex = 148;
+    this.button10.UseVisualStyleBackColor = false;
+    this.button10.Click += new EventHandler(this.button10_Click);
+    this.button11.BackColor = Color.Transparent;
+    this.button11.BackgroundImage = (Image) Resources.D2灯光11;
+    this.button11.BackgroundImageLayout = ImageLayout.Stretch;
+    this.button11.FlatAppearance.BorderSize = 0;
+    this.button11.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.button11.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.button11.FlatStyle = FlatStyle.Flat;
+    this.button11.Location = new Point(1042, 191);
+    this.button11.Margin = new Padding(0);
+    this.button11.Name = "button11";
+    this.button11.Size = new Size(93, 62);
+    this.button11.TabIndex = 149;
+    this.button11.UseVisualStyleBackColor = false;
+    this.button11.Click += new EventHandler(this.button11_Click);
+    this.button12.BackColor = Color.Transparent;
+    this.button12.BackgroundImage = (Image) Resources.D2灯光12;
+    this.button12.BackgroundImageLayout = ImageLayout.Stretch;
+    this.button12.FlatAppearance.BorderSize = 0;
+    this.button12.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.button12.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.button12.FlatStyle = FlatStyle.Flat;
+    this.button12.Location = new Point(1145, 191);
+    this.button12.Margin = new Padding(0);
+    this.button12.Name = "button12";
+    this.button12.Size = new Size(93, 62);
+    this.button12.TabIndex = 150;
+    this.button12.UseVisualStyleBackColor = false;
+    this.button12.Click += new EventHandler(this.button12_Click);
+    this.buttonDGX1.BackColor = Color.Transparent;
+    this.buttonDGX1.BackgroundImage = (Image) Resources.D3灯光秀1;
+    this.buttonDGX1.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonDGX1.FlatAppearance.BorderSize = 0;
+    this.buttonDGX1.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonDGX1.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonDGX1.FlatStyle = FlatStyle.Flat;
+    this.buttonDGX1.Location = new Point(630, 263);
+    this.buttonDGX1.Margin = new Padding(0);
+    this.buttonDGX1.Name = "buttonDGX1";
+    this.buttonDGX1.Size = new Size(198, 60);
+    this.buttonDGX1.TabIndex = 151;
+    this.buttonDGX1.UseVisualStyleBackColor = false;
+    this.buttonDGX1.Click += new EventHandler(this.buttonDGX1_Click);
+    this.buttonDGX2.BackColor = Color.Transparent;
+    this.buttonDGX2.BackgroundImage = (Image) Resources.D3灯光秀2;
+    this.buttonDGX2.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonDGX2.FlatAppearance.BorderSize = 0;
+    this.buttonDGX2.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonDGX2.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonDGX2.FlatStyle = FlatStyle.Flat;
+    this.buttonDGX2.Location = new Point(836, 263);
+    this.buttonDGX2.Margin = new Padding(0);
+    this.buttonDGX2.Name = "buttonDGX2";
+    this.buttonDGX2.Size = new Size(198, 60);
+    this.buttonDGX2.TabIndex = 152;
+    this.buttonDGX2.UseVisualStyleBackColor = false;
+    this.buttonDGX2.Click += new EventHandler(this.buttonDGX2_Click);
+    this.buttonDGX3.BackColor = Color.Transparent;
+    this.buttonDGX3.BackgroundImage = (Image) Resources.D3灯光秀3;
+    this.buttonDGX3.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonDGX3.FlatAppearance.BorderSize = 0;
+    this.buttonDGX3.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonDGX3.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonDGX3.FlatStyle = FlatStyle.Flat;
+    this.buttonDGX3.Location = new Point(1042, 263);
+    this.buttonDGX3.Margin = new Padding(0);
+    this.buttonDGX3.Name = "buttonDGX3";
+    this.buttonDGX3.Size = new Size(198, 60);
+    this.buttonDGX3.TabIndex = 153;
+    this.buttonDGX3.UseVisualStyleBackColor = false;
+    this.buttonDGX3.Click += new EventHandler(this.buttonDGX3_Click);
+    this.buttonTK0.BackColor = Color.Transparent;
+    this.buttonTK0.BackgroundImage = (Image) Resources.D1头盔1;
+    this.buttonTK0.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonTK0.FlatAppearance.BorderSize = 0;
+    this.buttonTK0.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonTK0.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonTK0.FlatStyle = FlatStyle.Flat;
+    this.buttonTK0.Location = new Point(201, 154);
+    this.buttonTK0.Margin = new Padding(0);
+    this.buttonTK0.Name = "buttonTK0";
+    this.buttonTK0.Size = new Size(28, 541);
+    this.buttonTK0.TabIndex = 154;
+    this.buttonTK0.UseVisualStyleBackColor = false;
+    this.buttonTK0.Click += new EventHandler(this.buttonTK0_Click);
+    this.buttonTK1.BackColor = Color.Transparent;
+    this.buttonTK1.BackgroundImage = (Image) Resources.D1头盔2;
+    this.buttonTK1.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonTK1.FlatAppearance.BorderSize = 0;
+    this.buttonTK1.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonTK1.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonTK1.FlatStyle = FlatStyle.Flat;
+    this.buttonTK1.Location = new Point(256 /*0x0100*/, 157);
+    this.buttonTK1.Margin = new Padding(0);
+    this.buttonTK1.Name = "buttonTK1";
+    this.buttonTK1.Size = new Size(28, 541);
+    this.buttonTK1.TabIndex = 155;
+    this.buttonTK1.UseVisualStyleBackColor = false;
+    this.buttonTK1.Click += new EventHandler(this.buttonTK1_Click);
+    this.buttonTK2.BackColor = Color.Transparent;
+    this.buttonTK2.BackgroundImage = (Image) Resources.D1头盔3;
+    this.buttonTK2.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonTK2.FlatAppearance.BorderSize = 0;
+    this.buttonTK2.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonTK2.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonTK2.FlatStyle = FlatStyle.Flat;
+    this.buttonTK2.Location = new Point(311, 150);
+    this.buttonTK2.Margin = new Padding(0);
+    this.buttonTK2.Name = "buttonTK2";
+    this.buttonTK2.Size = new Size(29, 492);
+    this.buttonTK2.TabIndex = 156;
+    this.buttonTK2.UseVisualStyleBackColor = false;
+    this.buttonTK2.Click += new EventHandler(this.buttonTK2_Click);
+    this.buttonTK3.BackColor = Color.Transparent;
+    this.buttonTK3.BackgroundImage = (Image) Resources.D1头盔2;
+    this.buttonTK3.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonTK3.FlatAppearance.BorderSize = 0;
+    this.buttonTK3.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonTK3.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonTK3.FlatStyle = FlatStyle.Flat;
+    this.buttonTK3.Location = new Point(367, 157);
+    this.buttonTK3.Margin = new Padding(0);
+    this.buttonTK3.Name = "buttonTK3";
+    this.buttonTK3.Size = new Size(28, 541);
+    this.buttonTK3.TabIndex = 157;
+    this.buttonTK3.UseVisualStyleBackColor = false;
+    this.buttonTK3.Click += new EventHandler(this.buttonTK3_Click);
+    this.buttonTK4.BackColor = Color.Transparent;
+    this.buttonTK4.BackgroundImage = (Image) Resources.D1头盔1;
+    this.buttonTK4.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonTK4.FlatAppearance.BorderSize = 0;
+    this.buttonTK4.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonTK4.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonTK4.FlatStyle = FlatStyle.Flat;
+    this.buttonTK4.Location = new Point(423, 154);
+    this.buttonTK4.Margin = new Padding(0);
+    this.buttonTK4.Name = "buttonTK4";
+    this.buttonTK4.Size = new Size(28, 541);
+    this.buttonTK4.TabIndex = 158;
+    this.buttonTK4.UseVisualStyleBackColor = false;
+    this.buttonTK4.Click += new EventHandler(this.buttonTK4_Click);
+    this.buttonKJMS.BackColor = Color.Transparent;
+    this.buttonKJMS.BackgroundImage = (Image) Resources.D4开机a;
+    this.buttonKJMS.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonKJMS.FlatAppearance.BorderSize = 0;
+    this.buttonKJMS.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonKJMS.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonKJMS.FlatStyle = FlatStyle.Flat;
+    this.buttonKJMS.Location = new Point(641, 696);
+    this.buttonKJMS.Margin = new Padding(0);
+    this.buttonKJMS.Name = "buttonKJMS";
+    this.buttonKJMS.Size = new Size(112 /*0x70*/, 50);
+    this.buttonKJMS.TabIndex = 159;
+    this.buttonKJMS.UseVisualStyleBackColor = false;
+    this.buttonKJMS.Click += new EventHandler(this.buttonKJMS_Click);
+    this.buttonKJMS.MouseDown += new MouseEventHandler(this.SaveButtonMouseDown);
+    this.buttonKJMS.MouseMove += new MouseEventHandler(this.SaveButtonMouseMove);
+    this.buttonKJMS.MouseUp += new MouseEventHandler(this.SaveButtonMouseUp);
+    this.buttonMS1.BackColor = Color.Transparent;
+    this.buttonMS1.BackgroundImage = (Image) Resources.D4模式1a;
+    this.buttonMS1.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonMS1.FlatAppearance.BorderSize = 0;
+    this.buttonMS1.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonMS1.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonMS1.FlatStyle = FlatStyle.Flat;
+    this.buttonMS1.Location = new Point(760, 696);
+    this.buttonMS1.Margin = new Padding(0);
+    this.buttonMS1.Name = "buttonMS1";
+    this.buttonMS1.Size = new Size(112 /*0x70*/, 50);
+    this.buttonMS1.TabIndex = 160 /*0xA0*/;
+    this.buttonMS1.UseVisualStyleBackColor = false;
+    this.buttonMS1.Click += new EventHandler(this.buttonMS1_Click);
+    this.buttonMS1.MouseDown += new MouseEventHandler(this.SaveButtonMouseDown);
+    this.buttonMS1.MouseMove += new MouseEventHandler(this.SaveButtonMouseMove);
+    this.buttonMS1.MouseUp += new MouseEventHandler(this.SaveButtonMouseUp);
+    this.buttonMS2.BackColor = Color.Transparent;
+    this.buttonMS2.BackgroundImage = (Image) Resources.D4模式2;
+    this.buttonMS2.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonMS2.FlatAppearance.BorderSize = 0;
+    this.buttonMS2.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonMS2.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonMS2.FlatStyle = FlatStyle.Flat;
+    this.buttonMS2.Location = new Point(879, 696);
+    this.buttonMS2.Margin = new Padding(0);
+    this.buttonMS2.Name = "buttonMS2";
+    this.buttonMS2.Size = new Size(112 /*0x70*/, 50);
+    this.buttonMS2.TabIndex = 161;
+    this.buttonMS2.UseVisualStyleBackColor = false;
+    this.buttonMS2.Click += new EventHandler(this.buttonMS2_Click);
+    this.buttonMS2.MouseDown += new MouseEventHandler(this.SaveButtonMouseDown);
+    this.buttonMS2.MouseMove += new MouseEventHandler(this.SaveButtonMouseMove);
+    this.buttonMS2.MouseUp += new MouseEventHandler(this.SaveButtonMouseUp);
+    this.buttonMS3.BackColor = Color.Transparent;
+    this.buttonMS3.BackgroundImage = (Image) Resources.D4模式3;
+    this.buttonMS3.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonMS3.FlatAppearance.BorderSize = 0;
+    this.buttonMS3.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonMS3.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonMS3.FlatStyle = FlatStyle.Flat;
+    this.buttonMS3.Location = new Point(997, 696);
+    this.buttonMS3.Margin = new Padding(0);
+    this.buttonMS3.Name = "buttonMS3";
+    this.buttonMS3.Size = new Size(112 /*0x70*/, 50);
+    this.buttonMS3.TabIndex = 162;
+    this.buttonMS3.UseVisualStyleBackColor = false;
+    this.buttonMS3.Click += new EventHandler(this.buttonMS3_Click);
+    this.buttonMS3.MouseDown += new MouseEventHandler(this.SaveButtonMouseDown);
+    this.buttonMS3.MouseMove += new MouseEventHandler(this.SaveButtonMouseMove);
+    this.buttonMS3.MouseUp += new MouseEventHandler(this.SaveButtonMouseUp);
+    this.buttonMS4.BackColor = Color.Transparent;
+    this.buttonMS4.BackgroundImage = (Image) Resources.D4模式4;
+    this.buttonMS4.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonMS4.FlatAppearance.BorderSize = 0;
+    this.buttonMS4.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonMS4.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonMS4.FlatStyle = FlatStyle.Flat;
+    this.buttonMS4.Location = new Point(1116, 696);
+    this.buttonMS4.Margin = new Padding(0);
+    this.buttonMS4.Name = "buttonMS4";
+    this.buttonMS4.Size = new Size(112 /*0x70*/, 50);
+    this.buttonMS4.TabIndex = 163;
+    this.buttonMS4.UseVisualStyleBackColor = false;
+    this.buttonMS4.Click += new EventHandler(this.buttonMS4_Click);
+    this.buttonMS4.MouseDown += new MouseEventHandler(this.SaveButtonMouseDown);
+    this.buttonMS4.MouseMove += new MouseEventHandler(this.SaveButtonMouseMove);
+    this.buttonMS4.MouseUp += new MouseEventHandler(this.SaveButtonMouseUp);
+    this.buttonC1.BackColor = Color.Transparent;
+    this.buttonC1.BackgroundImage = (Image) Resources.D3红;
+    this.buttonC1.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonC1.FlatAppearance.BorderSize = 0;
+    this.buttonC1.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonC1.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonC1.FlatStyle = FlatStyle.Flat;
+    this.buttonC1.Location = new Point(941, 484);
+    this.buttonC1.Margin = new Padding(0);
+    this.buttonC1.Name = "buttonC1";
+    this.buttonC1.Size = new Size(24, 24);
+    this.buttonC1.TabIndex = 164;
+    this.buttonC1.UseVisualStyleBackColor = false;
+    this.buttonC1.Click += new EventHandler(this.buttonC1_Click);
+    this.buttonC2.BackColor = Color.Transparent;
+    this.buttonC2.BackgroundImage = (Image) Resources.D3橙;
+    this.buttonC2.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonC2.FlatAppearance.BorderSize = 0;
+    this.buttonC2.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonC2.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonC2.FlatStyle = FlatStyle.Flat;
+    this.buttonC2.Location = new Point(975, 484);
+    this.buttonC2.Margin = new Padding(0);
+    this.buttonC2.Name = "buttonC2";
+    this.buttonC2.Size = new Size(24, 24);
+    this.buttonC2.TabIndex = 165;
+    this.buttonC2.UseVisualStyleBackColor = false;
+    this.buttonC2.Click += new EventHandler(this.buttonC2_Click);
+    this.buttonC3.BackColor = Color.Transparent;
+    this.buttonC3.BackgroundImage = (Image) Resources.D3黄;
+    this.buttonC3.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonC3.FlatAppearance.BorderSize = 0;
+    this.buttonC3.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonC3.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonC3.FlatStyle = FlatStyle.Flat;
+    this.buttonC3.Location = new Point(1010, 484);
+    this.buttonC3.Margin = new Padding(0);
+    this.buttonC3.Name = "buttonC3";
+    this.buttonC3.Size = new Size(24, 24);
+    this.buttonC3.TabIndex = 166;
+    this.buttonC3.UseVisualStyleBackColor = false;
+    this.buttonC3.Click += new EventHandler(this.buttonC3_Click);
+    this.buttonC4.BackColor = Color.Transparent;
+    this.buttonC4.BackgroundImage = (Image) Resources.D3绿;
+    this.buttonC4.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonC4.FlatAppearance.BorderSize = 0;
+    this.buttonC4.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonC4.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonC4.FlatStyle = FlatStyle.Flat;
+    this.buttonC4.Location = new Point(1044, 484);
+    this.buttonC4.Margin = new Padding(0);
+    this.buttonC4.Name = "buttonC4";
+    this.buttonC4.Size = new Size(24, 24);
+    this.buttonC4.TabIndex = 167;
+    this.buttonC4.UseVisualStyleBackColor = false;
+    this.buttonC4.Click += new EventHandler(this.buttonC4_Click);
+    this.buttonC5.BackColor = Color.Transparent;
+    this.buttonC5.BackgroundImage = (Image) Resources.D3湖;
+    this.buttonC5.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonC5.FlatAppearance.BorderSize = 0;
+    this.buttonC5.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonC5.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonC5.FlatStyle = FlatStyle.Flat;
+    this.buttonC5.Location = new Point(1079, 484);
+    this.buttonC5.Margin = new Padding(0);
+    this.buttonC5.Name = "buttonC5";
+    this.buttonC5.Size = new Size(24, 24);
+    this.buttonC5.TabIndex = 168;
+    this.buttonC5.UseVisualStyleBackColor = false;
+    this.buttonC5.Click += new EventHandler(this.buttonC5_Click);
+    this.buttonC6.BackColor = Color.Transparent;
+    this.buttonC6.BackgroundImage = (Image) Resources.D3蓝;
+    this.buttonC6.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonC6.FlatAppearance.BorderSize = 0;
+    this.buttonC6.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonC6.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonC6.FlatStyle = FlatStyle.Flat;
+    this.buttonC6.Location = new Point(1113, 484);
+    this.buttonC6.Margin = new Padding(0);
+    this.buttonC6.Name = "buttonC6";
+    this.buttonC6.Size = new Size(24, 24);
+    this.buttonC6.TabIndex = 169;
+    this.buttonC6.UseVisualStyleBackColor = false;
+    this.buttonC6.Click += new EventHandler(this.buttonC6_Click);
+    this.buttonC7.BackColor = Color.Transparent;
+    this.buttonC7.BackgroundImage = (Image) Resources.D3紫;
+    this.buttonC7.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonC7.FlatAppearance.BorderSize = 0;
+    this.buttonC7.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonC7.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonC7.FlatStyle = FlatStyle.Flat;
+    this.buttonC7.Location = new Point(1148, 484);
+    this.buttonC7.Margin = new Padding(0);
+    this.buttonC7.Name = "buttonC7";
+    this.buttonC7.Size = new Size(24, 24);
+    this.buttonC7.TabIndex = 170;
+    this.buttonC7.UseVisualStyleBackColor = false;
+    this.buttonC7.Click += new EventHandler(this.buttonC7_Click);
+    this.buttonC8.BackColor = Color.Transparent;
+    this.buttonC8.BackgroundImage = (Image) Resources.D3白;
+    this.buttonC8.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonC8.FlatAppearance.BorderSize = 0;
+    this.buttonC8.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonC8.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonC8.FlatStyle = FlatStyle.Flat;
+    this.buttonC8.Location = new Point(1182, 484);
+    this.buttonC8.Margin = new Padding(0);
+    this.buttonC8.Name = "buttonC8";
+    this.buttonC8.Size = new Size(24, 24);
+    this.buttonC8.TabIndex = 171;
+    this.buttonC8.UseVisualStyleBackColor = false;
+    this.buttonC8.Click += new EventHandler(this.buttonC8_Click);
+    this.label1.BackColor = Color.Transparent;
+    this.label1.Font = new Font("微软雅黑", 10.5f, FontStyle.Regular, GraphicsUnit.Point, (byte) 134);
+    this.label1.ForeColor = Color.Orange;
+    this.label1.Location = new Point(538, 26);
+    this.label1.Name = "label1";
+    this.label1.Size = new Size(119, 37);
+    this.label1.TabIndex = 172;
+    this.label1.Text = "保存模式成功";
+    this.label1.TextAlign = ContentAlignment.MiddleCenter;
+    this.label1.Visible = false;
+    this.labelB.BackColor = Color.Transparent;
+    this.labelB.FlatStyle = FlatStyle.Flat;
+    this.labelB.Font = new Font("微软雅黑", 12f, FontStyle.Regular, GraphicsUnit.Point, (byte) 134);
+    this.labelB.ForeColor = Color.White;
+    this.labelB.Location = new Point(963, 430);
+    this.labelB.Margin = new Padding(0);
+    this.labelB.Name = "labelB";
+    this.labelB.Size = new Size(47, 24);
+    this.labelB.TabIndex = 179;
+    this.labelB.Text = "0";
+    this.labelB.TextAlign = ContentAlignment.MiddleLeft;
+    this.labelG.BackColor = Color.Transparent;
+    this.labelG.FlatStyle = FlatStyle.Flat;
+    this.labelG.Font = new Font("微软雅黑", 12f, FontStyle.Regular, GraphicsUnit.Point, (byte) 134);
+    this.labelG.ForeColor = Color.White;
+    this.labelG.Location = new Point(963, 400);
+    this.labelG.Margin = new Padding(0);
+    this.labelG.Name = "labelG";
+    this.labelG.Size = new Size(47, 24);
+    this.labelG.TabIndex = 178;
+    this.labelG.Text = "0";
+    this.labelG.TextAlign = ContentAlignment.MiddleLeft;
+    this.labelR.BackColor = Color.Transparent;
+    this.labelR.FlatStyle = FlatStyle.Flat;
+    this.labelR.Font = new Font("微软雅黑", 12f, FontStyle.Regular, GraphicsUnit.Point, (byte) 134);
+    this.labelR.ForeColor = Color.White;
+    this.labelR.Location = new Point(963, 370);
+    this.labelR.Margin = new Padding(0);
+    this.labelR.Name = "labelR";
+    this.labelR.Size = new Size(47, 24);
+    this.labelR.TabIndex = 177;
+    this.labelR.Text = "255";
+    this.labelR.TextAlign = ContentAlignment.MiddleLeft;
+    this.ucColorA1.BackColor = Color.Transparent;
+    this.ucColorA1.BackgroundImage = (Image) Resources.D3旋钮;
+    this.ucColorA1.BackgroundImageLayout = ImageLayout.Center;
+    this.ucColorA1.Location = new Point(658, 374);
+    this.ucColorA1.Margin = new Padding(0);
+    this.ucColorA1.Name = "ucColorA1";
+    this.ucColorA1.Size = new Size(216, 216);
+    this.ucColorA1.TabIndex = 180;
+    this.ucScrollA.BackColor = Color.Transparent;
+    this.ucScrollA.BackgroundImageLayout = ImageLayout.None;
+    this.ucScrollA.Location = new Point(1016, 577);
+    this.ucScrollA.Margin = new Padding(0);
+    this.ucScrollA.Name = "ucScrollA";
+    this.ucScrollA.Size = new Size(190, 20);
+    this.ucScrollA.TabIndex = 176 /*0xB0*/;
+    this.ucScrollAB.BackColor = Color.Transparent;
+    this.ucScrollAB.BackgroundImageLayout = ImageLayout.None;
+    this.ucScrollAB.Location = new Point(1016, 432);
+    this.ucScrollAB.Margin = new Padding(0);
+    this.ucScrollAB.Name = "ucScrollAB";
+    this.ucScrollAB.Size = new Size(190, 20);
+    this.ucScrollAB.TabIndex = 175;
+    this.ucScrollAG.BackColor = Color.Transparent;
+    this.ucScrollAG.BackgroundImageLayout = ImageLayout.None;
+    this.ucScrollAG.Location = new Point(1016, 403);
+    this.ucScrollAG.Margin = new Padding(0);
+    this.ucScrollAG.Name = "ucScrollAG";
+    this.ucScrollAG.Size = new Size(190, 20);
+    this.ucScrollAG.TabIndex = 174;
+    this.ucScrollAR.BackColor = Color.Transparent;
+    this.ucScrollAR.BackgroundImageLayout = ImageLayout.None;
+    this.ucScrollAR.Location = new Point(1016, 373);
+    this.ucScrollAR.Margin = new Padding(0);
+    this.ucScrollAR.Name = "ucScrollAR";
+    this.ucScrollAR.Size = new Size(190, 20);
+    this.ucScrollAR.TabIndex = 173;
+    this.AutoScaleMode = AutoScaleMode.Inherit;
+    this.BackColor = Color.White;
+    this.BackgroundImage = (Image) Resources.D0KVMA灯控;
+    this.BackgroundImageLayout = ImageLayout.None;
+    this.ClientSize = new Size(1274, 800);
+    this.Controls.Add((Control) this.ucColorA1);
+    this.Controls.Add((Control) this.labelB);
+    this.Controls.Add((Control) this.labelG);
+    this.Controls.Add((Control) this.labelR);
+    this.Controls.Add((Control) this.ucScrollA);
+    this.Controls.Add((Control) this.ucScrollAB);
+    this.Controls.Add((Control) this.ucScrollAG);
+    this.Controls.Add((Control) this.ucScrollAR);
+    this.Controls.Add((Control) this.label1);
+    this.Controls.Add((Control) this.buttonC8);
+    this.Controls.Add((Control) this.buttonC7);
+    this.Controls.Add((Control) this.buttonC6);
+    this.Controls.Add((Control) this.buttonC5);
+    this.Controls.Add((Control) this.buttonC4);
+    this.Controls.Add((Control) this.buttonC3);
+    this.Controls.Add((Control) this.buttonC2);
+    this.Controls.Add((Control) this.buttonC1);
+    this.Controls.Add((Control) this.buttonMS4);
+    this.Controls.Add((Control) this.buttonMS3);
+    this.Controls.Add((Control) this.buttonMS2);
+    this.Controls.Add((Control) this.buttonMS1);
+    this.Controls.Add((Control) this.buttonKJMS);
+    this.Controls.Add((Control) this.buttonTK4);
+    this.Controls.Add((Control) this.buttonTK3);
+    this.Controls.Add((Control) this.buttonTK2);
+    this.Controls.Add((Control) this.buttonTK1);
+    this.Controls.Add((Control) this.buttonTK0);
+    this.Controls.Add((Control) this.buttonDGX3);
+    this.Controls.Add((Control) this.buttonDGX2);
+    this.Controls.Add((Control) this.buttonDGX1);
+    this.Controls.Add((Control) this.button12);
+    this.Controls.Add((Control) this.button11);
+    this.Controls.Add((Control) this.button10);
+    this.Controls.Add((Control) this.button9);
+    this.Controls.Add((Control) this.button8);
+    this.Controls.Add((Control) this.button7);
+    this.Controls.Add((Control) this.button6);
+    this.Controls.Add((Control) this.button5);
+    this.Controls.Add((Control) this.button4);
+    this.Controls.Add((Control) this.button3);
+    this.Controls.Add((Control) this.button2);
+    this.Controls.Add((Control) this.button1);
+    this.Controls.Add((Control) this.buttonWBSR);
+    this.Controls.Add((Control) this.buttonDGJH);
+    this.Controls.Add((Control) this.buttonPower);
+    this.DoubleBuffered = true;
+    this.FormBorderStyle = FormBorderStyle.None;
+    this.Icon = (Icon) componentResourceManager.GetObject("$this.Icon");
+    this.Location = new Point(180, 0);
+    this.MaximizeBox = false;
+    this.MinimizeBox = false;
+    this.Name = nameof (FormKVMALED6);
+    this.Text = nameof (FormKVMALED6);
+    this.MouseDown += new MouseEventHandler(this.FormKVMALED6_MouseDown);
+    this.MouseMove += new MouseEventHandler(this.FormKVMALED6_MouseMove);
+    this.MouseUp += new MouseEventHandler(this.FormKVMALED6_MouseUp);
+    this.ResumeLayout(false);
+  }
+
+  public delegate void delegateFormKVMALED6(int cmd, object info = null, object data = null, object form = null);
+}

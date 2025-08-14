@@ -1,0 +1,6762 @@
+﻿// Decompiled with JetBrains decompiler
+// Type: TRCC.CZTV.FormCZTV
+// Assembly: TRCC, Version=2.0.4.0, Culture=neutral, PublicKeyToken=null
+// MVID: CB0A5FF9-0AB9-4D2F-A637-515F7C378183
+// Assembly location: C:\Program Files (x86)\TRCCCAPEN\TRCC.exe
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Windows.Forms;
+using TRCC.DCUserControl;
+using TRCC.Properties;
+
+#nullable disable
+namespace TRCC.CZTV;
+
+public class FormCZTV : Form
+{
+  public FormCZTV.delegateFormCZTV delegateForm;
+  public int myDeviceMode = 1;
+  public int myDeviceCount = 0;
+  public int myDeviceJpgYSL = 95;
+  public int myTempDeviceJpgYSL = 95;
+  public int myDevicePingMu = 1;
+  private int myDeviceSPIMode = 1;
+  private int myDevicePingMuCount = 0;
+  private const int GIF_DELAYS_ARRAY_VAL = 20736;
+  private int GIFSizeW = 240 /*0xF0*/;
+  private int GIFSizeH = 320;
+  private int directionB = 0;
+  private const byte GifDownload = 1;
+  private const byte GifNotDownload = 0;
+  private const byte SysModeImage = 0;
+  private const byte SysModeScreenshot = 16 /*0x10*/;
+  private const byte SysModeQuhua = 32 /*0x20*/;
+  private const byte SysModeVideo = 48 /*0x30*/;
+  private const string GifDirectory0 = "Data\\USBLCD\\Theme";
+  private const string GifDirectoryWeb240240 = "\\Data\\USBLCD\\Web\\240240\\";
+  private const string GifDirectoryWeb240320 = "\\Data\\USBLCD\\Web\\240320\\";
+  private const string GifDirectoryWeb320240 = "\\Data\\USBLCD\\Web\\320240\\";
+  private const string GifDirectoryWeb480640 = "\\Data\\USBLCD\\Web\\480640\\";
+  private const string GifDirectoryWeb640480 = "\\Data\\USBLCD\\Web\\640480\\";
+  private const string GifDirectoryWeb320320 = "\\Data\\USBLCD\\Web\\320320\\";
+  private const string GifDirectoryWeb480480 = "\\Data\\USBLCD\\Web\\480480\\";
+  private const string GifDirectoryWeb1600720 = "\\Data\\USBLCD\\Web\\1600720\\";
+  private const string GifDirectoryWeb7201600 = "\\Data\\USBLCD\\Web\\7201600\\";
+  private const string GifDirectoryWeb1280480 = "\\Data\\USBLCD\\Web\\1280480\\";
+  private const string GifDirectoryWeb4801280 = "\\Data\\USBLCD\\Web\\4801280\\";
+  private const string GifDirectoryWeb1920462 = "\\Data\\USBLCD\\Web\\1920462\\";
+  private const string GifDirectoryWeb4621920 = "\\Data\\USBLCD\\Web\\4621920\\";
+  private const string GifDirectoryWeb360360 = "\\Data\\USBLCD\\Web\\360360\\";
+  private const string GifDirectoryWeb800480 = "\\Data\\USBLCD\\Web\\800480\\";
+  private const string GifDirectoryWeb480800 = "\\Data\\USBLCD\\Web\\480800\\";
+  private const string GifDirectoryWeb854480 = "\\Data\\USBLCD\\Web\\854480\\";
+  private const string GifDirectoryWeb480854 = "\\Data\\USBLCD\\Web\\480854\\";
+  private const string GifDirectoryWeb960540 = "\\Data\\USBLCD\\Web\\960540\\";
+  private const string GifDirectoryWeb540960 = "\\Data\\USBLCD\\Web\\540960\\";
+  private const string GifDirectoryWeb960320 = "\\Data\\USBLCD\\Web\\960320\\";
+  private const string GifDirectoryWeb320960 = "\\Data\\USBLCD\\Web\\320960\\";
+  private const string GifWebDir240240 = "http://www.czhorde.com/tr/bj240240/";
+  private const string GifWebDir240320 = "http://www.czhorde.com/tr/bj240320/";
+  private const string GifWebDir320240 = "http://www.czhorde.com/tr/bj320240/";
+  private const string GifWebDir480640 = "http://www.czhorde.com/tr/bj480640/";
+  private const string GifWebDir640480 = "http://www.czhorde.com/tr/bj640480/";
+  private const string GifWebDir320320 = "http://www.czhorde.com/tr/bj320320/";
+  private const string GifWebDir480480 = "http://www.czhorde.com/tr/bj480480/";
+  private const string GifWebDir1600720 = "http://www.czhorde.com/tr/bj1600720/";
+  private const string GifWebDir7201600 = "http://www.czhorde.com/tr/bj7201600/";
+  private const string GifWebDir1280480 = "http://www.czhorde.com/tr/bj1280480/";
+  private const string GifWebDir4801280 = "http://www.czhorde.com/tr/bj4801280/";
+  private const string GifWebDir1920462 = "http://www.czhorde.com/tr/bj1920462/";
+  private const string GifWebDir4621920 = "http://www.czhorde.com/tr/bj4621920/";
+  private const string GifWebDir800480 = "http://www.czhorde.com/tr/bj800480/";
+  private const string GifWebDir480800 = "http://www.czhorde.com/tr/bj480800/";
+  private const string GifWebDir854480 = "http://www.czhorde.com/tr/bj854480/";
+  private const string GifWebDir480854 = "http://www.czhorde.com/tr/bj480854/";
+  private const string GifWebDir960540 = "http://www.czhorde.com/tr/bj960540/";
+  private const string GifWebDir540960 = "http://www.czhorde.com/tr/bj540960/";
+  private const string GifWebDir360360 = "http://www.czhorde.com/tr/bj360360/";
+  private const string GifWebDir960320 = "http://www.czhorde.com/tr/bj960320/";
+  private const string GifWebDir320960 = "http://www.czhorde.com/tr/bj320960/";
+  private const string GifWebDirEn = "www.czhorde.cc";
+  private const string GifWebDirCn = "www.czhorde.com";
+  private const string GifDirectoryWebMB240240 = "\\Data\\USBLCD\\Web\\zt240240\\";
+  private const string GifDirectoryWebMB240320 = "\\Data\\USBLCD\\Web\\zt240320\\";
+  private const string GifDirectoryWebMB320240 = "\\Data\\USBLCD\\Web\\zt320240\\";
+  private const string GifDirectoryWebMB480640 = "\\Data\\USBLCD\\Web\\zt480640\\";
+  private const string GifDirectoryWebMB640480 = "\\Data\\USBLCD\\Web\\zt640480\\";
+  private const string GifDirectoryWebMB320320 = "\\Data\\USBLCD\\Web\\zt320320\\";
+  private const string GifDirectoryWebMB480480 = "\\Data\\USBLCD\\Web\\zt480480\\";
+  private const string GifDirectoryWebMB480480Y = "\\Data\\USBLCD\\Web\\zt480480y\\";
+  private const string GifDirectoryWebMB1600720 = "\\Data\\USBLCD\\Web\\zt1600720\\";
+  private const string GifDirectoryWebMB7201600 = "\\Data\\USBLCD\\Web\\zt7201600\\";
+  private const string GifDirectoryWebMB1280480 = "\\Data\\USBLCD\\Web\\zt1280480\\";
+  private const string GifDirectoryWebMB4801280 = "\\Data\\USBLCD\\Web\\zt4801280\\";
+  private const string GifDirectoryWebMB1920462 = "\\Data\\USBLCD\\Web\\zt1920462\\";
+  private const string GifDirectoryWebMB4621920 = "\\Data\\USBLCD\\Web\\zt4621920\\";
+  private const string GifDirectoryWebMB800480 = "\\Data\\USBLCD\\Web\\zt800480\\";
+  private const string GifDirectoryWebMB480800 = "\\Data\\USBLCD\\Web\\zt480800\\";
+  private const string GifDirectoryWebMB854480 = "\\Data\\USBLCD\\Web\\zt854480\\";
+  private const string GifDirectoryWebMB480854 = "\\Data\\USBLCD\\Web\\zt480854\\";
+  private const string GifDirectoryWebMB960540 = "\\Data\\USBLCD\\Web\\zt960540\\";
+  private const string GifDirectoryWebMB540960 = "\\Data\\USBLCD\\Web\\zt540960\\";
+  private const string GifDirectoryWebMB360360 = "\\Data\\USBLCD\\Web\\zt360360\\";
+  private const string GifDirectoryWebMB960320 = "\\Data\\USBLCD\\Web\\zt960320\\";
+  private const string GifDirectoryWebMB320960 = "\\Data\\USBLCD\\Web\\zt320960\\";
+  private string GifDirectory = "";
+  private bool isGifMode = false;
+  private bool isToTimer = true;
+  private bool isToTimerJP = true;
+  private ArrayList imageArray = (ArrayList) null;
+  private Bitmap imagePicture = (Bitmap) null;
+  private Bitmap gifPicture = (Bitmap) null;
+  private int[] gifDelays;
+  private int gifCount = 0;
+  private const int MyUIMode_BeiJing = 1;
+  private const int MyUIMode_TouPing = 2;
+  private const int MyUIMode_Quhua = 3;
+  private const int MyUIMode_ShiPing = 4;
+  private int myModeUC = 1;
+  private int myUIMode = 1;
+  private int myUISubMode = 0;
+  private int myThemeT = 1;
+  private int myTheme = 1;
+  private int myMode = 0;
+  private bool myBjxs = true;
+  private bool myTpxs = true;
+  private bool mySdbl = true;
+  private bool myYcbk = true;
+  private bool mySpxs = false;
+  private bool myMbxs = true;
+  private bool myXtxx = true;
+  private int JpX = 0;
+  private int JpY = 0;
+  private int JpW = 240 /*0xF0*/;
+  private int JpH = 320;
+  private int TPXSCount = 0;
+  private int ImageCount = 0;
+  private int InfoCount = 0;
+  private int ImageVal = 3;
+  private int VideoCount = 0;
+  private const byte USB_PACKED_Head = 220;
+  private const byte USB_PACKED_Head_NEW = 221;
+  private const string fileName = "Theme.zt";
+  private const string fileName1 = "config1.dc";
+  private const string fileName2 = "Theme.png";
+  private const string fileTheme0 = "Data\\USBLCD\\Theme";
+  private const string fileThemeColor = "Color.dc";
+  private const string fileThemeCount = "Theme.dc";
+  private string fileThemeVal = "";
+  private string fileThemeDir = "";
+  private ArrayList themeArray;
+  public FormScreenshot formJP = (FormScreenshot) null;
+  public FormGetColor formGetColor = (FormGetColor) null;
+  private double sfblJP = 1.0;
+  public bool is480x480 = false;
+  public bool is320x320 = false;
+  public bool is240x240 = false;
+  public bool is360x360 = false;
+  public bool is640x480 = false;
+  public bool is1600x720 = false;
+  public bool is1280x480 = false;
+  public bool is1920x462 = false;
+  public bool is800x480 = false;
+  public bool is854x480 = false;
+  public bool is960x540 = false;
+  public bool is960x320 = false;
+  private const string ThemeML240240 = "240240\\";
+  private const string ThemeML240320 = "240320\\";
+  private const string ThemeML320240 = "320240\\";
+  private const string ThemeML320320 = "320320\\";
+  private const string ThemeML360360 = "360360\\";
+  private const string ThemeML480480 = "480480\\";
+  private const string ThemeML640480 = "640480\\";
+  private const string ThemeML1280480 = "1280480\\";
+  private const string ThemeML1600720 = "1600720\\";
+  private const string ThemeML1920462 = "1920462\\";
+  private const string ThemeML854480 = "854480\\";
+  private const string ThemeML960540 = "960540\\";
+  private const string ThemeML800480 = "800480\\";
+  private const string ThemeML480800 = "480800\\";
+  private const string ThemeML480854 = "480854\\";
+  private const string ThemeML540960 = "540960\\";
+  private const string ThemeML960320 = "960320\\";
+  private const string ThemeML320960 = "320960\\";
+  private string ThemeML = "240320\\";
+  private int nowThemeLocal = 0;
+  public bool isBiliPingmu = false;
+  public FormScreenImage formScreenImage = (FormScreenImage) null;
+  private int testInt = 0;
+  private bool isFanLcd = false;
+  private bool isLunboInit = false;
+  private int myLunboCountSub = 0;
+  private int myLunboCount = 0;
+  private int myLunboCountN = 0;
+  private const int SanPingTimer = 14;
+  private int shanPingCount = -1;
+  private int shanPingTimer = 0;
+  private int myLddVal = 2;
+  private int myLddValSub = 0;
+  private IContainer components = (IContainer) null;
+  private Button buttonPower;
+  private UCComboBoxA ucComboBoxA1;
+  private UCComboBoxA ucComboBoxA2;
+  private UCComboBoxA ucComboBoxA3;
+  private TextBox textBoxCMM;
+  private Button buttonBCZT;
+  private Button buttonDaoChu;
+  private Button buttonDaoRu;
+  private Button buttonBDZT;
+  private Button buttonYDZT;
+  private Button buttonZTSZ;
+  private UCThemeSetting ucThemeSetting1;
+  private UCScreenImageBK ucScreenImageBK1;
+  private UCImageCut ucImageCut1;
+  private Button buttonDWXS;
+  private UCThemeLocal ucThemeLocal1;
+  private UCThemeWeb ucThemeWeb1;
+  private Label labelZXCG;
+  private Button buttonHelp;
+  private Button buttonYDMB;
+  private UCThemeMask ucThemeMask1;
+  private UCVideoCut ucVideoCut1;
+  private UCBoFangQiKongZhi ucBoFangQiKongZhi1;
+  private Button buttonLDD;
+
+  [DllImport("gdi32.dll", SetLastError = true)]
+  public static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
+
+  private double GetScreenScalingFactor()
+  {
+    return (double) FormCZTV.GetDeviceCaps(Graphics.FromHwnd(IntPtr.Zero).GetHdc(), 117) / (double) Screen.PrimaryScreen.Bounds.Height;
+  }
+
+  private void CheckDirectoryExist()
+  {
+    if (Directory.Exists(this.GifDirectory))
+      return;
+    Directory.CreateDirectory(this.GifDirectory);
+  }
+
+  public void FormCZTVLanguageSet()
+  {
+    switch (Form1.Language)
+    {
+      case 1:
+        this.BackgroundImage = (Image) Resources.P0CZTV;
+        this.ucThemeLocal1.BackgroundImage = (Image) Resources.P0本地主题;
+        this.ucThemeMask1.BackgroundImage = (Image) Resources.p0云端主题;
+        this.ucThemeWeb1.BackgroundImage = (Image) Resources.p0云端背景;
+        this.ucThemeLocal1.imageBk = (Image) Resources.P0本地主题;
+        this.ucThemeMask1.imageBk = (Image) Resources.p0云端主题;
+        this.ucThemeWeb1.imageBk = (Image) Resources.p0云端背景;
+        this.ucThemeSetting1.ucBeiJingXianShi1.BackgroundImage = (Image) Resources.P01背景显示;
+        this.ucThemeSetting1.ucMengBanXianShi1.BackgroundImage = (Image) Resources.P01布局蒙板;
+        this.ucThemeSetting1.ucTouPingXianShi1.BackgroundImage = (Image) Resources.P01投屏显示xy;
+        this.ucThemeSetting1.ucShiPingBoFangQi1.BackgroundImage = (Image) Resources.P01播放器;
+        this.ucThemeSetting1.ucXiTongXianShi1.BackgroundImage = (Image) Resources.P01内容;
+        this.ucThemeSetting1.ucXiTongXianShiColor1.BackgroundImage = (Image) Resources.P01参数面板;
+        break;
+      case 2:
+        this.BackgroundImage = (Image) Resources.P0CZTVtc;
+        this.ucThemeLocal1.BackgroundImage = (Image) Resources.P0本地主题tc;
+        this.ucThemeMask1.BackgroundImage = (Image) Resources.P0云端主题tc;
+        this.ucThemeWeb1.BackgroundImage = (Image) Resources.p0云端背景tc;
+        this.ucThemeLocal1.imageBk = (Image) Resources.P0本地主题tc;
+        this.ucThemeMask1.imageBk = (Image) Resources.P0云端主题tc;
+        this.ucThemeWeb1.imageBk = (Image) Resources.p0云端背景tc;
+        this.ucThemeSetting1.ucBeiJingXianShi1.BackgroundImage = (Image) Resources.P01背景显示tc;
+        this.ucThemeSetting1.ucMengBanXianShi1.BackgroundImage = (Image) Resources.P01布局蒙板tc;
+        this.ucThemeSetting1.ucTouPingXianShi1.BackgroundImage = (Image) Resources.P01投屏显示xytc;
+        this.ucThemeSetting1.ucShiPingBoFangQi1.BackgroundImage = (Image) Resources.P01播放器tc;
+        this.ucThemeSetting1.ucXiTongXianShi1.BackgroundImage = (Image) Resources.P01内容tc;
+        this.ucThemeSetting1.ucXiTongXianShiColor1.BackgroundImage = (Image) Resources.P01参数面板tc;
+        break;
+      case 3:
+        this.BackgroundImage = (Image) Resources.P0CZTVd;
+        this.ucThemeLocal1.BackgroundImage = (Image) Resources.P0本地主题d;
+        this.ucThemeMask1.BackgroundImage = (Image) Resources.P0云端主题d;
+        this.ucThemeWeb1.BackgroundImage = (Image) Resources.p0云端背景d;
+        this.ucThemeLocal1.imageBk = (Image) Resources.P0本地主题d;
+        this.ucThemeMask1.imageBk = (Image) Resources.P0云端主题d;
+        this.ucThemeWeb1.imageBk = (Image) Resources.p0云端背景d;
+        this.ucThemeSetting1.ucBeiJingXianShi1.BackgroundImage = (Image) Resources.P01背景显示d;
+        this.ucThemeSetting1.ucMengBanXianShi1.BackgroundImage = (Image) Resources.P01布局蒙板d;
+        this.ucThemeSetting1.ucTouPingXianShi1.BackgroundImage = (Image) Resources.P01投屏显示xyd;
+        this.ucThemeSetting1.ucShiPingBoFangQi1.BackgroundImage = (Image) Resources.P01播放器d;
+        this.ucThemeSetting1.ucXiTongXianShi1.BackgroundImage = (Image) Resources.P01内容d;
+        this.ucThemeSetting1.ucXiTongXianShiColor1.BackgroundImage = (Image) Resources.P01参数面板d;
+        break;
+      case 4:
+        this.BackgroundImage = (Image) Resources.P0CZTVe;
+        this.ucThemeLocal1.BackgroundImage = (Image) Resources.P0本地主题e;
+        this.ucThemeMask1.BackgroundImage = (Image) Resources.P0云端主题e;
+        this.ucThemeWeb1.BackgroundImage = (Image) Resources.p0云端背景e;
+        this.ucThemeLocal1.imageBk = (Image) Resources.P0本地主题e;
+        this.ucThemeMask1.imageBk = (Image) Resources.P0云端主题e;
+        this.ucThemeWeb1.imageBk = (Image) Resources.p0云端背景e;
+        this.ucThemeSetting1.ucBeiJingXianShi1.BackgroundImage = (Image) Resources.P01背景显示e;
+        this.ucThemeSetting1.ucMengBanXianShi1.BackgroundImage = (Image) Resources.P01布局蒙板e;
+        this.ucThemeSetting1.ucTouPingXianShi1.BackgroundImage = (Image) Resources.P01投屏显示xye;
+        this.ucThemeSetting1.ucShiPingBoFangQi1.BackgroundImage = (Image) Resources.P01播放器e;
+        this.ucThemeSetting1.ucXiTongXianShi1.BackgroundImage = (Image) Resources.P01内容e;
+        this.ucThemeSetting1.ucXiTongXianShiColor1.BackgroundImage = (Image) Resources.P01参数面板e;
+        break;
+      case 5:
+        this.BackgroundImage = (Image) Resources.P0CZTVf;
+        this.ucThemeLocal1.BackgroundImage = (Image) Resources.P0本地主题f;
+        this.ucThemeMask1.BackgroundImage = (Image) Resources.P0云端主题f;
+        this.ucThemeWeb1.BackgroundImage = (Image) Resources.p0云端背景f;
+        this.ucThemeLocal1.imageBk = (Image) Resources.P0本地主题f;
+        this.ucThemeMask1.imageBk = (Image) Resources.P0云端主题f;
+        this.ucThemeWeb1.imageBk = (Image) Resources.p0云端背景f;
+        this.ucThemeSetting1.ucBeiJingXianShi1.BackgroundImage = (Image) Resources.P01背景显示f;
+        this.ucThemeSetting1.ucMengBanXianShi1.BackgroundImage = (Image) Resources.P01布局蒙板f;
+        this.ucThemeSetting1.ucTouPingXianShi1.BackgroundImage = (Image) Resources.P01投屏显示xyf;
+        this.ucThemeSetting1.ucShiPingBoFangQi1.BackgroundImage = (Image) Resources.P01播放器f;
+        this.ucThemeSetting1.ucXiTongXianShi1.BackgroundImage = (Image) Resources.P01内容f;
+        this.ucThemeSetting1.ucXiTongXianShiColor1.BackgroundImage = (Image) Resources.P01参数面板f;
+        break;
+      case 6:
+        this.BackgroundImage = (Image) Resources.P0CZTVp;
+        this.ucThemeLocal1.BackgroundImage = (Image) Resources.P0本地主题p;
+        this.ucThemeMask1.BackgroundImage = (Image) Resources.P0云端主题p;
+        this.ucThemeWeb1.BackgroundImage = (Image) Resources.p0云端背景p;
+        this.ucThemeLocal1.imageBk = (Image) Resources.P0本地主题p;
+        this.ucThemeMask1.imageBk = (Image) Resources.P0云端主题p;
+        this.ucThemeWeb1.imageBk = (Image) Resources.p0云端背景p;
+        this.ucThemeSetting1.ucBeiJingXianShi1.BackgroundImage = (Image) Resources.P01背景显示p;
+        this.ucThemeSetting1.ucMengBanXianShi1.BackgroundImage = (Image) Resources.P01布局蒙板p;
+        this.ucThemeSetting1.ucTouPingXianShi1.BackgroundImage = (Image) Resources.P01投屏显示xyp;
+        this.ucThemeSetting1.ucShiPingBoFangQi1.BackgroundImage = (Image) Resources.P01播放器p;
+        this.ucThemeSetting1.ucXiTongXianShi1.BackgroundImage = (Image) Resources.P01内容p;
+        this.ucThemeSetting1.ucXiTongXianShiColor1.BackgroundImage = (Image) Resources.P01参数面板p;
+        break;
+      case 7:
+        this.BackgroundImage = (Image) Resources.P0CZTVr;
+        this.ucThemeLocal1.BackgroundImage = (Image) Resources.P0本地主题r;
+        this.ucThemeMask1.BackgroundImage = (Image) Resources.P0云端主题r;
+        this.ucThemeWeb1.BackgroundImage = (Image) Resources.p0云端背景r;
+        this.ucThemeLocal1.imageBk = (Image) Resources.P0本地主题r;
+        this.ucThemeMask1.imageBk = (Image) Resources.P0云端主题r;
+        this.ucThemeWeb1.imageBk = (Image) Resources.p0云端背景r;
+        this.ucThemeSetting1.ucBeiJingXianShi1.BackgroundImage = (Image) Resources.P01背景显示r;
+        this.ucThemeSetting1.ucMengBanXianShi1.BackgroundImage = (Image) Resources.P01布局蒙板r;
+        this.ucThemeSetting1.ucTouPingXianShi1.BackgroundImage = (Image) Resources.P01投屏显示xyr;
+        this.ucThemeSetting1.ucShiPingBoFangQi1.BackgroundImage = (Image) Resources.P01播放器r;
+        this.ucThemeSetting1.ucXiTongXianShi1.BackgroundImage = (Image) Resources.P01内容r;
+        this.ucThemeSetting1.ucXiTongXianShiColor1.BackgroundImage = (Image) Resources.P01参数面板r;
+        break;
+      case 8:
+        this.BackgroundImage = (Image) Resources.P0CZTVx;
+        this.ucThemeLocal1.BackgroundImage = (Image) Resources.P0本地主题x;
+        this.ucThemeMask1.BackgroundImage = (Image) Resources.P0云端主题x;
+        this.ucThemeWeb1.BackgroundImage = (Image) Resources.p0云端背景x;
+        this.ucThemeLocal1.imageBk = (Image) Resources.P0本地主题x;
+        this.ucThemeMask1.imageBk = (Image) Resources.P0云端主题x;
+        this.ucThemeWeb1.imageBk = (Image) Resources.p0云端背景x;
+        this.ucThemeSetting1.ucBeiJingXianShi1.BackgroundImage = (Image) Resources.P01背景显示x;
+        this.ucThemeSetting1.ucMengBanXianShi1.BackgroundImage = (Image) Resources.P01布局蒙板x;
+        this.ucThemeSetting1.ucTouPingXianShi1.BackgroundImage = (Image) Resources.P01投屏显示xyx;
+        this.ucThemeSetting1.ucShiPingBoFangQi1.BackgroundImage = (Image) Resources.P01播放器x;
+        this.ucThemeSetting1.ucXiTongXianShi1.BackgroundImage = (Image) Resources.P01内容x;
+        this.ucThemeSetting1.ucXiTongXianShiColor1.BackgroundImage = (Image) Resources.P01参数面板x;
+        break;
+      default:
+        this.BackgroundImage = (Image) Resources.P0CZTVen;
+        this.ucThemeLocal1.BackgroundImage = (Image) Resources.P0本地主题en;
+        this.ucThemeMask1.BackgroundImage = (Image) Resources.P0云端主题en;
+        this.ucThemeWeb1.BackgroundImage = (Image) Resources.p0云端背景en;
+        this.ucThemeLocal1.imageBk = (Image) Resources.P0本地主题en;
+        this.ucThemeMask1.imageBk = (Image) Resources.P0云端主题en;
+        this.ucThemeWeb1.imageBk = (Image) Resources.p0云端背景en;
+        this.ucThemeSetting1.ucBeiJingXianShi1.BackgroundImage = (Image) Resources.P01背景显示en;
+        this.ucThemeSetting1.ucMengBanXianShi1.BackgroundImage = (Image) Resources.P01布局蒙板en;
+        this.ucThemeSetting1.ucTouPingXianShi1.BackgroundImage = (Image) Resources.P01投屏显示xyen;
+        this.ucThemeSetting1.ucShiPingBoFangQi1.BackgroundImage = (Image) Resources.P01播放器en;
+        this.ucThemeSetting1.ucXiTongXianShi1.BackgroundImage = (Image) Resources.P01内容en;
+        this.ucThemeSetting1.ucXiTongXianShiColor1.BackgroundImage = (Image) Resources.P01参数面板en;
+        break;
+    }
+  }
+
+  public FormCZTV()
+  {
+    this.InitializeComponent();
+    this.sfblJP = this.GetScreenScalingFactor();
+    this.buttonBDZT.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonYDZT.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonZTSZ.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonYDMB.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonDWXS.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonHelp.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonPower.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.buttonLDD.FlatAppearance.BorderColor = Color.FromArgb(0, 0, 0, 0);
+    this.formJP = new FormScreenshot();
+    this.formJP.ucdelegateForm = new FormScreenshot.delegateFormScreenshot(this.UpDateFormScreenshot);
+    this.formGetColor = new FormGetColor();
+    this.formGetColor.InitFormGetColor(this.sfblJP);
+    this.formGetColor.ucdelegateForm = new FormGetColor.delegateFormGetColor(this.UpDateFormGetColor);
+    this.ucThemeLocal1.delegateLocal = new UCThemeLocal.delegateThemeLocal(this.ThemeLocal);
+    this.ucThemeWeb1.delegateWeb = new UCThemeWeb.delegateThemeWeb(this.ThemeWeb);
+    this.ucThemeSetting1.delegateUCSetting = new UCThemeSetting.delegateUCThemeSetting(this.ThemeSetting);
+    this.ucThemeMask1.delegateMask = new UCThemeMask.delegateThemeMask(this.ThemeMask);
+    this.GifDirectory = Application.StartupPath + "\\Data\\USBLCD\\Theme";
+    this.ucComboBoxA1.myCount = 4;
+    this.ucComboBoxA1.SetBoxNameArray(new string[8]
+    {
+      "0°",
+      "90°",
+      "180°",
+      "270°",
+      "",
+      "",
+      "",
+      ""
+    });
+    this.ucComboBoxA1.pointImg = (Image) Resources.P下拉框底图4X;
+    this.ucComboBoxA1.ucComboBoxA = new UCComboBoxA.delegateUCComboBoxA(this.UpDateUCComboBox1);
+    this.ucComboBoxA2.myCount = 4;
+    this.ucComboBoxA2.SetBoxNameArray(new string[8]
+    {
+      "0°",
+      "90°",
+      "180°",
+      "270°",
+      "",
+      "",
+      "",
+      ""
+    });
+    this.ucComboBoxA2.pointImg = (Image) Resources.P下拉框底图4X;
+    this.ucComboBoxA2.ucComboBoxA = new UCComboBoxA.delegateUCComboBoxA(this.UpDateUCComboBox2);
+    this.ucComboBoxA3.myCount = 2;
+    this.ucComboBoxA3.SetBoxNameArray(new string[8]
+    {
+      "℃",
+      "℉",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    });
+    this.ucComboBoxA3.pointImg = (Image) Resources.P下拉框底图2X;
+    this.ucComboBoxA3.ucComboBoxA = new UCComboBoxA.delegateUCComboBoxA(this.UpDateUCComboBox3);
+    this.ucImageCut1.ucImageCut = new UCImageCut.delegateUCImageCut(this.UpDateUCImageCut);
+    this.ucVideoCut1.ucVideoCut = new UCVideoCut.delegateUCVideoCut(this.UpDateUCVideoCut);
+    this.ucScreenImageBK1.ucScreenImage1.ucScreenImage = new UCScreenImage.delegateUCScreenImage(this.UpDateFormUCScreenImage);
+    this.CheckDirectoryExist();
+    this.FormCZTVLanguageSet();
+    this.imageArray = new ArrayList();
+    this.themeArray = new ArrayList();
+    this.formJP.Hide();
+    this.formGetColor.Hide();
+    this.ucThemeLocal1.Hide();
+    this.ucScreenImageBK1.Hide();
+  }
+
+  public void FormCZTVRemove()
+  {
+    this.isToTimer = false;
+    this.myTempDeviceJpgYSL = this.myDeviceJpgYSL;
+    this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = (Bitmap) null;
+    if (this.gifPicture != null)
+      this.gifPicture.Dispose();
+    this.gifPicture = (Bitmap) null;
+    this.imageArray.Clear();
+    if (this.imagePicture != null)
+      this.imagePicture.Dispose();
+    this.imagePicture = (Bitmap) null;
+    if (this.ucScreenImageBK1.ucScreenImage1.bitmapMB != null)
+      this.ucScreenImageBK1.ucScreenImage1.bitmapMB.Dispose();
+    this.ucScreenImageBK1.ucScreenImage1.bitmapMB = (Bitmap) null;
+    this.themeArray.Clear();
+    this.ucThemeLocal1.UCThemeLocalRemove();
+    this.ucThemeMask1.UCThemeMaskRemove();
+    this.ucThemeWeb1.UCThemeWebRemove();
+    this.ucThemeLocal1.Dispose();
+    this.ucThemeMask1.Dispose();
+    this.ucThemeWeb1.Dispose();
+  }
+
+  public void FormCZTVInit(int fbl, int m = 1, int count = 0, int ysl = 95, int pm = 1, string name = null, int pmSub = 0)
+  {
+    this.myDeviceMode = m;
+    this.myDeviceCount = count;
+    this.myTempDeviceJpgYSL = this.myDeviceJpgYSL = ysl;
+    this.myDevicePingMu = pm;
+    switch (pm)
+    {
+      case 5:
+        fbl = 50;
+        break;
+      case 7:
+        fbl = 64 /*0x40*/;
+        break;
+      default:
+        if (this.myDeviceMode == 2 && pm == 32 /*0x20*/)
+        {
+          this.myDeviceMode = 4;
+          fbl = 100;
+          break;
+        }
+        int num1;
+        if (this.myDeviceMode == 2)
+        {
+          switch (pm)
+          {
+            case 1:
+              num1 = pmSub == 48 /*0x30*/ ? 1 : 0;
+              break;
+            case 64 /*0x40*/:
+              num1 = 1;
+              break;
+            default:
+              num1 = 0;
+              break;
+          }
+        }
+        else
+          num1 = 0;
+        if (num1 != 0)
+        {
+          this.isBiliPingmu = true;
+          this.is1600x720 = true;
+          fbl = 114;
+          this.buttonLDD.Show();
+          this.myLddValSub = pmSub;
+          this.formScreenImage = new FormScreenImage();
+          this.formScreenImage.Show();
+          Thread.Sleep(1);
+          this.formScreenImage.Hide();
+          this.formScreenImage.ucScreenImage1 = this.ucScreenImageBK1.ucScreenImage1;
+          this.formScreenImage.ucScreenImage = new FormScreenImage.delegateFScreenImage(this.UpDateFormScreenImage);
+          break;
+        }
+        int num2;
+        if (this.myDeviceMode == 2)
+        {
+          switch (pm)
+          {
+            case 1:
+              num2 = pmSub == 49 ? 1 : 0;
+              break;
+            case 65:
+              num2 = 1;
+              break;
+            default:
+              num2 = 0;
+              break;
+          }
+        }
+        else
+          num2 = 0;
+        if (num2 != 0)
+        {
+          this.isBiliPingmu = true;
+          this.is1920x462 = true;
+          fbl = 192 /*0xC0*/;
+          this.formScreenImage = new FormScreenImage();
+          this.formScreenImage.Show();
+          Thread.Sleep(1);
+          this.formScreenImage.Hide();
+          this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗1920X462;
+          this.formScreenImage.ResetFormScreenImage();
+          this.formScreenImage.ucScreenImage1 = this.ucScreenImageBK1.ucScreenImage1;
+          this.formScreenImage.ucScreenImage = new FormScreenImage.delegateFScreenImage(this.UpDateFormScreenImage);
+          break;
+        }
+        if (this.myDeviceMode == 2 && (pm == 9 || pm == 11))
+        {
+          this.isBiliPingmu = true;
+          this.is854x480 = true;
+          fbl = 224 /*0xE0*/;
+          this.formScreenImage = new FormScreenImage();
+          this.formScreenImage.Show();
+          Thread.Sleep(1);
+          this.formScreenImage.Hide();
+          this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗854X480;
+          this.formScreenImage.ResetFormScreenImage();
+          this.formScreenImage.ucScreenImage1 = this.ucScreenImageBK1.ucScreenImage1;
+          this.formScreenImage.ucScreenImage = new FormScreenImage.delegateFScreenImage(this.UpDateFormScreenImage);
+          break;
+        }
+        if (this.myDeviceMode == 2 && pm == 10)
+        {
+          this.isBiliPingmu = true;
+          this.is960x540 = true;
+          fbl = 224 /*0xE0*/;
+          this.formScreenImage = new FormScreenImage();
+          this.formScreenImage.Show();
+          Thread.Sleep(1);
+          this.formScreenImage.Hide();
+          this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗960X540;
+          this.formScreenImage.ResetFormScreenImage();
+          this.formScreenImage.ucScreenImage1 = this.ucScreenImageBK1.ucScreenImage1;
+          this.formScreenImage.ucScreenImage = new FormScreenImage.delegateFScreenImage(this.UpDateFormScreenImage);
+          break;
+        }
+        if (this.myDeviceMode == 2 && pm == 12)
+        {
+          this.isBiliPingmu = true;
+          this.is800x480 = true;
+          fbl = 224 /*0xE0*/;
+          this.formScreenImage = new FormScreenImage();
+          this.formScreenImage.Show();
+          Thread.Sleep(1);
+          this.formScreenImage.Hide();
+          this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗800X480;
+          this.formScreenImage.ResetFormScreenImage();
+          this.formScreenImage.ucScreenImage1 = this.ucScreenImageBK1.ucScreenImage1;
+          this.formScreenImage.ucScreenImage = new FormScreenImage.delegateFScreenImage(this.UpDateFormScreenImage);
+          break;
+        }
+        if (this.myDeviceMode == 2 && pm == 13)
+        {
+          this.isBiliPingmu = true;
+          this.is960x320 = true;
+          fbl = 224 /*0xE0*/;
+          this.formScreenImage = new FormScreenImage();
+          this.formScreenImage.Show();
+          Thread.Sleep(1);
+          this.formScreenImage.Hide();
+          this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗960X320;
+          this.formScreenImage.ResetFormScreenImage();
+          this.formScreenImage.ucScreenImage1 = this.ucScreenImageBK1.ucScreenImage1;
+          this.formScreenImage.ucScreenImage = new FormScreenImage.delegateFScreenImage(this.UpDateFormScreenImage);
+          break;
+        }
+        break;
+    }
+    if (this.myDeviceMode == 3 && this.myDevicePingMu == 100 && fbl == 58)
+      this.myDevicePingMu = 101;
+    if (this.myDeviceMode == 3 && this.myDevicePingMu == 100 && fbl == 54)
+    {
+      this.isFanLcd = true;
+      this.myDeviceMode = 2;
+      this.ucThemeSetting1.ucXiTongXianShi1.isFanLcd = true;
+      this.ucThemeSetting1.ucXiTongXianShiAdd1.isFanLcd = true;
+    }
+    if (this.myDeviceMode == 3 && this.myDevicePingMu == 100 && fbl == 128 /*0x80*/)
+    {
+      this.myDeviceMode = 2;
+      this.isBiliPingmu = true;
+      this.is1280x480 = true;
+      this.formScreenImage = new FormScreenImage();
+      this.formScreenImage.Show();
+      Thread.Sleep(1);
+      this.formScreenImage.Hide();
+      this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗1280X480;
+      this.formScreenImage.ResetFormScreenImage();
+      this.formScreenImage.ucScreenImage1 = this.ucScreenImageBK1.ucScreenImage1;
+      this.formScreenImage.ucScreenImage = new FormScreenImage.delegateFScreenImage(this.UpDateFormScreenImage);
+    }
+    if (this.myDeviceMode == 1 && fbl == 51)
+      this.myDeviceSPIMode = 2;
+    this.buttonBDZT.Enabled = true;
+    this.buttonZTSZ.Enabled = true;
+    this.buttonYDZT.Enabled = true;
+    this.buttonYDMB.Enabled = true;
+    this.is480x480 = fbl == 72;
+    this.is640x480 = fbl == 64 /*0x40*/;
+    if (fbl == 100 || fbl == 101 || fbl == 102)
+      this.is320x320 = true;
+    if (fbl == 36 || fbl == 37)
+      this.is240x240 = true;
+    this.is360x360 = fbl == 54;
+    this.ucImageCut1.is480x480 = this.is480x480;
+    this.ucScreenImageBK1.ucScreenImage1.is480x480 = this.is480x480;
+    this.ucThemeSetting1.ucTouPingXianShi1.is480x480 = this.is480x480;
+    this.ucVideoCut1.is480x480 = this.is480x480;
+    this.ucBoFangQiKongZhi1.is480x480 = this.is480x480;
+    this.ucImageCut1.is320x320 = this.is320x320;
+    this.ucScreenImageBK1.ucScreenImage1.is320x320 = this.is320x320;
+    this.ucThemeSetting1.ucTouPingXianShi1.is320x320 = this.is320x320;
+    this.ucVideoCut1.is320x320 = this.is320x320;
+    this.ucBoFangQiKongZhi1.is320x320 = this.is320x320;
+    this.ucImageCut1.is360x360 = this.is360x360;
+    this.ucScreenImageBK1.ucScreenImage1.is360x360 = this.is360x360;
+    this.ucThemeSetting1.ucTouPingXianShi1.is360x360 = this.is360x360;
+    this.ucVideoCut1.is360x360 = this.is360x360;
+    this.ucBoFangQiKongZhi1.is360x360 = this.is360x360;
+    this.ucImageCut1.is640x480 = this.is640x480;
+    this.ucScreenImageBK1.ucScreenImage1.is640x480 = this.is640x480;
+    this.ucThemeSetting1.ucTouPingXianShi1.is640x480 = this.is640x480;
+    this.ucVideoCut1.is640x480 = this.is640x480;
+    this.ucBoFangQiKongZhi1.is640x480 = this.is640x480;
+    this.ucImageCut1.is240x240 = this.is240x240;
+    this.ucScreenImageBK1.ucScreenImage1.is240x240 = this.is240x240;
+    this.ucThemeSetting1.ucTouPingXianShi1.is240x240 = this.is240x240;
+    this.ucVideoCut1.is240x240 = this.is240x240;
+    this.ucBoFangQiKongZhi1.is240x240 = this.is240x240;
+    this.ucImageCut1.is1600x720 = this.is1600x720;
+    this.ucScreenImageBK1.ucScreenImage1.is1600x720 = this.is1600x720;
+    this.ucThemeSetting1.ucTouPingXianShi1.is1600x720 = this.is1600x720;
+    this.ucVideoCut1.is1600x720 = this.is1600x720;
+    this.ucBoFangQiKongZhi1.is1600x720 = this.is1600x720;
+    this.ucImageCut1.is1280x480 = this.is1280x480;
+    this.ucScreenImageBK1.ucScreenImage1.is1280x480 = this.is1280x480;
+    this.ucThemeSetting1.ucTouPingXianShi1.is1280x480 = this.is1280x480;
+    this.ucVideoCut1.is1280x480 = this.is1280x480;
+    this.ucBoFangQiKongZhi1.is1280x480 = this.is1280x480;
+    this.ucImageCut1.is1920x462 = this.is1920x462;
+    this.ucScreenImageBK1.ucScreenImage1.is1920x462 = this.is1920x462;
+    this.ucThemeSetting1.ucTouPingXianShi1.is1920x462 = this.is1920x462;
+    this.ucVideoCut1.is1920x462 = this.is1920x462;
+    this.ucBoFangQiKongZhi1.is1920x462 = this.is1920x462;
+    this.ucImageCut1.is854x480 = this.is854x480;
+    this.ucScreenImageBK1.ucScreenImage1.is854x480 = this.is854x480;
+    this.ucThemeSetting1.ucTouPingXianShi1.is854x480 = this.is854x480;
+    this.ucVideoCut1.is854x480 = this.is854x480;
+    this.ucBoFangQiKongZhi1.is854x480 = this.is854x480;
+    this.ucImageCut1.is960x540 = this.is960x540;
+    this.ucScreenImageBK1.ucScreenImage1.is960x540 = this.is960x540;
+    this.ucThemeSetting1.ucTouPingXianShi1.is960x540 = this.is960x540;
+    this.ucVideoCut1.is960x540 = this.is960x540;
+    this.ucBoFangQiKongZhi1.is960x540 = this.is960x540;
+    this.ucImageCut1.is800x480 = this.is800x480;
+    this.ucScreenImageBK1.ucScreenImage1.is800x480 = this.is800x480;
+    this.ucThemeSetting1.ucTouPingXianShi1.is800x480 = this.is800x480;
+    this.ucVideoCut1.is800x480 = this.is800x480;
+    this.ucBoFangQiKongZhi1.is800x480 = this.is800x480;
+    this.ucImageCut1.is960x320 = this.is960x320;
+    this.ucScreenImageBK1.ucScreenImage1.is960x320 = this.is960x320;
+    this.ucThemeSetting1.ucTouPingXianShi1.is960x320 = this.is960x320;
+    this.ucVideoCut1.is960x320 = this.is960x320;
+    this.ucBoFangQiKongZhi1.is960x320 = this.is960x320;
+    this.ucScreenImageBK1.ucScreenImage1.myDevicePingMu = pm;
+    this.ucScreenImageBK1.ucScreenImage1.isBiliPingmu = this.isBiliPingmu;
+    this.ucImageCut1.isBiliPingmu = this.isBiliPingmu;
+    this.ucVideoCut1.isBiliPingmu = this.isBiliPingmu;
+    this.ucBoFangQiKongZhi1.isBiliPingmu = this.isBiliPingmu;
+    if (this.is320x320)
+    {
+      this.formJP.Width = this.formJP.Height = 320;
+      this.ThemeML = "320320\\";
+    }
+    if (this.is360x360)
+      this.ThemeML = "360360\\";
+    if (this.is480x480)
+      this.ThemeML = "480480\\";
+    if (this.is240x240)
+      this.ThemeML = "240240\\";
+    if (this.is1600x720)
+      this.ThemeML = "1600720\\";
+    if (this.is1280x480)
+      this.ThemeML = "1280480\\";
+    if (this.is1920x462)
+      this.ThemeML = "1920462\\";
+    if (this.is640x480)
+      this.ThemeML = "640480\\";
+    if (this.is854x480)
+      this.ThemeML = pmSub >= 5 ? "480854\\" : "854480\\";
+    if (this.is960x320)
+      this.ThemeML = pmSub >= 5 ? "320960\\" : "960320\\";
+    if (this.is960x540)
+      this.ThemeML = pmSub >= 5 ? "540960\\" : "960540\\";
+    if (this.is800x480)
+      this.ThemeML = pmSub >= 5 ? "480800\\" : "800480\\";
+    this.ucThemeLocal1.Show();
+    this.ucScreenImageBK1.Show();
+    this.fileThemeDir = $"{Application.StartupPath}\\Data\\USBLCD\\Theme{this.ThemeML}";
+    if (name != null)
+      this.ucThemeSetting1.ucXiTongXianShiColor1.UCXiTongXianShiBackupColorInit($"{this.fileThemeDir}Color.dc{name}");
+    else
+      this.ucThemeSetting1.ucXiTongXianShiColor1.UCXiTongXianShiBackupColorInit(this.fileThemeDir + "Color.dc");
+    this.fileThemeVal = name == null ? this.fileThemeDir + "Theme.dc" : $"{this.fileThemeDir}Theme.dc{name}";
+    try
+    {
+      this.ReadFileTheme();
+    }
+    catch
+    {
+    }
+    this.Theme_Click(false);
+    try
+    {
+      this.Theme_Click_Event(false);
+    }
+    catch
+    {
+    }
+    this.ucThemeLocal1.Reset_Button();
+    if (Form1.Language == 100)
+      return;
+    this.ucThemeWeb1.Display_Button();
+    this.ucThemeMask1.Display_Button();
+    this.buttonYDZT.Show();
+    this.buttonYDMB.Show();
+  }
+
+  protected override CreateParams CreateParams
+  {
+    get
+    {
+      CreateParams createParams = base.CreateParams;
+      createParams.ExStyle |= 33554432 /*0x02000000*/;
+      return createParams;
+    }
+  }
+
+  public void ReadFileTheme(bool bl = true)
+  {
+    this.themeArray.Clear();
+    DirectoryInfo[] directories = new DirectoryInfo(this.fileThemeDir).GetDirectories();
+    string[] priorityFolders = new string[5]
+    {
+      "Theme1",
+      "Theme2",
+      "Theme3",
+      "Theme4",
+      "Theme5"
+    };
+    foreach (FileSystemInfo fileSystemInfo in ((IEnumerable<DirectoryInfo>) directories).OrderByDescending<DirectoryInfo, bool>((Func<DirectoryInfo, bool>) (d => ((IEnumerable<string>) priorityFolders).Contains<string>(d.Name))).ThenBy<DirectoryInfo, int>((Func<DirectoryInfo, int>) (d => Array.IndexOf<string>(priorityFolders, d.Name))).ThenBy<DirectoryInfo, string>((Func<DirectoryInfo, string>) (d => d.Name)).ToList<DirectoryInfo>())
+      this.themeArray.Add((object) fileSystemInfo.Name);
+    this.ReadFileThemeSub(bl);
+  }
+
+  public void ReadFileThemeSub(bool bl)
+  {
+    if (!bl)
+      return;
+    FileStream input = new FileStream(this.fileThemeVal, FileMode.OpenOrCreate);
+    BinaryReader binaryReader = new BinaryReader((Stream) input);
+    try
+    {
+      if (binaryReader.ReadByte() == (byte) 220)
+      {
+        this.myTheme = binaryReader.ReadInt32();
+        this.ucThemeLocal1.isLunbo = binaryReader.ReadBoolean();
+        this.ucThemeLocal1.myLunBoTimer = binaryReader.ReadInt32();
+        this.ucThemeLocal1.lunBoCount = binaryReader.ReadInt32();
+        this.ucThemeLocal1.lunBoArray[0] = binaryReader.ReadInt32();
+        this.ucThemeLocal1.lunBoArray[1] = binaryReader.ReadInt32();
+        this.ucThemeLocal1.lunBoArray[2] = binaryReader.ReadInt32();
+        this.ucThemeLocal1.lunBoArray[3] = binaryReader.ReadInt32();
+        this.ucThemeLocal1.lunBoArray[4] = binaryReader.ReadInt32();
+        this.ucThemeLocal1.lunBoArray[5] = binaryReader.ReadInt32();
+        this.ucThemeLocal1.buttonLunbo_Set(this.ucThemeLocal1.isLunbo);
+        this.ucThemeLocal1.textBoxTimer.Text = Convert.ToString(this.ucThemeLocal1.myLunBoTimer);
+        try
+        {
+          this.myLddVal = binaryReader.ReadInt32();
+          this.buttonLDD_Set(this.myLddVal);
+        }
+        catch
+        {
+        }
+      }
+      if (this.myTheme >= this.themeArray.Count)
+        this.myTheme = 0;
+    }
+    catch
+    {
+      if (this.myLddValSub == 2)
+      {
+        this.myLddVal = 3;
+        this.buttonLDD_Set(this.myLddVal);
+      }
+    }
+    binaryReader.Close();
+    binaryReader.Dispose();
+    input.Close();
+    input.Dispose();
+    this.isLunboInit = true;
+  }
+
+  private void UpDateFormUCScreenImage(int mode, int count)
+  {
+    if (mode == 0)
+    {
+      this.ucScreenImageBK1.Controls.Remove((Control) this.ucScreenImageBK1.ucScreenImage1);
+      this.formScreenImage.Controls.Add((Control) this.formScreenImage.ucScreenImage1);
+      this.formScreenImage.ucScreenImage1.isBiliPingmu = false;
+      this.formScreenImage.ucScreenImage1.SetMyUCScreenImage(this.directionB);
+      this.formScreenImage.Show();
+    }
+    else
+      this.ucThemeSetting1.ucXiTongXianShi1.UCXiTongXianShiSelect(count);
+  }
+
+  private void UpDateFormScreenImage(int mode)
+  {
+    this.formScreenImage.Controls.Remove((Control) this.formScreenImage.ucScreenImage1);
+    this.ucScreenImageBK1.Controls.Add((Control) this.ucScreenImageBK1.ucScreenImage1);
+    this.ucScreenImageBK1.ucScreenImage1.isBiliPingmu = true;
+    this.ucScreenImageBK1.ucScreenImage1.SetMyUCScreenImage(this.directionB);
+  }
+
+  [DllImport("kernel32.dll")]
+  public static extern int SetProcessWorkingSetSize(IntPtr process, int minSize, int maxSize);
+
+  [DllImport("psapi.dll")]
+  private static extern int EmptyWorkingSet(IntPtr hwProc);
+
+  public static void ClearMemoryMy(int memory = 20)
+  {
+  }
+
+  public static void ClearMemorySelf(int memory = 1000)
+  {
+  }
+
+  public static void ClearMemoryAll()
+  {
+    GC.Collect();
+    GC.WaitForPendingFinalizers();
+    foreach (Process process in Process.GetProcesses())
+    {
+      try
+      {
+        FormCZTV.EmptyWorkingSet(process.Handle);
+      }
+      catch
+      {
+      }
+    }
+  }
+
+  private void UpDateFormScreenshot(int mode, int x, int y)
+  {
+    if (mode == 0)
+    {
+      this.myYcbk = true;
+      this.ucThemeSetting1.ucTouPingXianShi1.buttonXSBK_Set(this.myYcbk);
+    }
+    else
+    {
+      this.ucThemeSetting1.ucTouPingXianShi1.textBoxX.Text = x.ToString();
+      this.ucThemeSetting1.ucTouPingXianShi1.textBoxY.Text = y.ToString();
+    }
+  }
+
+  private void UpDateFormGetColor(int mode, Color color, Bitmap bitmap)
+  {
+    switch (mode)
+    {
+      case 0:
+        this.ucThemeSetting1.ucXiTongXianShiColor1.isGetRGB = false;
+        this.ucThemeSetting1.ucXiTongXianShiColor1.buttonGetColor.BackgroundImage = (Image) Resources.P吸管;
+        this.ucThemeSetting1.ucXiTongXianShiColor1.buttonGetColor.Image = (Image) null;
+        this.ucThemeSetting1.ucXiTongXianShiColor1.ChangedTextBoxAndUCColorCWB(color);
+        break;
+      case 1:
+        if (!this.ucThemeSetting1.ucXiTongXianShiColor1.isGetRGB)
+          break;
+        this.ucThemeSetting1.ucXiTongXianShiColor1.buttonGetColor.BackgroundImage = (Image) bitmap;
+        this.ucThemeSetting1.ucXiTongXianShiColor1.buttonGetColor.Invalidate();
+        break;
+      case 2:
+        this.ucThemeSetting1.ucXiTongXianShiColor1.isGetRGB = false;
+        this.ucThemeSetting1.ucXiTongXianShiColor1.buttonGetColor.BackgroundImage = (Image) Resources.P吸管;
+        this.ucThemeSetting1.ucXiTongXianShiColor1.buttonGetColor.Image = (Image) null;
+        break;
+    }
+  }
+
+  private void buttonPower_Click(object sender, EventArgs e)
+  {
+    FormCZTV.delegateFormCZTV delegateForm = this.delegateForm;
+    if (delegateForm == null)
+      return;
+    delegateForm((int) byte.MaxValue);
+  }
+
+  private void buttonPower_MouseEnter(object sender, EventArgs e)
+  {
+    this.buttonPower.BackgroundImage = (Image) Resources.Alogout选中;
+  }
+
+  private void buttonPower_MouseLeave(object sender, EventArgs e)
+  {
+    this.buttonPower.BackgroundImage = (Image) Resources.Alogout默认;
+  }
+
+  private void FormCZTV_MouseDown(object sender, MouseEventArgs e)
+  {
+    FormCZTV.delegateFormCZTV delegateForm = this.delegateForm;
+    if (delegateForm != null)
+      delegateForm(241, data: (object) e);
+    this.ucComboBoxA1.ReSetUCComboBoxMode();
+    this.ucComboBoxA2.ReSetUCComboBoxMode();
+    this.ucComboBoxA3.ReSetUCComboBoxMode();
+  }
+
+  private void FormCZTV_MouseMove(object sender, MouseEventArgs e)
+  {
+    FormCZTV.delegateFormCZTV delegateForm = this.delegateForm;
+    if (delegateForm == null)
+      return;
+    delegateForm(242, data: (object) e);
+  }
+
+  private void FormCZTV_MouseUp(object sender, MouseEventArgs e)
+  {
+    FormCZTV.delegateFormCZTV delegateForm = this.delegateForm;
+    if (delegateForm == null)
+      return;
+    delegateForm(243, data: (object) e);
+  }
+
+  private void ButtonNewMode(int mode)
+  {
+    this.buttonBDZT.BackgroundImage = (Image) Resources.P本地主题;
+    this.buttonYDZT.BackgroundImage = (Image) Resources.P云端背景;
+    this.buttonZTSZ.BackgroundImage = (Image) Resources.P主题设置;
+    this.buttonYDMB.BackgroundImage = (Image) Resources.p云端主题;
+    switch (mode)
+    {
+      case 1:
+        this.buttonBDZT.BackgroundImage = (Image) Resources.P本地主题a;
+        this.ucThemeWeb1.Hide();
+        this.ucThemeMask1.Hide();
+        this.ucThemeSetting1.Hide();
+        this.ucThemeLocal1.Show();
+        break;
+      case 2:
+        this.buttonYDZT.BackgroundImage = (Image) Resources.P云端背景a;
+        this.ucThemeLocal1.Hide();
+        this.ucThemeMask1.Hide();
+        this.ucThemeSetting1.Hide();
+        this.ucThemeWeb1.Show();
+        break;
+      case 3:
+        this.buttonZTSZ.BackgroundImage = (Image) Resources.P主题设置a;
+        this.ucThemeLocal1.Hide();
+        this.ucThemeWeb1.Hide();
+        this.ucThemeMask1.Hide();
+        this.ucThemeSetting1.Show();
+        break;
+      case 4:
+        this.buttonYDMB.BackgroundImage = (Image) Resources.P云端主题a;
+        this.ucThemeLocal1.Hide();
+        this.ucThemeWeb1.Hide();
+        this.ucThemeSetting1.Hide();
+        this.ucThemeMask1.Show();
+        break;
+    }
+  }
+
+  private void buttonBDZT_Click(object sender, EventArgs e)
+  {
+    this.myModeUC = 1;
+    this.ButtonNewMode(this.myModeUC);
+  }
+
+  private void buttonYDZT_Click(object sender, EventArgs e)
+  {
+    if (this.ucThemeLocal1.isLunbo)
+      this.ucThemeLocal1.buttonLunbo_Set(false);
+    this.myModeUC = 2;
+    this.ButtonNewMode(this.myModeUC);
+  }
+
+  private void buttonZTSZ_Click(object sender, EventArgs e)
+  {
+    if (this.ucThemeLocal1.isLunbo)
+      this.ucThemeLocal1.buttonLunbo_Set(false);
+    this.myModeUC = 3;
+    this.ButtonNewMode(this.myModeUC);
+  }
+
+  private void buttonYDMB_Click(object sender, EventArgs e)
+  {
+    if (this.ucThemeLocal1.isLunbo)
+      this.ucThemeLocal1.buttonLunbo_Set(false);
+    this.myModeUC = 4;
+    this.ButtonNewMode(this.myModeUC);
+  }
+
+  private void UpDateUCComboBox1(int mode)
+  {
+    this.directionB = (mode - 1) * 90;
+    this.isToTimer = false;
+    this.buttonSelectBackgroundImage();
+    this.isToTimer = true;
+  }
+
+  private void GifToJPG(Image gif)
+  {
+  }
+
+  private void GifTo565(Image gif)
+  {
+    Bitmap img = (Bitmap) gif;
+    byte[] numArray1 = img.GetPropertyItem(20736).Value;
+    FrameDimension dimension = new FrameDimension(img.FrameDimensionsList[0]);
+    int frameCount = img.GetFrameCount(FrameDimension.Time);
+    int[] numArray2 = new int[frameCount];
+    if (frameCount >= 250)
+    {
+      Thread.Sleep(100);
+      int num = (int) MessageBox.Show("图像格式有误，请重新选择!");
+      img.Dispose();
+    }
+    else
+    {
+      for (int index = 0; index < frameCount; ++index)
+      {
+        numArray2[index] = BitConverter.ToInt32(numArray1, index * 4);
+        if (numArray2[index] == 0)
+          numArray2[index] = 10;
+      }
+      byte[] data1 = new byte[4]
+      {
+        (byte) 0,
+        (byte) 1,
+        (byte) 0,
+        (byte) 30
+      };
+      FormCZTV.delegateFormCZTV delegateForm1 = this.delegateForm;
+      if (delegateForm1 != null)
+        delegateForm1(0, (object) 0, (object) data1, (object) 4);
+      for (int frameIndex = 0; frameIndex < frameCount; ++frameIndex)
+      {
+        img.SelectActiveFrame(dimension, frameIndex);
+        Image image;
+        switch (this.directionB)
+        {
+          case 0:
+            image = this.ucScreenImageBK1.ucScreenImage1.RotateImg((Image) img, 90.00002f);
+            break;
+          case 90:
+            image = this.ucScreenImageBK1.ucScreenImage1.RotateImg((Image) img, 0.0f);
+            break;
+          case 180:
+            image = this.ucScreenImageBK1.ucScreenImage1.RotateImg((Image) img, 270f);
+            break;
+          case 270:
+            image = this.ucScreenImageBK1.ucScreenImage1.RotateImg((Image) img, 180.000015f);
+            break;
+          default:
+            image = this.ucScreenImageBK1.ucScreenImage1.RotateImg((Image) img, 90f);
+            break;
+        }
+        Bitmap bitmap = (Bitmap) image;
+        Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+        BitmapData bitmapdata = bitmap.LockBits(rect, ImageLockMode.ReadWrite, bitmap.PixelFormat);
+        IntPtr scan0 = bitmapdata.Scan0;
+        int data1_1 = bitmap.Width * bitmap.Height * 2;
+        int length = bitmap.Width * bitmap.Height * 4;
+        byte[] destination = new byte[length];
+        Marshal.Copy(scan0, destination, 0, length);
+        bitmap.UnlockBits(bitmapdata);
+        bitmap.Dispose();
+        byte[] data2 = new byte[data1_1];
+        int index1 = 0;
+        int index2 = 0;
+        while (index1 < data1_1)
+        {
+          byte num1 = destination[index2 + 2];
+          byte num2 = destination[index2 + 1];
+          byte num3 = destination[index2];
+          if (this.is320x320)
+          {
+            data2[index1 + 1] = (byte) ((int) num2 << 3 & 224 /*0xE0*/);
+            data2[index1 + 1] += (byte) ((uint) num3 >> 3);
+            data2[index1] = (byte) ((uint) num1 & 248U);
+            data2[index1] += (byte) ((uint) num2 >> 5);
+          }
+          else if (this.myDeviceSPIMode == 2)
+          {
+            data2[index1 + 1] = (byte) ((int) num2 << 3 & 224 /*0xE0*/);
+            data2[index1 + 1] += (byte) ((uint) num3 >> 3);
+            data2[index1] = (byte) ((uint) num1 & 248U);
+            data2[index1] += (byte) ((uint) num2 >> 5);
+          }
+          else
+          {
+            data2[index1] = (byte) ((int) num2 << 3 & 224 /*0xE0*/);
+            data2[index1] += (byte) ((uint) num3 >> 3);
+            data2[index1 + 1] = (byte) ((uint) num1 & 248U);
+            data2[index1 + 1] += (byte) ((uint) num2 >> 5);
+          }
+          index1 += 2;
+          index2 += 4;
+        }
+        FormCZTV.delegateFormCZTV delegateForm2 = this.delegateForm;
+        if (delegateForm2 != null)
+          delegateForm2(0, (object) ((this.is320x320 ? 2 * frameIndex : frameIndex) + 1), (object) data2, (object) data1_1);
+      }
+      img.Dispose();
+      byte[] data3 = new byte[153600];
+      data3[0] = (byte) 1;
+      data3[1] = (byte) frameCount;
+      data3[2] = data3[3] = (byte) 1;
+      for (int index = 0; index < numArray2.Length; ++index)
+      {
+        data3[index + 4] = (byte) (numArray2[index] * 10);
+        if (numArray2[index] > 25)
+          data3[index + 4] = (byte) 250;
+      }
+      FormCZTV.delegateFormCZTV delegateForm3 = this.delegateForm;
+      if (delegateForm3 == null)
+        return;
+      delegateForm3(0, (object) 0, (object) data3, (object) data3.Length);
+    }
+  }
+
+  private void buttonFXTB_Click()
+  {
+    Image gif;
+    if (this.is320x320)
+      gif = (Image) Resources._320320;
+    else if (this.is240x240)
+    {
+      gif = (Image) Resources._240240;
+    }
+    else
+    {
+      if (this.is360x360 || this.is480x480 || this.is640x480 || this.is1600x720 || this.is1280x480 || this.is1920x462 || this.is854x480 || this.is960x540 || this.is800x480 || this.is960x320)
+        return;
+      gif = this.directionB != 0 && this.directionB != 180 ? (Image) Resources._240320 : (Image) Resources._320240;
+    }
+    this.labelZXCG.Text = "正在调整开机动画方向";
+    this.labelZXCG.Show();
+    Application.DoEvents();
+    this.isToTimer = false;
+    Thread.Sleep(100);
+    if (this.myDeviceMode == 1)
+      this.GifTo565(gif);
+    else if (this.myDeviceMode == 2)
+      this.GifToJPG(gif);
+    for (int index = 0; index < 120; ++index)
+    {
+      Thread.Sleep(250);
+      if (index % 2 == 1)
+        this.labelZXCG.Show();
+      else
+        this.labelZXCG.Hide();
+      Application.DoEvents();
+    }
+    this.ImageCount = 0;
+    this.gifCount = 0;
+    this.isToTimer = true;
+    this.labelZXCG.Hide();
+    if (Form1.Language == 1)
+      this.labelZXCG.Text = "执行中";
+    else if (Form1.Language == 2)
+      this.labelZXCG.Text = "執行中";
+    else
+      this.labelZXCG.Text = "working";
+  }
+
+  private void UpDateUCComboBox2(int mode)
+  {
+    int directionB = this.directionB;
+    this.directionB = (mode - 1) * 90;
+    this.isToTimer = false;
+    this.buttonFXTB_Click();
+    this.directionB = directionB;
+    this.isToTimer = true;
+  }
+
+  private void UpDateUCComboBox3(int mode)
+  {
+  }
+
+  private void ImageCut_Open()
+  {
+    OpenFileDialog openFileDialog = new OpenFileDialog();
+    openFileDialog.Filter = "Image(*.JPG;*.JPEG;*.BMP;*.PNG)|*.JPG;*.JPEG;*.BMP;*.PNG";
+    openFileDialog.Title = "Open";
+    if (openFileDialog.ShowDialog() == DialogResult.OK && new FileInfo(openFileDialog.FileName).Exists)
+    {
+      this.myTempDeviceJpgYSL = this.myDeviceJpgYSL;
+      this.myUISubMode = 1;
+      this.isGifMode = false;
+      this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = (Bitmap) null;
+      if (this.imagePicture != null)
+        this.imagePicture.Dispose();
+      this.imagePicture = (Bitmap) null;
+      if (this.gifPicture != null)
+        this.gifPicture.Dispose();
+      this.gifPicture = (Bitmap) null;
+      this.imageArray.Clear();
+      this.ucImageCut1.SetImage((Image) new Bitmap(openFileDialog.FileName));
+      this.buttonMS_Mode();
+    }
+    openFileDialog.Dispose();
+  }
+
+  private void UpDateUCImageCut(Image image)
+  {
+    this.myUISubMode = 0;
+    this.buttonMS_Mode();
+    if (image == null)
+    {
+      if (!Directory.Exists(this.GifDirectory))
+        return;
+      this.Theme_Click(false);
+      this.Theme_Click_Event(false);
+    }
+    else
+    {
+      if (this.gifPicture != null)
+        this.gifPicture.Dispose();
+      this.gifPicture = (Bitmap) null;
+      this.imageArray.Clear();
+      image.Save(this.GifDirectory + "\\00.png", ImageFormat.Png);
+      try
+      {
+        System.IO.File.Delete(this.GifDirectory + "\\Theme.zt");
+      }
+      catch
+      {
+      }
+      byte[] buffer = this.BitmapToByte((Bitmap) image);
+      image.Dispose();
+      image = (Image) this.ByteToBitmap(buffer);
+      this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = (Bitmap) image;
+      this.imagePicture = (Bitmap) image;
+      this.ImageCount = 100;
+    }
+  }
+
+  private void GifSelect_Open_Generate()
+  {
+    OpenFileDialog openFileDialog = new OpenFileDialog();
+    openFileDialog.Filter = "GIF(*.GIF)|*.GIF";
+    openFileDialog.Title = "Open";
+    if (openFileDialog.ShowDialog() == DialogResult.OK && new FileInfo(openFileDialog.FileName).Exists)
+    {
+      this.isToTimer = false;
+      this.isGifMode = false;
+      Thread.Sleep(100);
+      this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = (Bitmap) null;
+      if (this.imagePicture != null)
+        this.imagePicture.Dispose();
+      this.imagePicture = (Bitmap) null;
+      this.myUISubMode = 0;
+      this.buttonMS_Mode();
+      this.My_Gif_Generate_Event(openFileDialog.FileName);
+      this.ImageCount = 0;
+      this.gifCount = 0;
+      this.isGifMode = true;
+      this.isToTimer = true;
+    }
+    openFileDialog.Dispose();
+  }
+
+  private void My_Gif_Generate_Event(string gifAddr)
+  {
+    if (this.gifPicture != null)
+      this.gifPicture.Dispose();
+    this.gifPicture = (Bitmap) null;
+    this.imageArray.Clear();
+    try
+    {
+      System.IO.File.Delete(this.GifDirectory + "\\00.png");
+    }
+    catch
+    {
+    }
+    try
+    {
+      System.IO.File.Delete(this.GifDirectory + "\\Theme.zt");
+    }
+    catch
+    {
+    }
+    Bitmap bitmap = new Bitmap(gifAddr);
+    byte[] numArray1 = bitmap.GetPropertyItem(20736).Value;
+    FrameDimension dimension = new FrameDimension(bitmap.FrameDimensionsList[0]);
+    int length = bitmap.GetFrameCount(FrameDimension.Time);
+    if (length >= 20000)
+      length = 20000;
+    int[] numArray2 = new int[length];
+    for (int index = 0; index < length; ++index)
+    {
+      numArray2[index] = BitConverter.ToInt32(numArray1, index * 4) * 10;
+      if (numArray2[index] == 0)
+        numArray2[index] = 100;
+    }
+    for (int frameIndex = 0; frameIndex < length; ++frameIndex)
+    {
+      bitmap.SelectActiveFrame(dimension, frameIndex);
+      if (this.is320x320)
+      {
+        Bitmap Bit = new Bitmap(320, 320);
+        Graphics graphics = Graphics.FromImage((Image) Bit);
+        graphics.CompositingQuality = CompositingQuality.HighQuality;
+        SolidBrush solidBrush = new SolidBrush(Color.Black);
+        graphics.FillRectangle((Brush) solidBrush, 0, 0, Bit.Width, Bit.Height);
+        int x = 0;
+        int y = 0;
+        int width;
+        int height;
+        if (bitmap.Width > bitmap.Height)
+        {
+          width = 320;
+          height = bitmap.Height * 320 / bitmap.Width;
+          y += (320 - height) / 2;
+        }
+        else
+        {
+          height = 320;
+          width = bitmap.Width * 320 / bitmap.Height;
+          x += (320 - width) / 2;
+        }
+        graphics.DrawImage((Image) bitmap, x, y, width, height);
+        graphics.Dispose();
+        solidBrush.Dispose();
+        this.imageArray.Add((object) this.BitmapToByte(Bit));
+        Bit.Dispose();
+      }
+      else if (this.is240x240)
+      {
+        Bitmap Bit = new Bitmap(240 /*0xF0*/, 240 /*0xF0*/);
+        Graphics graphics = Graphics.FromImage((Image) Bit);
+        graphics.CompositingQuality = CompositingQuality.HighQuality;
+        SolidBrush solidBrush = new SolidBrush(Color.Black);
+        graphics.FillRectangle((Brush) solidBrush, 0, 0, Bit.Width, Bit.Height);
+        int x = 0;
+        int y = 0;
+        int width;
+        int height;
+        if (bitmap.Width > bitmap.Height)
+        {
+          width = 240 /*0xF0*/;
+          height = bitmap.Height * 240 /*0xF0*/ / bitmap.Width;
+          y += (240 /*0xF0*/ - height) / 2;
+        }
+        else
+        {
+          height = 240 /*0xF0*/;
+          width = bitmap.Width * 240 /*0xF0*/ / bitmap.Height;
+          x += (240 /*0xF0*/ - width) / 2;
+        }
+        graphics.DrawImage((Image) bitmap, x, y, width, height);
+        graphics.Dispose();
+        solidBrush.Dispose();
+        this.imageArray.Add((object) this.BitmapToByte(Bit));
+        Bit.Dispose();
+      }
+      else if (this.is480x480)
+      {
+        Bitmap Bit = new Bitmap(480, 480);
+        Graphics graphics = Graphics.FromImage((Image) Bit);
+        graphics.CompositingQuality = CompositingQuality.HighQuality;
+        SolidBrush solidBrush = new SolidBrush(Color.Black);
+        graphics.FillRectangle((Brush) solidBrush, 0, 0, Bit.Width, Bit.Height);
+        int x = 0;
+        int y = 0;
+        int width;
+        int height;
+        if (bitmap.Width > bitmap.Height)
+        {
+          width = 480;
+          height = bitmap.Height * 480 / bitmap.Width;
+          y += (480 - height) / 2;
+        }
+        else
+        {
+          height = 480;
+          width = bitmap.Width * 480 / bitmap.Height;
+          x += (480 - width) / 2;
+        }
+        graphics.DrawImage((Image) bitmap, x, y, width, height);
+        graphics.Dispose();
+        solidBrush.Dispose();
+        this.imageArray.Add((object) this.BitmapToByte(Bit));
+        Bit.Dispose();
+      }
+      else if (this.is640x480)
+      {
+        if (this.directionB == 0 || this.directionB == 180)
+        {
+          Bitmap Bit = new Bitmap(640, 480);
+          Graphics graphics = Graphics.FromImage((Image) Bit);
+          graphics.CompositingQuality = CompositingQuality.HighQuality;
+          SolidBrush solidBrush = new SolidBrush(Color.Black);
+          graphics.FillRectangle((Brush) solidBrush, 0, 0, Bit.Width, Bit.Height);
+          int x = 0;
+          int y = 0;
+          int width;
+          int height;
+          if ((double) bitmap.Width * 0.75 > (double) bitmap.Height)
+          {
+            width = 640;
+            height = bitmap.Height * 640 / bitmap.Width;
+            y += (480 - height) / 2;
+          }
+          else
+          {
+            height = 480;
+            width = bitmap.Width * 480 / bitmap.Height;
+            x += (640 - width) / 2;
+          }
+          graphics.DrawImage((Image) bitmap, x, y, width, height);
+          graphics.Dispose();
+          solidBrush.Dispose();
+          this.imageArray.Add((object) this.BitmapToByte(Bit));
+          Bit.Dispose();
+        }
+        else
+        {
+          Bitmap Bit = new Bitmap(480, 640);
+          Graphics graphics = Graphics.FromImage((Image) Bit);
+          graphics.CompositingQuality = CompositingQuality.HighQuality;
+          SolidBrush solidBrush = new SolidBrush(Color.Black);
+          graphics.FillRectangle((Brush) solidBrush, 0, 0, Bit.Width, Bit.Height);
+          int x = 0;
+          int y = 0;
+          int height;
+          int width;
+          if ((double) bitmap.Height * 0.75 > (double) bitmap.Width)
+          {
+            height = 640;
+            width = bitmap.Width * 640 / bitmap.Height;
+            x += (480 - width) / 2;
+          }
+          else
+          {
+            width = 480;
+            height = bitmap.Height * 480 / bitmap.Width;
+            y += (640 - height) / 2;
+          }
+          graphics.DrawImage((Image) bitmap, x, y, width, height);
+          graphics.Dispose();
+          solidBrush.Dispose();
+          this.imageArray.Add((object) this.BitmapToByte(Bit));
+          Bit.Dispose();
+        }
+      }
+      else if (this.directionB == 0 || this.directionB == 180)
+      {
+        Bitmap Bit = new Bitmap(320, 240 /*0xF0*/);
+        Graphics graphics = Graphics.FromImage((Image) Bit);
+        graphics.CompositingQuality = CompositingQuality.HighQuality;
+        SolidBrush solidBrush = new SolidBrush(Color.Black);
+        graphics.FillRectangle((Brush) solidBrush, 0, 0, Bit.Width, Bit.Height);
+        int x = 0;
+        int y = 0;
+        int width;
+        int height;
+        if ((double) bitmap.Width * 0.75 > (double) bitmap.Height)
+        {
+          width = 320;
+          height = bitmap.Height * 320 / bitmap.Width;
+          y += (240 /*0xF0*/ - height) / 2;
+        }
+        else
+        {
+          height = 240 /*0xF0*/;
+          width = bitmap.Width * 240 /*0xF0*/ / bitmap.Height;
+          x += (320 - width) / 2;
+        }
+        graphics.DrawImage((Image) bitmap, x, y, width, height);
+        graphics.Dispose();
+        solidBrush.Dispose();
+        this.imageArray.Add((object) this.BitmapToByte(Bit));
+        Bit.Dispose();
+      }
+      else
+      {
+        Bitmap Bit = new Bitmap(240 /*0xF0*/, 320);
+        Graphics graphics = Graphics.FromImage((Image) Bit);
+        graphics.CompositingQuality = CompositingQuality.HighQuality;
+        SolidBrush solidBrush = new SolidBrush(Color.Black);
+        graphics.FillRectangle((Brush) solidBrush, 0, 0, Bit.Width, Bit.Height);
+        int x = 0;
+        int y = 0;
+        int height;
+        int width;
+        if ((double) bitmap.Height * 0.75 > (double) bitmap.Width)
+        {
+          height = 320;
+          width = bitmap.Width * 320 / bitmap.Height;
+          x += (240 /*0xF0*/ - width) / 2;
+        }
+        else
+        {
+          width = 240 /*0xF0*/;
+          height = bitmap.Height * 240 /*0xF0*/ / bitmap.Width;
+          y += (320 - height) / 2;
+        }
+        graphics.DrawImage((Image) bitmap, x, y, width, height);
+        graphics.Dispose();
+        solidBrush.Dispose();
+        this.imageArray.Add((object) this.BitmapToByte(Bit));
+        Bit.Dispose();
+      }
+    }
+    bitmap.Dispose();
+    this.gifDelays = numArray2;
+    for (int index = 1; index < this.gifDelays.Length; ++index)
+      this.gifDelays[index] += this.gifDelays[index - 1];
+    FileStream output = new FileStream(this.GifDirectory + "\\Theme.zt", FileMode.OpenOrCreate);
+    BinaryWriter binaryWriter = new BinaryWriter((Stream) output);
+    binaryWriter.Write((byte) 220);
+    binaryWriter.Write(this.gifDelays.Length);
+    for (int index = 0; index < this.gifDelays.Length; ++index)
+      binaryWriter.Write(this.gifDelays[index]);
+    for (int index = 0; index < this.imageArray.Count; ++index)
+    {
+      byte[] image = (byte[]) this.imageArray[index];
+      binaryWriter.Write(image.Length);
+      binaryWriter.Write(image);
+    }
+    binaryWriter.Flush();
+    binaryWriter.Close();
+    binaryWriter.Dispose();
+    output.Close();
+    output.Dispose();
+  }
+
+  private void VideoCut_Open()
+  {
+    OpenFileDialog openFileDialog = new OpenFileDialog();
+    openFileDialog.Filter = "Video(*.MP4;*.AVI;*.MKV;*.MOV;*.GIF)|*.MP4;*.AVI;*.MKV;*.MOV;*.GIF";
+    openFileDialog.Title = "Open";
+    if (openFileDialog.ShowDialog() == DialogResult.OK)
+    {
+      if (new FileInfo(openFileDialog.FileName).Exists)
+      {
+        this.isToTimer = false;
+        this.isGifMode = false;
+        this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = (Bitmap) null;
+        if (this.imagePicture != null)
+          this.imagePicture.Dispose();
+        this.imagePicture = (Bitmap) null;
+        this.myTempDeviceJpgYSL = this.myDeviceJpgYSL;
+        if (this.gifPicture != null)
+          this.gifPicture.Dispose();
+        this.gifPicture = (Bitmap) null;
+        this.imageArray.Clear();
+        FormCZTV.ClearMemoryMy();
+        this.myUISubMode = 2;
+        this.buttonMS_Mode();
+        this.ucVideoCut1.SetImage(openFileDialog.FileName);
+      }
+    }
+    else
+      this.isToTimer = true;
+    openFileDialog.Dispose();
+  }
+
+  private void My_Video_Generate_Event(string name)
+  {
+    if (this.gifPicture != null)
+      this.gifPicture.Dispose();
+    this.gifPicture = (Bitmap) null;
+    this.imageArray.Clear();
+    try
+    {
+      System.IO.File.Delete(this.GifDirectory + "\\00.png");
+    }
+    catch
+    {
+    }
+    try
+    {
+      System.IO.File.Delete(this.GifDirectory + "\\Theme.zt");
+    }
+    catch
+    {
+    }
+    System.IO.File.Move(name, this.GifDirectory + "\\Theme.zt");
+    FileStream input = new FileStream(this.GifDirectory + "\\Theme.zt", FileMode.OpenOrCreate);
+    BinaryReader binaryReader = new BinaryReader((Stream) input);
+    try
+    {
+      if (binaryReader.ReadByte() == (byte) 220)
+      {
+        int length = binaryReader.ReadInt32();
+        this.gifDelays = new int[length];
+        for (int index = 0; index < length; ++index)
+          this.gifDelays[index] = binaryReader.ReadInt32();
+        for (int index = 0; index < length; ++index)
+        {
+          int count = binaryReader.ReadInt32();
+          this.imageArray.Add((object) binaryReader.ReadBytes(count));
+        }
+      }
+    }
+    catch
+    {
+    }
+    binaryReader.Close();
+    binaryReader.Dispose();
+    input.Close();
+    input.Dispose();
+  }
+
+  private void My_Video_To_Theme(string name)
+  {
+    this.ucVideoCut1.ResetAllTempFile();
+    Process process = new Process()
+    {
+      StartInfo = new ProcessStartInfo("cmd.exe")
+      {
+        UseShellExecute = false
+      }
+    };
+    process.StartInfo.RedirectStandardInput = true;
+    process.StartInfo.RedirectStandardOutput = true;
+    process.StartInfo.CreateNoWindow = true;
+    process.Start();
+    string str = $"ffmpeg -i \"{name}\" -y -r 24 -f image2 \"{this.ucVideoCut1.allPicAddr}%04d.bmp\"";
+    process.StandardInput.WriteLine("cd /d \"{0}\"", (object) Application.StartupPath);
+    process.StandardInput.WriteLine(str);
+    Thread.Sleep(100);
+    this.ucVideoCut1.BmpToThemeFile();
+    this.My_Video_Generate_Event(this.ucVideoCut1.allPicAddr + "Theme.zt");
+    process.Close();
+    process.Dispose();
+  }
+
+  private void UpDateUCVideoCut(ArrayList array)
+  {
+    if (array == null)
+    {
+      this.myUISubMode = 0;
+      this.buttonMS_Mode();
+      if (!Directory.Exists(this.GifDirectory))
+        return;
+      this.Theme_Click(false);
+      this.Theme_Click_Event(false);
+    }
+    else
+    {
+      string name = (string) array[0];
+      switch (Form1.Language)
+      {
+        case 1:
+          this.labelZXCG.Text = "执行中";
+          break;
+        case 2:
+          this.labelZXCG.Text = "執行中";
+          break;
+        default:
+          this.labelZXCG.Text = "working";
+          break;
+      }
+      this.labelZXCG.Show();
+      this.isToTimer = false;
+      this.isGifMode = false;
+      Thread.Sleep(100);
+      this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = (Bitmap) null;
+      if (this.imagePicture != null)
+        this.imagePicture.Dispose();
+      this.imagePicture = (Bitmap) null;
+      this.myUISubMode = 0;
+      this.buttonMS_Mode();
+      Application.DoEvents();
+      FormCZTV.ClearMemoryMy();
+      this.My_Video_Generate_Event(name);
+      FormCZTV.ClearMemoryMy();
+      this.ImageCount = 0;
+      this.gifCount = 0;
+      this.isGifMode = true;
+      this.isToTimer = true;
+      this.labelZXCG.Hide();
+    }
+  }
+
+  private void VideoSelect_Open_Generate()
+  {
+    OpenFileDialog openFileDialog = new OpenFileDialog();
+    openFileDialog.Filter = "Video(*.MP4;*.AVI;*.MKV;*.MOV;*.GIF)|*.MP4;*.AVI;*.MKV;*.MOV;*.GIF";
+    openFileDialog.Title = "Open";
+    if (openFileDialog.ShowDialog() == DialogResult.OK && new FileInfo(openFileDialog.FileName).Exists)
+    {
+      this.myTempDeviceJpgYSL = this.myDeviceJpgYSL;
+      this.ucBoFangQiKongZhi1.SetNewFile(openFileDialog.FileName);
+    }
+    openFileDialog.Dispose();
+  }
+
+  private void GetSystemInfo()
+  {
+    if (this.InfoCount % 3 == 0)
+      this.formGetColor.MyTimer();
+    ++this.InfoCount;
+    if (this.InfoCount >= 64 /*0x40*/)
+    {
+      this.InfoCount = 0;
+      this.ucThemeSetting1.ucXiTongXianShiAdd1.Invalidate();
+      this.ucThemeSetting1.ucXiTongXianShi1.UCXiTongXianShiTimer();
+    }
+    if (this.shanPingTimer < 0)
+      return;
+    --this.shanPingTimer;
+    if (this.shanPingTimer < 0)
+      this.shanPingCount = -1;
+  }
+
+  public void Timer_event()
+  {
+    if (this.isToTimer)
+    {
+      this.GetSystemInfo();
+      if (this.myMode == 0)
+      {
+        if (this.isGifMode)
+        {
+          ++this.ImageCount;
+          this.ImageVal = (int) ((double) this.ImageCount * 15.625);
+          if (this.ImageVal >= this.gifDelays[this.gifCount])
+          {
+            ++this.gifCount;
+            if (this.gifCount >= this.gifDelays.Length)
+            {
+              this.gifCount = 0;
+              this.ImageCount = 0;
+            }
+            if (this.myDevicePingMu == 101)
+            {
+              if (this.gifDelays[0] < 50)
+              {
+                ++this.myDevicePingMuCount;
+                if (this.myDevicePingMuCount < 2)
+                  return;
+                this.myDevicePingMuCount = 0;
+              }
+              else
+              {
+                ++this.myDevicePingMuCount;
+                if (this.myDevicePingMuCount >= 3)
+                {
+                  this.myDevicePingMuCount = 0;
+                  return;
+                }
+              }
+            }
+            this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = (Bitmap) null;
+            if (this.gifPicture != null)
+              this.gifPicture.Dispose();
+            this.gifPicture = this.ByteToBitmap((byte[]) this.imageArray[this.gifCount]);
+            this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = this.gifPicture;
+            if (this.myDeviceMode == 2)
+              this.ImageToJpg(this.ucScreenImageBK1.ucScreenImage1.SetUCState(this.directionB, this.ucThemeSetting1.ucXiTongXianShi1.UCXiTongXianShiSubArray, this.shanPingCount));
+            else
+              this.ImageTo565(this.ucScreenImageBK1.ucScreenImage1.SetUCState(this.directionB, this.ucThemeSetting1.ucXiTongXianShi1.UCXiTongXianShiSubArray, this.shanPingCount));
+          }
+        }
+        else
+        {
+          ++this.ImageCount;
+          if (this.ImageCount >= 10)
+          {
+            this.ImageCount = 0;
+            if (this.myDeviceMode == 2)
+              this.ImageToJpg(this.ucScreenImageBK1.ucScreenImage1.SetUCState(this.directionB, this.ucThemeSetting1.ucXiTongXianShi1.UCXiTongXianShiSubArray, this.shanPingCount));
+            else
+              this.ImageTo565(this.ucScreenImageBK1.ucScreenImage1.SetUCState(this.directionB, this.ucThemeSetting1.ucXiTongXianShi1.UCXiTongXianShiSubArray, this.shanPingCount));
+          }
+        }
+      }
+      else if (this.myMode == 48 /*0x30*/)
+      {
+        ++this.VideoCount;
+        if (this.VideoCount >= 4)
+        {
+          this.VideoCount = 0;
+          this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = this.ucBoFangQiKongZhi1.Timer_Get_Image();
+          if (this.myDeviceMode == 2)
+            this.ImageToJpg(this.ucScreenImageBK1.ucScreenImage1.SetUCState(this.directionB, this.ucThemeSetting1.ucXiTongXianShi1.UCXiTongXianShiSubArray, this.shanPingCount));
+          else
+            this.ImageTo565(this.ucScreenImageBK1.ucScreenImage1.SetUCState(this.directionB, this.ucThemeSetting1.ucXiTongXianShi1.UCXiTongXianShiSubArray, this.shanPingCount));
+        }
+      }
+      else if (this.myMode == 16 /*0x10*/)
+      {
+        ++this.TPXSCount;
+        if (this.TPXSCount >= 3)
+        {
+          this.TPXSCount = 0;
+          if (this.JpW == 0 || this.JpH == 0)
+            return;
+          int num1 = (int) ((double) this.JpW * this.sfblJP);
+          int num2 = (int) ((double) this.JpH * this.sfblJP);
+          int sourceX = (int) ((double) this.JpX * this.sfblJP);
+          int sourceY = (int) ((double) this.JpY * this.sfblJP);
+          Bitmap bitmap1;
+          if (this.is320x320)
+          {
+            bitmap1 = new Bitmap(num2, num1);
+            this.GIFSizeW = 320;
+            this.GIFSizeH = 320;
+            if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpH || this.formJP.Height != this.JpW))
+            {
+              if (!this.formJP.isMouseDown)
+                this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+              this.formJP.Invalidate();
+            }
+          }
+          else if (this.is360x360)
+          {
+            bitmap1 = new Bitmap(num2, num1);
+            this.GIFSizeW = 360;
+            this.GIFSizeH = 360;
+            if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpH || this.formJP.Height != this.JpW))
+            {
+              if (!this.formJP.isMouseDown)
+                this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+              this.formJP.Invalidate();
+            }
+          }
+          else if (this.is240x240)
+          {
+            bitmap1 = new Bitmap(num2, num1);
+            this.GIFSizeW = 240 /*0xF0*/;
+            this.GIFSizeH = 240 /*0xF0*/;
+            if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpH || this.formJP.Height != this.JpW))
+            {
+              if (!this.formJP.isMouseDown)
+                this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+              this.formJP.Invalidate();
+            }
+          }
+          else if (this.is480x480)
+          {
+            bitmap1 = new Bitmap(num2, num1);
+            this.GIFSizeW = 480;
+            this.GIFSizeH = 480;
+            if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpH || this.formJP.Height != this.JpW))
+            {
+              if (!this.formJP.isMouseDown)
+                this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+              this.formJP.Invalidate();
+            }
+          }
+          else if (this.is1600x720)
+          {
+            if (this.directionB == 0 || this.directionB == 180)
+            {
+              bitmap1 = new Bitmap(num2, num1);
+              this.GIFSizeW = 1600;
+              this.GIFSizeH = 720;
+              if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpH || this.formJP.Height != this.JpW))
+              {
+                if (!this.formJP.isMouseDown)
+                  this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+                this.formJP.Invalidate();
+              }
+            }
+            else
+            {
+              bitmap1 = new Bitmap(num1, num2);
+              this.GIFSizeW = 720;
+              this.GIFSizeH = 1600;
+              if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpW || this.formJP.Height != this.JpH))
+              {
+                if (!this.formJP.isMouseDown)
+                  this.formJP.SetBounds(this.JpX, this.JpY, this.JpW, this.JpH);
+                this.formJP.Invalidate();
+              }
+            }
+          }
+          else if (this.is800x480)
+          {
+            if (this.directionB == 0 || this.directionB == 180)
+            {
+              bitmap1 = new Bitmap(num2, num1);
+              this.GIFSizeW = 800;
+              this.GIFSizeH = 480;
+              if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpH || this.formJP.Height != this.JpW))
+              {
+                if (!this.formJP.isMouseDown)
+                  this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+                this.formJP.Invalidate();
+              }
+            }
+            else
+            {
+              bitmap1 = new Bitmap(num1, num2);
+              this.GIFSizeW = 480;
+              this.GIFSizeH = 800;
+              if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpW || this.formJP.Height != this.JpH))
+              {
+                if (!this.formJP.isMouseDown)
+                  this.formJP.SetBounds(this.JpX, this.JpY, this.JpW, this.JpH);
+                this.formJP.Invalidate();
+              }
+            }
+          }
+          else if (this.is854x480)
+          {
+            if (this.directionB == 0 || this.directionB == 180)
+            {
+              bitmap1 = new Bitmap(num2, num1);
+              this.GIFSizeW = 854;
+              this.GIFSizeH = 480;
+              if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpH || this.formJP.Height != this.JpW))
+              {
+                if (!this.formJP.isMouseDown)
+                  this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+                this.formJP.Invalidate();
+              }
+            }
+            else
+            {
+              bitmap1 = new Bitmap(num1, num2);
+              this.GIFSizeW = 480;
+              this.GIFSizeH = 854;
+              if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpW || this.formJP.Height != this.JpH))
+              {
+                if (!this.formJP.isMouseDown)
+                  this.formJP.SetBounds(this.JpX, this.JpY, this.JpW, this.JpH);
+                this.formJP.Invalidate();
+              }
+            }
+          }
+          else if (this.is960x320)
+          {
+            if (this.directionB == 0 || this.directionB == 180)
+            {
+              bitmap1 = new Bitmap(num2, num1);
+              this.GIFSizeW = 960;
+              this.GIFSizeH = 320;
+              if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpH || this.formJP.Height != this.JpW))
+              {
+                if (!this.formJP.isMouseDown)
+                  this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+                this.formJP.Invalidate();
+              }
+            }
+            else
+            {
+              bitmap1 = new Bitmap(num1, num2);
+              this.GIFSizeW = 320;
+              this.GIFSizeH = 960;
+              if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpW || this.formJP.Height != this.JpH))
+              {
+                if (!this.formJP.isMouseDown)
+                  this.formJP.SetBounds(this.JpX, this.JpY, this.JpW, this.JpH);
+                this.formJP.Invalidate();
+              }
+            }
+          }
+          else if (this.is960x540)
+          {
+            if (this.directionB == 0 || this.directionB == 180)
+            {
+              bitmap1 = new Bitmap(num2, num1);
+              this.GIFSizeW = 960;
+              this.GIFSizeH = 540;
+              if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpH || this.formJP.Height != this.JpW))
+              {
+                if (!this.formJP.isMouseDown)
+                  this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+                this.formJP.Invalidate();
+              }
+            }
+            else
+            {
+              bitmap1 = new Bitmap(num1, num2);
+              this.GIFSizeW = 540;
+              this.GIFSizeH = 960;
+              if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpW || this.formJP.Height != this.JpH))
+              {
+                if (!this.formJP.isMouseDown)
+                  this.formJP.SetBounds(this.JpX, this.JpY, this.JpW, this.JpH);
+                this.formJP.Invalidate();
+              }
+            }
+          }
+          else if (this.is1280x480)
+          {
+            if (this.directionB == 0 || this.directionB == 180)
+            {
+              bitmap1 = new Bitmap(num2, num1);
+              this.GIFSizeW = 1280 /*0x0500*/;
+              this.GIFSizeH = 480;
+              if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpH || this.formJP.Height != this.JpW))
+              {
+                if (!this.formJP.isMouseDown)
+                  this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+                this.formJP.Invalidate();
+              }
+            }
+            else
+            {
+              bitmap1 = new Bitmap(num1, num2);
+              this.GIFSizeW = 480;
+              this.GIFSizeH = 1280 /*0x0500*/;
+              if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpW || this.formJP.Height != this.JpH))
+              {
+                if (!this.formJP.isMouseDown)
+                  this.formJP.SetBounds(this.JpX, this.JpY, this.JpW, this.JpH);
+                this.formJP.Invalidate();
+              }
+            }
+          }
+          else if (this.is1920x462)
+          {
+            if (this.directionB == 0 || this.directionB == 180)
+            {
+              bitmap1 = new Bitmap(num2, num1);
+              this.GIFSizeW = 1920;
+              this.GIFSizeH = 462;
+              if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpH || this.formJP.Height != this.JpW))
+              {
+                if (!this.formJP.isMouseDown)
+                  this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+                this.formJP.Invalidate();
+              }
+            }
+            else
+            {
+              bitmap1 = new Bitmap(num1, num2);
+              this.GIFSizeW = 462;
+              this.GIFSizeH = 1920;
+              if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpW || this.formJP.Height != this.JpH))
+              {
+                if (!this.formJP.isMouseDown)
+                  this.formJP.SetBounds(this.JpX, this.JpY, this.JpW, this.JpH);
+                this.formJP.Invalidate();
+              }
+            }
+          }
+          else if (this.is640x480)
+          {
+            if (this.directionB == 0 || this.directionB == 180)
+            {
+              bitmap1 = new Bitmap(num2, num1);
+              this.GIFSizeW = 640;
+              this.GIFSizeH = 480;
+              if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpH || this.formJP.Height != this.JpW))
+              {
+                if (!this.formJP.isMouseDown)
+                  this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+                this.formJP.Invalidate();
+              }
+            }
+            else
+            {
+              bitmap1 = new Bitmap(num1, num2);
+              this.GIFSizeW = 480;
+              this.GIFSizeH = 640;
+              if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpW || this.formJP.Height != this.JpH))
+              {
+                if (!this.formJP.isMouseDown)
+                  this.formJP.SetBounds(this.JpX, this.JpY, this.JpW, this.JpH);
+                this.formJP.Invalidate();
+              }
+            }
+          }
+          else if (this.directionB == 0 || this.directionB == 180)
+          {
+            bitmap1 = new Bitmap(num2, num1);
+            this.GIFSizeW = 320;
+            this.GIFSizeH = 240 /*0xF0*/;
+            if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpH || this.formJP.Height != this.JpW))
+            {
+              if (!this.formJP.isMouseDown)
+                this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+              this.formJP.Invalidate();
+            }
+          }
+          else
+          {
+            bitmap1 = new Bitmap(num1, num2);
+            this.GIFSizeW = 240 /*0xF0*/;
+            this.GIFSizeH = 320;
+            if (!this.myYcbk && (this.formJP.Left != this.JpX || this.formJP.Top != this.JpY || this.formJP.Width != this.JpW || this.formJP.Height != this.JpH))
+            {
+              if (!this.formJP.isMouseDown)
+                this.formJP.SetBounds(this.JpX, this.JpY, this.JpW, this.JpH);
+              this.formJP.Invalidate();
+            }
+          }
+          Graphics graphics = Graphics.FromImage((Image) bitmap1);
+          graphics.CompositingQuality = CompositingQuality.HighSpeed;
+          try
+          {
+            graphics.CopyFromScreen(sourceX, sourceY, 0, 0, new Size(bitmap1.Width, bitmap1.Height));
+          }
+          catch
+          {
+            graphics.Dispose();
+            bitmap1.Dispose();
+            return;
+          }
+          Bitmap bitmap2 = new Bitmap(this.GIFSizeW, this.GIFSizeH);
+          Graphics.FromImage((Image) bitmap2).DrawImage((Image) bitmap1, 0, 0, this.GIFSizeW, this.GIFSizeH);
+          graphics.Dispose();
+          bitmap1.Dispose();
+          Bitmap bitmapBgk = this.ucScreenImageBK1.ucScreenImage1.bitmapBGK;
+          this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = bitmap2;
+          bitmapBgk?.Dispose();
+          if (this.myDeviceMode == 2)
+            this.ImageToJpg(this.ucScreenImageBK1.ucScreenImage1.SetUCState(this.directionB, this.ucThemeSetting1.ucXiTongXianShi1.UCXiTongXianShiSubArray, this.shanPingCount));
+          else
+            this.ImageTo565(this.ucScreenImageBK1.ucScreenImage1.SetUCState(this.directionB, this.ucThemeSetting1.ucXiTongXianShi1.UCXiTongXianShiSubArray, this.shanPingCount));
+        }
+      }
+      if (this.ucThemeLocal1.isLunbo && this.ucThemeLocal1.lunBoCount > 0)
+      {
+        ++this.myLunboCountSub;
+        if (this.myLunboCountSub < 64 /*0x40*/)
+          return;
+        this.myLunboCountSub = 0;
+        ++this.myLunboCount;
+        if (this.myLunboCount >= this.ucThemeLocal1.myLunBoTimer)
+        {
+          this.myLunboCount = 0;
+          ++this.myLunboCountN;
+          if (this.myLunboCountN >= this.ucThemeLocal1.lunBoCount)
+            this.myLunboCountN = 0;
+          this.myTheme = this.ucThemeLocal1.lunBoArray[this.myLunboCountN];
+          this.Theme_Click_Event(false);
+        }
+      }
+      else
+      {
+        this.myLunboCountSub = 0;
+        this.myLunboCount = 0;
+        this.myLunboCountN = 0;
+      }
+    }
+    else
+      this.ucVideoCut1.Timer_event();
+  }
+
+  private static byte[] CompressionImage(Image image, long quality)
+  {
+    using (Image original = image)
+    {
+      using (Bitmap bitmap = new Bitmap(original))
+      {
+        ImageCodecInfo encoder = FormCZTV.GetEncoder(ImageFormat.Jpeg);
+        Encoder quality1 = Encoder.Quality;
+        EncoderParameters encoderParams = new EncoderParameters(1);
+        EncoderParameter encoderParameter = new EncoderParameter(quality1, quality);
+        encoderParams.Param[0] = encoderParameter;
+        using (MemoryStream memoryStream = new MemoryStream())
+        {
+          bitmap.Save((Stream) memoryStream, encoder, encoderParams);
+          encoderParams.Dispose();
+          encoderParameter.Dispose();
+          return memoryStream.ToArray();
+        }
+      }
+    }
+  }
+
+  private static ImageCodecInfo GetEncoder(ImageFormat format)
+  {
+    return ((IEnumerable<ImageCodecInfo>) ImageCodecInfo.GetImageDecoders()).FirstOrDefault<ImageCodecInfo>((Func<ImageCodecInfo, bool>) (codec => codec.FormatID == format.Guid));
+  }
+
+  private void ImageToJpg(Image image)
+  {
+    string str = $"{this.GifDirectory}{this.ThemeML}{(string) this.themeArray[this.myTheme]}\\Theme.png";
+    if (!System.IO.File.Exists(str))
+    {
+      image.Save(str, ImageFormat.Png);
+      this.ThemeLocal(this.nowThemeLocal, (object) null, (object) null, (object) null);
+    }
+    else
+    {
+      Image image1;
+      if (this.is320x320 || this.is480x480)
+      {
+        if (this.myDevicePingMu == 6)
+        {
+          switch (this.directionB)
+          {
+            case 0:
+              image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImgHei(image, 180.000015f);
+              break;
+            case 90:
+              image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImgHei(image, 90.00002f);
+              break;
+            case 180:
+              image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 0.0f);
+              break;
+            case 270:
+              image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImgHei(image, 270f);
+              break;
+            default:
+              image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImgHei(image, 180.000015f);
+              break;
+          }
+        }
+        else
+        {
+          switch (this.directionB)
+          {
+            case 0:
+              image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 0.0f);
+              break;
+            case 90:
+              image1 = this.myDevicePingMu != 3 ? this.ucScreenImageBK1.ucScreenImage1.RotateImgHei(image, 270f) : this.ucScreenImageBK1.ucScreenImage1.RotateImgBu(image, 270f);
+              break;
+            case 180:
+              image1 = this.myDevicePingMu != 3 ? this.ucScreenImageBK1.ucScreenImage1.RotateImgHei(image, 180.000015f) : this.ucScreenImageBK1.ucScreenImage1.RotateImgBu(image, 180.000015f);
+              break;
+            case 270:
+              image1 = this.myDevicePingMu != 3 ? this.ucScreenImageBK1.ucScreenImage1.RotateImgHei(image, 90.00002f) : this.ucScreenImageBK1.ucScreenImage1.RotateImgBu(image, 90.00002f);
+              break;
+            default:
+              image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 0.0f);
+              break;
+          }
+        }
+      }
+      else if (this.myDevicePingMu == 5)
+      {
+        switch (this.directionB)
+        {
+          case 0:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 0.0f);
+            break;
+          case 90:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 270f);
+            break;
+          case 180:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 180.000015f);
+            break;
+          case 270:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 90.00002f);
+            break;
+          default:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 0.0f);
+            break;
+        }
+      }
+      else if (this.is1600x720)
+      {
+        switch (this.directionB)
+        {
+          case 0:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 180.000015f);
+            break;
+          case 90:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 90.00002f);
+            break;
+          case 180:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 0.0f);
+            break;
+          case 270:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 270f);
+            break;
+          default:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 0.0f);
+            break;
+        }
+      }
+      else if (this.is1280x480 || this.is800x480 || this.is854x480 || this.is960x540 || this.is960x320)
+      {
+        switch (this.directionB)
+        {
+          case 0:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 0.0f);
+            break;
+          case 90:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 270f);
+            break;
+          case 180:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 180.000015f);
+            break;
+          case 270:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 90.00002f);
+            break;
+          default:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 0.0f);
+            break;
+        }
+      }
+      else if (this.is1920x462)
+      {
+        switch (this.directionB)
+        {
+          case 0:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 180.000015f);
+            break;
+          case 90:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 90.00002f);
+            break;
+          case 180:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 0.0f);
+            break;
+          case 270:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 270f);
+            break;
+          default:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 0.0f);
+            break;
+        }
+      }
+      else if (this.is640x480)
+      {
+        switch (this.directionB)
+        {
+          case 0:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 0.0f);
+            break;
+          case 90:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 270f);
+            break;
+          case 180:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 180.000015f);
+            break;
+          case 270:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 90.00002f);
+            break;
+          default:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 0.0f);
+            break;
+        }
+      }
+      else
+      {
+        switch (this.directionB)
+        {
+          case 0:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 90.00002f);
+            break;
+          case 90:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 0.0f);
+            break;
+          case 180:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 270f);
+            break;
+          case 270:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 180.000015f);
+            break;
+          default:
+            image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 90f);
+            break;
+        }
+      }
+      byte[] second = FormCZTV.CompressionImage(image1, (long) this.myTempDeviceJpgYSL);
+      image1.Dispose();
+      byte[] bytes = BitConverter.GetBytes(second.Length);
+      if (second.Length >= 450000)
+      {
+        this.myTempDeviceJpgYSL -= 5;
+      }
+      else
+      {
+        byte[] array;
+        if (this.is480x480)
+          array = ((IEnumerable<byte>) new byte[64 /*0x40*/]
+          {
+            (byte) 18,
+            (byte) 52,
+            (byte) 86,
+            (byte) 120,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 224 /*0xE0*/,
+            (byte) 1,
+            (byte) 0,
+            (byte) 0,
+            (byte) 224 /*0xE0*/,
+            (byte) 1,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            bytes[0],
+            bytes[1],
+            bytes[2],
+            bytes[3]
+          }).Concat<byte>((IEnumerable<byte>) second).ToArray<byte>();
+        else if (this.is320x320)
+          array = ((IEnumerable<byte>) new byte[64 /*0x40*/]
+          {
+            (byte) 18,
+            (byte) 52,
+            (byte) 86,
+            (byte) 120,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 64 /*0x40*/,
+            (byte) 1,
+            (byte) 0,
+            (byte) 0,
+            (byte) 64 /*0x40*/,
+            (byte) 1,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            bytes[0],
+            bytes[1],
+            bytes[2],
+            bytes[3]
+          }).Concat<byte>((IEnumerable<byte>) second).ToArray<byte>();
+        else if (this.is640x480)
+          array = ((IEnumerable<byte>) new byte[64 /*0x40*/]
+          {
+            (byte) 18,
+            (byte) 52,
+            (byte) 86,
+            (byte) 120,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 128 /*0x80*/,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 224 /*0xE0*/,
+            (byte) 1,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            bytes[0],
+            bytes[1],
+            bytes[2],
+            bytes[3]
+          }).Concat<byte>((IEnumerable<byte>) second).ToArray<byte>();
+        else if (this.is240x240)
+          array = ((IEnumerable<byte>) new byte[64 /*0x40*/]
+          {
+            (byte) 18,
+            (byte) 52,
+            (byte) 86,
+            (byte) 120,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 240 /*0xF0*/,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 240 /*0xF0*/,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            bytes[0],
+            bytes[1],
+            bytes[2],
+            bytes[3]
+          }).Concat<byte>((IEnumerable<byte>) second).ToArray<byte>();
+        else if (this.is1600x720)
+          array = ((IEnumerable<byte>) new byte[64 /*0x40*/]
+          {
+            (byte) 18,
+            (byte) 52,
+            (byte) 86,
+            (byte) 120,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 64 /*0x40*/,
+            (byte) 6,
+            (byte) 0,
+            (byte) 0,
+            (byte) 208 /*0xD0*/,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            bytes[0],
+            bytes[1],
+            bytes[2],
+            bytes[3]
+          }).Concat<byte>((IEnumerable<byte>) second).ToArray<byte>();
+        else if (this.is800x480)
+          array = ((IEnumerable<byte>) new byte[64 /*0x40*/]
+          {
+            (byte) 18,
+            (byte) 52,
+            (byte) 86,
+            (byte) 120,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 32 /*0x20*/,
+            (byte) 3,
+            (byte) 0,
+            (byte) 0,
+            (byte) 224 /*0xE0*/,
+            (byte) 1,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            bytes[0],
+            bytes[1],
+            bytes[2],
+            bytes[3]
+          }).Concat<byte>((IEnumerable<byte>) second).ToArray<byte>();
+        else if (this.is854x480)
+          array = ((IEnumerable<byte>) new byte[64 /*0x40*/]
+          {
+            (byte) 18,
+            (byte) 52,
+            (byte) 86,
+            (byte) 120,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 86,
+            (byte) 3,
+            (byte) 0,
+            (byte) 0,
+            (byte) 224 /*0xE0*/,
+            (byte) 1,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            bytes[0],
+            bytes[1],
+            bytes[2],
+            bytes[3]
+          }).Concat<byte>((IEnumerable<byte>) second).ToArray<byte>();
+        else if (this.is960x540)
+          array = ((IEnumerable<byte>) new byte[64 /*0x40*/]
+          {
+            (byte) 18,
+            (byte) 52,
+            (byte) 86,
+            (byte) 120,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 192 /*0xC0*/,
+            (byte) 3,
+            (byte) 0,
+            (byte) 0,
+            (byte) 28,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            bytes[0],
+            bytes[1],
+            bytes[2],
+            bytes[3]
+          }).Concat<byte>((IEnumerable<byte>) second).ToArray<byte>();
+        else if (this.is960x320)
+          array = ((IEnumerable<byte>) new byte[64 /*0x40*/]
+          {
+            (byte) 18,
+            (byte) 52,
+            (byte) 86,
+            (byte) 120,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 192 /*0xC0*/,
+            (byte) 3,
+            (byte) 0,
+            (byte) 0,
+            (byte) 64 /*0x40*/,
+            (byte) 1,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            bytes[0],
+            bytes[1],
+            bytes[2],
+            bytes[3]
+          }).Concat<byte>((IEnumerable<byte>) second).ToArray<byte>();
+        else if (this.is1920x462)
+          array = ((IEnumerable<byte>) new byte[64 /*0x40*/]
+          {
+            (byte) 18,
+            (byte) 52,
+            (byte) 86,
+            (byte) 120,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 128 /*0x80*/,
+            (byte) 7,
+            (byte) 0,
+            (byte) 0,
+            (byte) 206,
+            (byte) 1,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            bytes[0],
+            bytes[1],
+            bytes[2],
+            bytes[3]
+          }).Concat<byte>((IEnumerable<byte>) second).ToArray<byte>();
+        else if (this.is1280x480)
+          array = ((IEnumerable<byte>) new byte[20]
+          {
+            (byte) 218,
+            (byte) 219,
+            (byte) 220,
+            (byte) 221,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 5,
+            (byte) 224 /*0xE0*/,
+            (byte) 1,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            bytes[0],
+            bytes[1],
+            bytes[2],
+            bytes[3]
+          }).Concat<byte>((IEnumerable<byte>) second).ToArray<byte>();
+        else if (this.is360x360)
+          array = ((IEnumerable<byte>) new byte[20]
+          {
+            (byte) 218,
+            (byte) 219,
+            (byte) 220,
+            (byte) 221,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 104,
+            (byte) 1,
+            (byte) 104,
+            (byte) 1,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            bytes[0],
+            bytes[1],
+            bytes[2],
+            bytes[3]
+          }).Concat<byte>((IEnumerable<byte>) second).ToArray<byte>();
+        else if (this.myDevicePingMu == 5)
+          array = ((IEnumerable<byte>) new byte[64 /*0x40*/]
+          {
+            (byte) 18,
+            (byte) 52,
+            (byte) 86,
+            (byte) 120,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 64 /*0x40*/,
+            (byte) 1,
+            (byte) 0,
+            (byte) 0,
+            (byte) 240 /*0xF0*/,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            bytes[0],
+            bytes[1],
+            bytes[2],
+            bytes[3]
+          }).Concat<byte>((IEnumerable<byte>) second).ToArray<byte>();
+        else
+          array = ((IEnumerable<byte>) new byte[20]
+          {
+            (byte) 218,
+            (byte) 219,
+            (byte) 220,
+            (byte) 221,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 240 /*0xF0*/,
+            (byte) 0,
+            (byte) 64 /*0x40*/,
+            (byte) 1,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            bytes[0],
+            bytes[1],
+            bytes[2],
+            bytes[3]
+          }).Concat<byte>((IEnumerable<byte>) second).ToArray<byte>();
+        byte[] data = new byte[4]
+        {
+          (byte) 0,
+          (byte) 0,
+          (byte) 0,
+          (byte) 30
+        };
+        FormCZTV.delegateFormCZTV delegateForm1 = this.delegateForm;
+        if (delegateForm1 != null)
+          delegateForm1(1, (object) (this.myDeviceCount * 2), (object) data, (object) 4);
+        FormCZTV.delegateFormCZTV delegateForm2 = this.delegateForm;
+        if (delegateForm2 != null)
+          delegateForm2(1, (object) (1 + this.myDeviceCount * 2), (object) array, (object) array.Length);
+        data[0] = (byte) 0;
+        data[1] = (byte) 1;
+        data[2] = (byte) 1;
+        data[3] = (byte) 30;
+        FormCZTV.delegateFormCZTV delegateForm3 = this.delegateForm;
+        if (delegateForm3 == null)
+          return;
+        delegateForm3(1, (object) (this.myDeviceCount * 2), (object) data, (object) 4);
+      }
+    }
+  }
+
+  private void ImageTo565(Image image)
+  {
+    try
+    {
+      string str = $"{this.GifDirectory}{this.ThemeML}{(string) this.themeArray[this.myTheme]}\\Theme.png";
+      if (!System.IO.File.Exists(str))
+      {
+        image.Save(str, ImageFormat.Png);
+        this.ThemeLocal(this.nowThemeLocal, (object) null, (object) null, (object) null);
+      }
+      else
+      {
+        Image image1;
+        if (this.is240x240 || this.is320x320 || this.is480x480)
+        {
+          switch (this.directionB)
+          {
+            case 0:
+              image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 0.0f);
+              break;
+            case 90:
+              image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 270f);
+              break;
+            case 180:
+              image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 180.000015f);
+              break;
+            case 270:
+              image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 90.00002f);
+              break;
+            default:
+              image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 0.0f);
+              break;
+          }
+        }
+        else
+        {
+          switch (this.directionB)
+          {
+            case 0:
+              image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 90.00002f);
+              break;
+            case 90:
+              image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 0.0f);
+              break;
+            case 180:
+              image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 270f);
+              break;
+            case 270:
+              image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 180.000015f);
+              break;
+            default:
+              image1 = this.ucScreenImageBK1.ucScreenImage1.RotateImg(image, 90f);
+              break;
+          }
+        }
+        Bitmap bitmap = (Bitmap) image1;
+        Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+        BitmapData bitmapdata = bitmap.LockBits(rect, ImageLockMode.ReadWrite, bitmap.PixelFormat);
+        IntPtr scan0 = bitmapdata.Scan0;
+        int data1 = bitmap.Width * bitmap.Height * 2;
+        int length = bitmap.Width * bitmap.Height * 4;
+        byte[] destination = new byte[length];
+        Marshal.Copy(scan0, destination, 0, length);
+        bitmap.UnlockBits(bitmapdata);
+        bitmap.Dispose();
+        byte[] numArray = new byte[data1];
+        int index1 = 0;
+        int index2 = 0;
+        while (index1 < data1)
+        {
+          byte num1 = destination[index2 + 2];
+          byte num2 = destination[index2 + 1];
+          byte num3 = destination[index2];
+          if (this.is320x320)
+          {
+            numArray[index1 + 1] = (byte) ((int) num2 << 3 & 224 /*0xE0*/);
+            numArray[index1 + 1] += (byte) ((uint) num3 >> 3);
+            numArray[index1] = (byte) ((uint) num1 & 248U);
+            numArray[index1] += (byte) ((uint) num2 >> 5);
+          }
+          else if (this.myDeviceSPIMode == 2)
+          {
+            numArray[index1 + 1] = (byte) ((int) num2 << 3 & 224 /*0xE0*/);
+            numArray[index1 + 1] += (byte) ((uint) num3 >> 3);
+            numArray[index1] = (byte) ((uint) num1 & 248U);
+            numArray[index1] += (byte) ((uint) num2 >> 5);
+          }
+          else
+          {
+            numArray[index1] = (byte) ((int) num2 << 3 & 224 /*0xE0*/);
+            numArray[index1] += (byte) ((uint) num3 >> 3);
+            numArray[index1 + 1] = (byte) ((uint) num1 & 248U);
+            numArray[index1 + 1] += (byte) ((uint) num2 >> 5);
+          }
+          index1 += 2;
+          index2 += 4;
+        }
+        if (this.myDeviceMode == 1)
+        {
+          FormCZTV.delegateFormCZTV delegateForm1 = this.delegateForm;
+          if (delegateForm1 != null)
+            delegateForm1(0, (object) (1 + this.myDeviceCount * 4), (object) numArray, (object) data1);
+          byte[] data = new byte[4]
+          {
+            (byte) 0,
+            (byte) 1,
+            (byte) 1,
+            (byte) 30
+          };
+          FormCZTV.delegateFormCZTV delegateForm2 = this.delegateForm;
+          if (delegateForm2 == null)
+            return;
+          delegateForm2(0, (object) (this.myDeviceCount * 4), (object) data, (object) 4);
+        }
+        else if (this.myDeviceMode == 3)
+        {
+          byte[] bytes = BitConverter.GetBytes(numArray.Length);
+          byte[] array = ((IEnumerable<byte>) new byte[20]
+          {
+            (byte) 218,
+            (byte) 219,
+            (byte) 220,
+            (byte) 221,
+            (byte) 2,
+            (byte) 0,
+            (byte) 1,
+            (byte) 0,
+            (byte) 240 /*0xF0*/,
+            (byte) 0,
+            (byte) 64 /*0x40*/,
+            (byte) 1,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            bytes[0],
+            bytes[1],
+            bytes[2],
+            bytes[3]
+          }).Concat<byte>((IEnumerable<byte>) numArray).ToArray<byte>();
+          FormCZTV.delegateFormCZTV delegateForm = this.delegateForm;
+          if (delegateForm == null)
+            return;
+          delegateForm(1, (object) (1 + this.myDeviceCount * 2), (object) array, (object) array.Length);
+        }
+        else if (this.myDeviceMode == 4)
+        {
+          byte[] bytes = BitConverter.GetBytes(numArray.Length);
+          byte[] array = ((IEnumerable<byte>) new byte[64 /*0x40*/]
+          {
+            (byte) 18,
+            (byte) 52,
+            (byte) 86,
+            (byte) 120,
+            (byte) 3,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 64 /*0x40*/,
+            (byte) 1,
+            (byte) 0,
+            (byte) 0,
+            (byte) 64 /*0x40*/,
+            (byte) 1,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 2,
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            bytes[0],
+            bytes[1],
+            bytes[2],
+            bytes[3]
+          }).Concat<byte>((IEnumerable<byte>) numArray).ToArray<byte>();
+          byte[] data = new byte[4]
+          {
+            (byte) 0,
+            (byte) 0,
+            (byte) 0,
+            (byte) 30
+          };
+          FormCZTV.delegateFormCZTV delegateForm3 = this.delegateForm;
+          if (delegateForm3 != null)
+            delegateForm3(1, (object) (this.myDeviceCount * 2), (object) data, (object) 4);
+          FormCZTV.delegateFormCZTV delegateForm4 = this.delegateForm;
+          if (delegateForm4 != null)
+            delegateForm4(1, (object) (1 + this.myDeviceCount * 2), (object) array, (object) array.Length);
+          data[0] = (byte) 0;
+          data[1] = (byte) 1;
+          data[2] = (byte) 1;
+          data[3] = (byte) 30;
+          FormCZTV.delegateFormCZTV delegateForm5 = this.delegateForm;
+          if (delegateForm5 == null)
+            return;
+          delegateForm5(1, (object) (this.myDeviceCount * 2), (object) data, (object) 4);
+        }
+        else
+        {
+          if (this.myDeviceMode != 10)
+            return;
+          byte[] data = new byte[4];
+          FormCZTV.delegateFormCZTV delegateForm6 = this.delegateForm;
+          if (delegateForm6 != null)
+            delegateForm6(1, (object) (1 + this.myDeviceCount * 2), (object) numArray, (object) numArray.Length);
+          data[0] = (byte) 0;
+          data[1] = (byte) 1;
+          data[2] = (byte) 1;
+          data[3] = (byte) 30;
+          FormCZTV.delegateFormCZTV delegateForm7 = this.delegateForm;
+          if (delegateForm7 != null)
+            delegateForm7(1, (object) (this.myDeviceCount * 2), (object) data, (object) 4);
+        }
+      }
+    }
+    catch
+    {
+    }
+  }
+
+  private void buttonSelectBackgroundImage()
+  {
+    this.ucThemeWeb1.CheakDirectionB(this.directionB);
+    this.ucThemeMask1.CheakDirectionB(this.directionB);
+    if (this.myUIMode == 1 || this.myUIMode == 4)
+    {
+      if (this.is320x320)
+      {
+        this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减320320;
+        this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减320320;
+        this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览320X320;
+      }
+      else if (this.is360x360)
+      {
+        this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减360360;
+        this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减360360;
+        this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览360360圆;
+      }
+      else if (this.is480x480)
+      {
+        this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减480480;
+        this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减480480;
+        if (this.myDevicePingMu == 3)
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览480X480圆;
+        else
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览480X480;
+      }
+      else if (this.is240x240)
+      {
+        this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减240240;
+        this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减240240;
+        this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览240X240;
+      }
+      else if (this.is1600x720)
+      {
+        if (this.directionB == 0 || this.directionB == 180)
+        {
+          this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减400180;
+          this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减400180;
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览400X180;
+          this.ucImageCut1.isFanZhuan = false;
+          this.ucVideoCut1.isFanZhuan = false;
+          this.ucBoFangQiKongZhi1.isFanZhuan = false;
+        }
+        else
+        {
+          this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减180400;
+          this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减180400;
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览180X400;
+          this.ucImageCut1.isFanZhuan = true;
+          this.ucVideoCut1.isFanZhuan = true;
+          this.ucBoFangQiKongZhi1.isFanZhuan = true;
+        }
+      }
+      else if (this.is1280x480)
+      {
+        if (this.directionB == 0 || this.directionB == 180)
+        {
+          this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减480180;
+          this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减480180;
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览480X180;
+          this.ucImageCut1.isFanZhuan = false;
+          this.ucVideoCut1.isFanZhuan = false;
+          this.ucBoFangQiKongZhi1.isFanZhuan = false;
+        }
+        else
+        {
+          this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减180480;
+          this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减180480;
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览180X480;
+          this.ucImageCut1.isFanZhuan = true;
+          this.ucVideoCut1.isFanZhuan = true;
+          this.ucBoFangQiKongZhi1.isFanZhuan = true;
+        }
+      }
+      else if (this.is1920x462)
+      {
+        if (this.directionB == 0 || this.directionB == 180)
+        {
+          this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减480116;
+          this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减480116;
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览480X116;
+          this.ucImageCut1.isFanZhuan = false;
+          this.ucVideoCut1.isFanZhuan = false;
+          this.ucBoFangQiKongZhi1.isFanZhuan = false;
+        }
+        else
+        {
+          this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减116480;
+          this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减116480;
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览116X480;
+          this.ucImageCut1.isFanZhuan = true;
+          this.ucVideoCut1.isFanZhuan = true;
+          this.ucBoFangQiKongZhi1.isFanZhuan = true;
+        }
+      }
+      else if (this.is800x480)
+      {
+        if (this.directionB == 0 || this.directionB == 180)
+        {
+          this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减400240;
+          this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减400240;
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览400X240;
+          this.ucImageCut1.isFanZhuan = false;
+          this.ucVideoCut1.isFanZhuan = false;
+          this.ucBoFangQiKongZhi1.isFanZhuan = false;
+        }
+        else
+        {
+          this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减240400;
+          this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减240400;
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览240X400;
+          this.ucImageCut1.isFanZhuan = true;
+          this.ucVideoCut1.isFanZhuan = true;
+          this.ucBoFangQiKongZhi1.isFanZhuan = true;
+        }
+      }
+      else if (this.is854x480)
+      {
+        if (this.directionB == 0 || this.directionB == 180)
+        {
+          this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减427240;
+          this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减427240;
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览427X240;
+          this.ucImageCut1.isFanZhuan = false;
+          this.ucVideoCut1.isFanZhuan = false;
+          this.ucBoFangQiKongZhi1.isFanZhuan = false;
+        }
+        else
+        {
+          this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减240427;
+          this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减240427;
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览240X427;
+          this.ucImageCut1.isFanZhuan = true;
+          this.ucVideoCut1.isFanZhuan = true;
+          this.ucBoFangQiKongZhi1.isFanZhuan = true;
+        }
+      }
+      else if (this.is960x540)
+      {
+        if (this.directionB == 0 || this.directionB == 180)
+        {
+          this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减480270;
+          this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减480270;
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览480X270;
+          this.ucImageCut1.isFanZhuan = false;
+          this.ucVideoCut1.isFanZhuan = false;
+          this.ucBoFangQiKongZhi1.isFanZhuan = false;
+        }
+        else
+        {
+          this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减270480;
+          this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减270480;
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览270X480;
+          this.ucImageCut1.isFanZhuan = true;
+          this.ucVideoCut1.isFanZhuan = true;
+          this.ucBoFangQiKongZhi1.isFanZhuan = true;
+        }
+      }
+      else if (this.is960x320)
+      {
+        if (this.directionB == 0 || this.directionB == 180)
+        {
+          this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减480160;
+          this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减480160;
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览480X160;
+          this.ucImageCut1.isFanZhuan = false;
+          this.ucVideoCut1.isFanZhuan = false;
+          this.ucBoFangQiKongZhi1.isFanZhuan = false;
+        }
+        else
+        {
+          this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减160480;
+          this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减160480;
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览160X480;
+          this.ucImageCut1.isFanZhuan = true;
+          this.ucVideoCut1.isFanZhuan = true;
+          this.ucBoFangQiKongZhi1.isFanZhuan = true;
+        }
+      }
+      else if (this.directionB == 0 || this.directionB == 180)
+      {
+        this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减320240;
+        this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减320240;
+        this.ucImageCut1.isFanZhuan = false;
+        this.ucVideoCut1.isFanZhuan = false;
+        this.ucBoFangQiKongZhi1.isFanZhuan = false;
+        this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览320X240;
+      }
+      else
+      {
+        this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减240320;
+        this.ucVideoCut1.BackgroundImage = (Image) Resources.P0裁减240320;
+        this.ucImageCut1.isFanZhuan = true;
+        this.ucVideoCut1.isFanZhuan = true;
+        this.ucBoFangQiKongZhi1.isFanZhuan = true;
+        this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览240X320;
+      }
+      this.formJP.Hide();
+    }
+    else if (this.myUIMode == 2)
+    {
+      if (this.myYcbk)
+        this.formJP.Hide();
+      else
+        this.formJP.Show();
+      if (this.is320x320)
+      {
+        this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+        this.formJP.Invalidate();
+        this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览320X320;
+        this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(false);
+      }
+      else if (this.is360x360)
+      {
+        this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+        this.formJP.Invalidate();
+        this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览360360圆;
+        this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(false);
+      }
+      else if (this.is480x480)
+      {
+        this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+        this.formJP.Invalidate();
+        if (this.myDevicePingMu == 3)
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览480X480圆;
+        else
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览480X480;
+        this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(false);
+      }
+      else if (this.is1600x720)
+      {
+        if (this.directionB == 0 || this.directionB == 180)
+        {
+          this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+          this.formJP.Invalidate();
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览400X180;
+          this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(false);
+        }
+        else
+        {
+          this.formJP.SetBounds(this.JpX, this.JpY, this.JpW, this.JpH);
+          this.formJP.Invalidate();
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览180X400;
+          this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(true);
+        }
+      }
+      else if (this.is800x480)
+      {
+        if (this.directionB == 0 || this.directionB == 180)
+        {
+          this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+          this.formJP.Invalidate();
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览400X240;
+          this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(false);
+        }
+        else
+        {
+          this.formJP.SetBounds(this.JpX, this.JpY, this.JpW, this.JpH);
+          this.formJP.Invalidate();
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览240X400;
+          this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(true);
+        }
+      }
+      else if (this.is854x480)
+      {
+        if (this.directionB == 0 || this.directionB == 180)
+        {
+          this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+          this.formJP.Invalidate();
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览427X240;
+          this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(false);
+        }
+        else
+        {
+          this.formJP.SetBounds(this.JpX, this.JpY, this.JpW, this.JpH);
+          this.formJP.Invalidate();
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览240X427;
+          this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(true);
+        }
+      }
+      else if (this.is960x540)
+      {
+        if (this.directionB == 0 || this.directionB == 180)
+        {
+          this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+          this.formJP.Invalidate();
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览480X270;
+          this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(false);
+        }
+        else
+        {
+          this.formJP.SetBounds(this.JpX, this.JpY, this.JpW, this.JpH);
+          this.formJP.Invalidate();
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览270X480;
+          this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(true);
+        }
+      }
+      else if (this.is960x320)
+      {
+        if (this.directionB == 0 || this.directionB == 180)
+        {
+          this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+          this.formJP.Invalidate();
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览480X160;
+          this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(false);
+        }
+        else
+        {
+          this.formJP.SetBounds(this.JpX, this.JpY, this.JpW, this.JpH);
+          this.formJP.Invalidate();
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览160X480;
+          this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(true);
+        }
+      }
+      else if (this.is1280x480)
+      {
+        if (this.directionB == 0 || this.directionB == 180)
+        {
+          this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+          this.formJP.Invalidate();
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览480X180;
+          this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(false);
+        }
+        else
+        {
+          this.formJP.SetBounds(this.JpX, this.JpY, this.JpW, this.JpH);
+          this.formJP.Invalidate();
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览180X480;
+          this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(true);
+        }
+      }
+      else if (this.is1920x462)
+      {
+        if (this.directionB == 0 || this.directionB == 180)
+        {
+          this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+          this.formJP.Invalidate();
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览480X116;
+          this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(false);
+        }
+        else
+        {
+          this.formJP.SetBounds(this.JpX, this.JpY, this.JpW, this.JpH);
+          this.formJP.Invalidate();
+          this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览116X480;
+          this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(true);
+        }
+      }
+      else if (this.is240x240)
+      {
+        this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+        this.formJP.Invalidate();
+        this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览240X240;
+        this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+        this.formJP.Invalidate();
+        this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览480X116;
+        this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(false);
+      }
+      else if (this.directionB == 0 || this.directionB == 180)
+      {
+        this.formJP.SetBounds(this.JpX, this.JpY, this.JpH, this.JpW);
+        this.formJP.Invalidate();
+        this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览320X240;
+        this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(false);
+      }
+      else
+      {
+        this.formJP.SetBounds(this.JpX, this.JpY, this.JpW, this.JpH);
+        this.formJP.Invalidate();
+        this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览240X320;
+        this.ucThemeSetting1.ucTouPingXianShi1.TouPingXianShiBackgroundImageSet90du(true);
+      }
+    }
+    if (this.is1600x720)
+    {
+      if (this.directionB == 0 || this.directionB == 180)
+        this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗800X360;
+      else
+        this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗360X800;
+      this.formScreenImage.ResetFormScreenImage();
+    }
+    else if (this.is1280x480)
+    {
+      if (this.directionB == 0 || this.directionB == 180)
+        this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗1280X480;
+      else
+        this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗480X1280;
+      this.formScreenImage.ResetFormScreenImage();
+    }
+    else if (this.is1920x462)
+    {
+      if (this.directionB == 0 || this.directionB == 180)
+        this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗1920X462;
+      else
+        this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗462X1920;
+      this.formScreenImage.ResetFormScreenImage();
+    }
+    else if (this.is800x480)
+    {
+      if (this.directionB == 0 || this.directionB == 180)
+        this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗800X480;
+      else
+        this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗480X800;
+      this.formScreenImage.ResetFormScreenImage();
+    }
+    else if (this.is854x480)
+    {
+      if (this.directionB == 0 || this.directionB == 180)
+        this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗854X480;
+      else
+        this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗480X854;
+      this.formScreenImage.ResetFormScreenImage();
+    }
+    else if (this.is960x540)
+    {
+      if (this.directionB == 0 || this.directionB == 180)
+        this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗960X540;
+      else
+        this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗540X960;
+      this.formScreenImage.ResetFormScreenImage();
+    }
+    else if (this.is960x320)
+    {
+      if (this.directionB == 0 || this.directionB == 180)
+        this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗960X320;
+      else
+        this.formScreenImage.BackgroundImage = (Image) Resources.P0预览弹窗320X960;
+      this.formScreenImage.ResetFormScreenImage();
+    }
+    this.ucScreenImageBK1.ucScreenImage1.SetMyUCScreenImage(this.directionB);
+  }
+
+  private void buttonMS_Mode()
+  {
+    if (this.myUIMode == 1)
+    {
+      this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = this.imagePicture;
+      this.ucScreenImageBK1.ucScreenImage1.SetDrawBkImage(this.myBjxs);
+      this.buttonSelectBackgroundImage();
+      if (this.myUISubMode == 0)
+      {
+        this.ucImageCut1.Hide();
+        this.ucVideoCut1.Hide();
+      }
+      else if (this.myUISubMode == 1)
+      {
+        this.ucImageCut1.Show();
+        this.ucVideoCut1.Hide();
+      }
+      else
+      {
+        this.ucVideoCut1.Show();
+        this.ucImageCut1.Hide();
+      }
+      this.ucBoFangQiKongZhi1.Hide();
+      this.buttonYDZT.Show();
+    }
+    else if (this.myUIMode == 2)
+    {
+      if (this.ucScreenImageBK1.ucScreenImage1.bitmapBGK != null && this.ucScreenImageBK1.ucScreenImage1.bitmapBGK != this.imagePicture && this.ucScreenImageBK1.ucScreenImage1.bitmapBGK != this.gifPicture)
+      {
+        Bitmap bitmapBgk = this.ucScreenImageBK1.ucScreenImage1.bitmapBGK;
+        this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = (Bitmap) null;
+        bitmapBgk.Dispose();
+      }
+      this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = (Bitmap) null;
+      this.ucScreenImageBK1.ucScreenImage1.SetDrawBkImage(this.myTpxs);
+      this.buttonSelectBackgroundImage();
+      this.ucBoFangQiKongZhi1.Hide();
+      this.ucImageCut1.Hide();
+      this.ucVideoCut1.Hide();
+      this.buttonYDZT.Hide();
+    }
+    else
+    {
+      if (this.myUIMode != 4)
+        return;
+      if (this.ucScreenImageBK1.ucScreenImage1.bitmapBGK != null && this.ucScreenImageBK1.ucScreenImage1.bitmapBGK != this.imagePicture && this.ucScreenImageBK1.ucScreenImage1.bitmapBGK != this.gifPicture)
+      {
+        Bitmap bitmapBgk = this.ucScreenImageBK1.ucScreenImage1.bitmapBGK;
+        this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = (Bitmap) null;
+        this.ucBoFangQiKongZhi1.imageSub = (Bitmap) null;
+        bitmapBgk.Dispose();
+      }
+      this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = (Bitmap) null;
+      this.ucScreenImageBK1.ucScreenImage1.SetDrawBkImage(this.mySpxs);
+      this.buttonSelectBackgroundImage();
+      this.ucBoFangQiKongZhi1.Show();
+      this.ucImageCut1.Hide();
+      this.ucVideoCut1.Hide();
+      this.buttonYDZT.Hide();
+    }
+  }
+
+  private void ThemeLocal(int cmd, object info, object data, object data1)
+  {
+    ArrayList array = new ArrayList();
+    switch (cmd)
+    {
+      case 0:
+        for (int index = 0; index < this.themeArray.Count; ++index)
+          array.Add(this.themeArray[index]);
+        this.ucThemeLocal1.SetThemeLocal(array, this.GifDirectory + this.ThemeML, "Theme.zt", (byte) 220);
+        array.Clear();
+        this.nowThemeLocal = cmd;
+        break;
+      case 1:
+        for (int index = 0; index < 5; ++index)
+          array.Add(this.themeArray[index]);
+        this.ucThemeLocal1.SetThemeLocal(array, this.GifDirectory + this.ThemeML, "Theme.zt", (byte) 220);
+        array.Clear();
+        this.nowThemeLocal = cmd;
+        break;
+      case 2:
+        for (int index = 5; index < this.themeArray.Count; ++index)
+          array.Add(this.themeArray[index]);
+        this.ucThemeLocal1.SetThemeLocal(array, this.GifDirectory + this.ThemeML, "Theme.zt", (byte) 220);
+        array.Clear();
+        this.nowThemeLocal = cmd;
+        break;
+      case 16 /*0x10*/:
+        this.myTheme = (int) info + (int) data * 5;
+        this.Theme_Click(true, false);
+        this.Theme_Click_Event();
+        break;
+      case 32 /*0x20*/:
+        DialogResult dialogResult;
+        switch (Form1.Language)
+        {
+          case 1:
+            dialogResult = MessageBox.Show("是<删除>，否<取消>", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            break;
+          case 2:
+            dialogResult = MessageBox.Show("是<删除>，否<取消>", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            break;
+          default:
+            dialogResult = MessageBox.Show("Yes<Delete>,No<Cancel>", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            break;
+        }
+        if (dialogResult == DialogResult.No)
+          break;
+        int index1 = (int) info + (int) data * 5;
+        if (this.myTheme == index1)
+        {
+          this.myTheme = index1 - 1;
+          this.Theme_Click_Event();
+          if (Directory.Exists(this.GifDirectory + this.ThemeML + (string) this.themeArray[index1]))
+            Directory.Delete(this.GifDirectory + this.ThemeML + (string) this.themeArray[index1], true);
+          this.themeArray.RemoveAt(index1);
+          this.Theme_Click(true);
+        }
+        else if (this.myTheme < index1)
+        {
+          if (Directory.Exists(this.GifDirectory + this.ThemeML + (string) this.themeArray[index1]))
+            Directory.Delete(this.GifDirectory + this.ThemeML + (string) this.themeArray[index1], true);
+          this.themeArray.RemoveAt(index1);
+          this.Theme_Click(true);
+        }
+        else
+        {
+          if (Directory.Exists(this.GifDirectory + this.ThemeML + (string) this.themeArray[index1]))
+            Directory.Delete(this.GifDirectory + this.ThemeML + (string) this.themeArray[index1], true);
+          this.themeArray.RemoveAt(index1);
+          --this.myTheme;
+          this.Theme_Click(true);
+        }
+        this.ucThemeLocal1.Reset_Button();
+        FormCZTV.delegateFormCZTV delegateForm = this.delegateForm;
+        if (delegateForm == null)
+          break;
+        delegateForm(128 /*0x80*/, (object) this);
+        break;
+      case 48 /*0x30*/:
+        if (!this.isLunboInit)
+          break;
+        this.ChangeFileTheme();
+        break;
+    }
+  }
+
+  private bool DownLoadFile(string webDir, string dir, string name)
+  {
+    bool flag = true;
+    switch (Form1.Language)
+    {
+      case 1:
+        this.labelZXCG.Text = "正在从云端下载";
+        break;
+      case 2:
+        this.labelZXCG.Text = "Downloading";
+        webDir = webDir.Replace("www.czhorde.com", "www.czhorde.cc");
+        break;
+      default:
+        this.labelZXCG.Text = "Downloading";
+        webDir = webDir.Replace("www.czhorde.com", "www.czhorde.cc");
+        break;
+    }
+    this.labelZXCG.Show();
+    Application.DoEvents();
+    try
+    {
+      HttpWebRequest httpWebRequest = (HttpWebRequest) WebRequest.Create(webDir + name);
+      HttpWebResponse response = (HttpWebResponse) httpWebRequest.GetResponse();
+      Stream responseStream = response.GetResponseStream();
+      Stream stream = (Stream) new FileStream(dir + name, FileMode.Create);
+      byte[] buffer = new byte[1048576 /*0x100000*/];
+      int count = responseStream.Read(buffer, 0, buffer.Length);
+      if (count > 0)
+      {
+        for (; count > 0; count = responseStream.Read(buffer, 0, buffer.Length))
+          stream.Write(buffer, 0, count);
+      }
+      else
+        flag = false;
+      stream.Close();
+      responseStream.Close();
+      response.Close();
+      httpWebRequest.Abort();
+    }
+    catch
+    {
+      flag = false;
+    }
+    this.labelZXCG.Hide();
+    Application.DoEvents();
+    switch (Form1.Language)
+    {
+      case 1:
+        this.labelZXCG.Text = "执行中";
+        break;
+      case 2:
+        this.labelZXCG.Text = "執行中";
+        break;
+      default:
+        this.labelZXCG.Text = "working";
+        break;
+    }
+    return flag;
+  }
+
+  private string GetWebBackgroundImageDirectory()
+  {
+    return !this.is240x240 ? (!this.is320x320 ? (!this.is360x360 ? (!this.is480x480 ? (!this.is1600x720 ? (!this.is1280x480 ? (!this.is1920x462 ? (!this.is800x480 ? (!this.is854x480 ? (!this.is960x540 ? (!this.is960x320 ? (!this.is640x480 ? (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\240320\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\320240\\") : (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\480640\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\640480\\")) : (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\320960\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\960320\\")) : (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\540960\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\960540\\")) : (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\480854\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\854480\\")) : (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\480800\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\800480\\")) : (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\4621920\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\1920462\\")) : (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\4801280\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\1280480\\")) : (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\7201600\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\1600720\\")) : Application.StartupPath + "\\Data\\USBLCD\\Web\\480480\\") : Application.StartupPath + "\\Data\\USBLCD\\Web\\360360\\") : Application.StartupPath + "\\Data\\USBLCD\\Web\\320320\\") : Application.StartupPath + "\\Data\\USBLCD\\Web\\240240\\";
+  }
+
+  private string GetWebBackgroundHttpDirectory()
+  {
+    return !this.is240x240 ? (!this.is320x320 ? (!this.is360x360 ? (!this.is480x480 ? (!this.is1600x720 ? (!this.is1280x480 ? (!this.is1920x462 ? (!this.is800x480 ? (!this.is854x480 ? (!this.is960x540 ? (!this.is960x320 ? (!this.is640x480 ? (this.directionB != 0 && this.directionB != 180 ? "http://www.czhorde.com/tr/bj240320/" : "http://www.czhorde.com/tr/bj320240/") : (this.directionB != 0 && this.directionB != 180 ? "http://www.czhorde.com/tr/bj480640/" : "http://www.czhorde.com/tr/bj640480/")) : (this.directionB != 0 && this.directionB != 180 ? "http://www.czhorde.com/tr/bj320960/" : "http://www.czhorde.com/tr/bj960320/")) : (this.directionB != 0 && this.directionB != 180 ? "http://www.czhorde.com/tr/bj540960/" : "http://www.czhorde.com/tr/bj960540/")) : (this.directionB != 0 && this.directionB != 180 ? "http://www.czhorde.com/tr/bj480854/" : "http://www.czhorde.com/tr/bj854480/")) : (this.directionB != 0 && this.directionB != 180 ? "http://www.czhorde.com/tr/bj480800/" : "http://www.czhorde.com/tr/bj800480/")) : (this.directionB != 0 && this.directionB != 180 ? "http://www.czhorde.com/tr/bj4621920/" : "http://www.czhorde.com/tr/bj1920462/")) : (this.directionB != 0 && this.directionB != 180 ? "http://www.czhorde.com/tr/bj4801280/" : "http://www.czhorde.com/tr/bj1280480/")) : (this.directionB != 0 && this.directionB != 180 ? "http://www.czhorde.com/tr/bj7201600/" : "http://www.czhorde.com/tr/bj1600720/")) : "http://www.czhorde.com/tr/bj480480/") : "http://www.czhorde.com/tr/bj360360/") : "http://www.czhorde.com/tr/bj320320/") : "http://www.czhorde.com/tr/bj240240/";
+  }
+
+  private FileInfo[] GetFileList()
+  {
+    return new DirectoryInfo(this.GetWebBackgroundImageDirectory()).GetFiles();
+  }
+
+  private bool CheakWebFile(int mode, ArrayList imageArray, ArrayList nameArray)
+  {
+    FileInfo[] fileList = this.GetFileList();
+    if (fileList.Length == 0)
+      return false;
+    for (int index = 0; index < fileList.Length; ++index)
+    {
+      if (fileList[index].Name.Contains(".png"))
+        nameArray.Add((object) fileList[index].Name.Replace(".png", ""));
+    }
+    for (int index = nameArray.Count - 1; index >= 0; --index)
+    {
+      switch (mode)
+      {
+        case 1:
+          if (!((string) nameArray[index]).Contains("a"))
+          {
+            nameArray.RemoveAt(index);
+            break;
+          }
+          break;
+        case 2:
+          if (!((string) nameArray[index]).Contains("b"))
+          {
+            nameArray.RemoveAt(index);
+            break;
+          }
+          break;
+        case 3:
+          if (!((string) nameArray[index]).Contains("c"))
+          {
+            nameArray.RemoveAt(index);
+            break;
+          }
+          break;
+        case 4:
+          if (!((string) nameArray[index]).Contains("d"))
+          {
+            nameArray.RemoveAt(index);
+            break;
+          }
+          break;
+        case 5:
+          if (!((string) nameArray[index]).Contains("e"))
+          {
+            nameArray.RemoveAt(index);
+            break;
+          }
+          break;
+        case 6:
+          if (!((string) nameArray[index]).Contains("y"))
+          {
+            nameArray.RemoveAt(index);
+            break;
+          }
+          break;
+      }
+    }
+    for (int index = 0; index < nameArray.Count; ++index)
+    {
+      try
+      {
+        Bitmap Bit = new Bitmap($"{this.GetWebBackgroundImageDirectory()}{(string) nameArray[index]}.png");
+        byte[] buffer = this.BitmapToByte(Bit);
+        Bit.Dispose();
+        imageArray.Add((object) this.ByteToBitmap(buffer));
+      }
+      catch
+      {
+      }
+    }
+    return true;
+  }
+
+  private void ThemeWeb(int cmd, object info, object data, object data1)
+  {
+    ArrayList imageArray = new ArrayList();
+    ArrayList nameArray = new ArrayList();
+    switch (cmd)
+    {
+      case 0:
+      case 1:
+      case 2:
+      case 3:
+      case 4:
+      case 5:
+      case 6:
+        if (this.CheakWebFile(cmd, imageArray, nameArray))
+          this.ucThemeWeb1.SetThemeWeb(imageArray, nameArray);
+        imageArray.Clear();
+        nameArray.Clear();
+        break;
+      case 16 /*0x10*/:
+        string name1 = (string) info + ".mp4";
+        bool flag = true;
+        if (!System.IO.File.Exists(this.GetWebBackgroundImageDirectory() + name1))
+          flag = this.DownLoadFile(this.GetWebBackgroundHttpDirectory(), this.GetWebBackgroundImageDirectory(), name1);
+        string name2 = this.GetWebBackgroundImageDirectory() + name1;
+        if (!flag)
+          break;
+        switch (Form1.Language)
+        {
+          case 1:
+            this.labelZXCG.Text = "正在载入动画";
+            break;
+          case 2:
+            this.labelZXCG.Text = "Loading";
+            break;
+          default:
+            this.labelZXCG.Text = "Loading";
+            break;
+        }
+        this.labelZXCG.Show();
+        Application.DoEvents();
+        this.isToTimer = false;
+        this.isGifMode = false;
+        Thread.Sleep(100);
+        this.myTempDeviceJpgYSL = this.myDeviceJpgYSL;
+        this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = (Bitmap) null;
+        if (this.imagePicture != null)
+          this.imagePicture.Dispose();
+        this.imagePicture = (Bitmap) null;
+        if (this.gifPicture != null)
+          this.gifPicture.Dispose();
+        this.gifPicture = (Bitmap) null;
+        this.myUISubMode = 0;
+        this.buttonMS_Mode();
+        this.My_Video_To_Theme(name2);
+        this.ImageCount = 0;
+        this.gifCount = 0;
+        this.isGifMode = true;
+        this.isToTimer = true;
+        this.labelZXCG.Hide();
+        Application.DoEvents();
+        switch (Form1.Language)
+        {
+          case 1:
+            this.labelZXCG.Text = "执行中";
+            break;
+          case 2:
+            this.labelZXCG.Text = "執行中";
+            break;
+          default:
+            this.labelZXCG.Text = "working";
+            break;
+        }
+        break;
+    }
+  }
+
+  private void MengBanSelect_Open()
+  {
+    OpenFileDialog openFileDialog = new OpenFileDialog();
+    openFileDialog.Filter = "Image(*.PNG)|*.PNG";
+    openFileDialog.Title = "Open";
+    if (openFileDialog.ShowDialog() == DialogResult.OK && new FileInfo(openFileDialog.FileName).Exists)
+    {
+      Bitmap Bit = new Bitmap(openFileDialog.FileName);
+      if (this.is480x480)
+      {
+        if ((double) Bit.Width > (double) this.ucScreenImageBK1.ucScreenImage1.Width * 1.5 || (double) Bit.Height > (double) this.ucScreenImageBK1.ucScreenImage1.Height * 1.5)
+        {
+          Bit.Dispose();
+          openFileDialog.Dispose();
+          if (Form1.Language == 1)
+          {
+            int num = (int) MessageBox.Show("分辨率过大");
+            return;
+          }
+          if (Form1.Language == 2)
+          {
+            int num = (int) MessageBox.Show("分辯率過大");
+            return;
+          }
+          int num1 = (int) MessageBox.Show("Image size too large");
+          return;
+        }
+      }
+      else if (this.is1600x720)
+      {
+        if (Bit.Width > this.ucScreenImageBK1.ucScreenImage1.Width * 4 || Bit.Height > this.ucScreenImageBK1.ucScreenImage1.Height * 4)
+        {
+          Bit.Dispose();
+          openFileDialog.Dispose();
+          if (Form1.Language == 1)
+          {
+            int num = (int) MessageBox.Show("分辨率过大");
+            return;
+          }
+          if (Form1.Language == 2)
+          {
+            int num = (int) MessageBox.Show("分辯率過大");
+            return;
+          }
+          int num2 = (int) MessageBox.Show("Image size too large");
+          return;
+        }
+      }
+      else if (this.is1280x480)
+      {
+        if ((double) Bit.Width * 0.375 > (double) this.ucScreenImageBK1.ucScreenImage1.Width || (double) Bit.Height * 0.375 > (double) this.ucScreenImageBK1.ucScreenImage1.Height)
+        {
+          Bit.Dispose();
+          openFileDialog.Dispose();
+          if (Form1.Language == 1)
+          {
+            int num = (int) MessageBox.Show("分辨率过大");
+            return;
+          }
+          if (Form1.Language == 2)
+          {
+            int num = (int) MessageBox.Show("分辯率過大");
+            return;
+          }
+          int num3 = (int) MessageBox.Show("Image size too large");
+          return;
+        }
+      }
+      else if (this.is1920x462)
+      {
+        if ((double) Bit.Width * 0.25 > (double) this.ucScreenImageBK1.ucScreenImage1.Width || (double) Bit.Height * 0.25 > (double) this.ucScreenImageBK1.ucScreenImage1.Height)
+        {
+          Bit.Dispose();
+          openFileDialog.Dispose();
+          if (Form1.Language == 1)
+          {
+            int num = (int) MessageBox.Show("分辨率过大");
+            return;
+          }
+          if (Form1.Language == 2)
+          {
+            int num = (int) MessageBox.Show("分辯率過大");
+            return;
+          }
+          int num4 = (int) MessageBox.Show("Image size too large");
+          return;
+        }
+      }
+      else if (this.is640x480 || this.is800x480 || this.is854x480 || this.is960x540 || this.is960x320)
+      {
+        if (Bit.Width > this.ucScreenImageBK1.ucScreenImage1.Width * 2 || Bit.Height > this.ucScreenImageBK1.ucScreenImage1.Height * 2)
+        {
+          Bit.Dispose();
+          openFileDialog.Dispose();
+          if (Form1.Language == 1)
+          {
+            int num = (int) MessageBox.Show("分辨率过大");
+            return;
+          }
+          if (Form1.Language == 2)
+          {
+            int num = (int) MessageBox.Show("分辯率過大");
+            return;
+          }
+          int num5 = (int) MessageBox.Show("Image size too large");
+          return;
+        }
+      }
+      else if (Bit.Width > this.ucScreenImageBK1.ucScreenImage1.Width || Bit.Height > this.ucScreenImageBK1.ucScreenImage1.Height)
+      {
+        Bit.Dispose();
+        openFileDialog.Dispose();
+        if (Form1.Language == 1)
+        {
+          int num = (int) MessageBox.Show("分辨率过大");
+          return;
+        }
+        if (Form1.Language == 2)
+        {
+          int num = (int) MessageBox.Show("分辯率過大");
+          return;
+        }
+        int num6 = (int) MessageBox.Show("Image size too large");
+        return;
+      }
+      Bit.Save(this.GifDirectory + "\\01.png");
+      byte[] buffer = this.BitmapToByte(Bit);
+      Bit.Dispose();
+      Bitmap bitmap = this.ByteToBitmap(buffer);
+      Bitmap bitmapMb = this.ucScreenImageBK1.ucScreenImage1.bitmapMB;
+      this.ucScreenImageBK1.ucScreenImage1.bitmapMB = bitmap;
+      this.ucScreenImageBK1.ucScreenImage1.WvalMB = bitmap.Width;
+      this.ucScreenImageBK1.ucScreenImage1.HvalMB = bitmap.Height;
+      this.ucScreenImageBK1.ucScreenImage1.XvalMB = bitmap.Width / 2;
+      this.ucScreenImageBK1.ucScreenImage1.YvalMB = bitmap.Height / 2;
+      bitmapMb?.Dispose();
+    }
+    openFileDialog.Dispose();
+  }
+
+  private string GetFileListMBDir()
+  {
+    return !this.is240x240 ? (!this.is320x320 ? (!this.is360x360 ? (!this.is480x480 ? (!this.is1600x720 ? (!this.is1280x480 ? (!this.is1920x462 ? (!this.is800x480 ? (!this.is854x480 ? (!this.is960x540 ? (!this.is960x320 ? (!this.is640x480 ? (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\zt240320\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\zt320240\\") : (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\zt480640\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\zt640480\\")) : (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\zt320960\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\zt960320\\")) : (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\zt540960\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\zt960540\\")) : (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\zt480854\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\zt854480\\")) : (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\zt480800\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\zt800480\\")) : (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\zt4621920\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\zt1920462\\")) : (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\zt4801280\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\zt1280480\\")) : (this.directionB != 0 && this.directionB != 180 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\zt7201600\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\zt1600720\\")) : (this.myDevicePingMu != 3 ? Application.StartupPath + "\\Data\\USBLCD\\Web\\zt480480\\" : Application.StartupPath + "\\Data\\USBLCD\\Web\\zt480480y\\")) : Application.StartupPath + "\\Data\\USBLCD\\Web\\zt360360\\") : Application.StartupPath + "\\Data\\USBLCD\\Web\\zt320320\\") : Application.StartupPath + "\\Data\\USBLCD\\Web\\zt240240\\";
+  }
+
+  private string[] GetFileListMB() => Directory.GetDirectories(this.GetFileListMBDir());
+
+  private bool CheakMaskFile(int mode, ArrayList imageArray, ArrayList nameArray)
+  {
+    string[] fileListMb = this.GetFileListMB();
+    if (fileListMb.Length == 0)
+      return false;
+    try
+    {
+      for (int index = 0; index < fileListMb.Length; ++index)
+      {
+        Bitmap Bit = new Bitmap(fileListMb[index] + "\\Theme.png");
+        byte[] buffer = this.BitmapToByte(Bit);
+        Bit.Dispose();
+        imageArray.Add((object) this.ByteToBitmap(buffer));
+        string name = new DirectoryInfo(fileListMb[index]).Name;
+        nameArray.Add((object) name);
+      }
+    }
+    catch
+    {
+    }
+    return true;
+  }
+
+  private void ThemeMask(int cmd, object info, object data, object data1)
+  {
+    ArrayList imageArray = new ArrayList();
+    ArrayList nameArray = new ArrayList();
+    switch (cmd)
+    {
+      case 0:
+        if (this.CheakMaskFile(cmd, imageArray, nameArray))
+          this.ucThemeMask1.SetThemeMask(imageArray, nameArray);
+        imageArray.Clear();
+        nameArray.Clear();
+        break;
+      case 16 /*0x10*/:
+        string str = (string) info + "\\01.png";
+        Bitmap Bit = new Bitmap(this.GetFileListMBDir() + str);
+        string fileName = $"{this.GetFileListMBDir()}{(string) info}\\config1.dc";
+        Bit.Save(this.GifDirectory + "\\01.png");
+        byte[] buffer = this.BitmapToByte(Bit);
+        Bit.Dispose();
+        Bitmap bitmap = this.ByteToBitmap(buffer);
+        Bitmap bitmapMb = this.ucScreenImageBK1.ucScreenImage1.bitmapMB;
+        this.ucScreenImageBK1.ucScreenImage1.bitmapMB = bitmap;
+        this.ucScreenImageBK1.ucScreenImage1.WvalMB = bitmap.Width;
+        this.ucScreenImageBK1.ucScreenImage1.HvalMB = bitmap.Height;
+        this.ucScreenImageBK1.ucScreenImage1.XvalMB = bitmap.Width / 2;
+        this.ucScreenImageBK1.ucScreenImage1.YvalMB = bitmap.Height / 2;
+        bitmapMb?.Dispose();
+        this.isToTimer = false;
+        this.ReadSystemConfiguration(fileName, false);
+        this.ucComboBoxA1.SetUCComboBoxMode(this.directionB / 90 + 1);
+        this.buttonMS_Mode();
+        this.InfoCount = 100;
+        this.GetSystemInfo();
+        this.isToTimer = true;
+        this.textBoxCMM.Text = (string) info;
+        break;
+    }
+  }
+
+  private void ThemeSetting(int cmd, object info, object data, object data1)
+  {
+    this.isToTimer = false;
+    switch (cmd)
+    {
+      case 1:
+        this.myUIMode = 1;
+        this.myMode = 0;
+        this.myBjxs = (bool) info;
+        this.myTpxs = false;
+        this.mySpxs = false;
+        this.buttonMS_Mode();
+        this.ucBoFangQiKongZhi1.ClosePlayer();
+        this.myTempDeviceJpgYSL = this.myDeviceJpgYSL;
+        break;
+      case 2:
+        this.myUIMode = 2;
+        this.myMode = 16 /*0x10*/;
+        this.myTpxs = (bool) info;
+        this.myBjxs = false;
+        this.mySpxs = false;
+        this.buttonMS_Mode();
+        this.ucBoFangQiKongZhi1.ClosePlayer();
+        this.myTempDeviceJpgYSL = this.myDeviceJpgYSL;
+        break;
+      case 3:
+        this.myUIMode = 4;
+        this.myMode = 48 /*0x30*/;
+        this.mySpxs = (bool) info;
+        this.myTpxs = false;
+        this.myBjxs = false;
+        this.buttonMS_Mode();
+        if (this.mySpxs)
+        {
+          this.ucBoFangQiKongZhi1.SetImage();
+          this.ucBoFangQiKongZhi1.Player();
+        }
+        else
+          this.ucBoFangQiKongZhi1.ClosePlayer();
+        this.myTempDeviceJpgYSL = this.myDeviceJpgYSL;
+        break;
+      case 10:
+        this.VideoSelect_Open_Generate();
+        break;
+      case 49:
+        this.ImageCut_Open();
+        break;
+      case 50:
+        this.GifSelect_Open_Generate();
+        break;
+      case 51:
+        this.buttonYDZT_Click((object) null, (EventArgs) null);
+        break;
+      case 52:
+        this.VideoCut_Open();
+        break;
+      case 65:
+        this.JpX = (int) info;
+        break;
+      case 66:
+        this.JpY = (int) info;
+        break;
+      case 67:
+        this.JpW = (int) info;
+        break;
+      case 68:
+        this.JpH = (int) info;
+        break;
+      case 69:
+        this.myYcbk = (bool) info;
+        if (this.myYcbk)
+        {
+          this.formJP.Hide();
+          break;
+        }
+        this.buttonSelectBackgroundImage();
+        break;
+      case 96 /*0x60*/:
+        this.myMbxs = (bool) info;
+        this.ucScreenImageBK1.ucScreenImage1.SetDrawMengBan(this.myMbxs);
+        break;
+      case 97:
+        this.MengBanSelect_Open();
+        break;
+      case 99:
+        this.buttonYDMB_Click((object) null, (EventArgs) null);
+        break;
+      case 112 /*0x70*/:
+        this.formGetColor.Show();
+        this.formGetColor.Top = 0;
+        this.formGetColor.Left = 0;
+        this.formGetColor.Width = Screen.PrimaryScreen.Bounds.Width;
+        this.formGetColor.Height = Screen.PrimaryScreen.Bounds.Height;
+        break;
+      case 128 /*0x80*/:
+        this.myXtxx = (bool) info;
+        this.ucScreenImageBK1.ucScreenImage1.SetDrawXiTong(this.myXtxx);
+        break;
+      case 129:
+        this.ucScreenImageBK1.ucScreenImage1.SetDMouseDown((int) info);
+        this.shanPingCount = (int) info;
+        this.shanPingTimer = 14;
+        break;
+    }
+    if (this.myUIMode != 1)
+    {
+      this.isToTimer = true;
+    }
+    else
+    {
+      if (this.myUISubMode == 2)
+        return;
+      this.isToTimer = true;
+    }
+  }
+
+  public void CopyDireToDire(string sourceDir, string destDir)
+  {
+    DirectoryInfo dir = new DirectoryInfo(sourceDir);
+    List<FileInfo> fileList = new List<FileInfo>();
+    this.GetFileList(dir, fileList);
+    List<DirectoryInfo> dirList = new List<DirectoryInfo>();
+    this.GetDirList(dir, dirList);
+    foreach (FileSystemInfo fileSystemInfo in dirList)
+    {
+      string path = fileSystemInfo.FullName.Replace(sourceDir, destDir);
+      if (!Directory.Exists(path))
+        Directory.CreateDirectory(path);
+    }
+    foreach (FileSystemInfo fileSystemInfo in fileList)
+    {
+      string fullName = fileSystemInfo.FullName;
+      string destFileName = fullName.Replace(sourceDir, destDir);
+      System.IO.File.Copy(fullName, destFileName, true);
+    }
+  }
+
+  private void GetFileList(DirectoryInfo dir, List<FileInfo> fileList)
+  {
+    fileList.AddRange((IEnumerable<FileInfo>) dir.GetFiles());
+    foreach (DirectoryInfo directory in dir.GetDirectories())
+      this.GetFileList(directory, fileList);
+  }
+
+  private void GetDirList(DirectoryInfo dir, List<DirectoryInfo> dirList)
+  {
+    dirList.AddRange((IEnumerable<DirectoryInfo>) dir.GetDirectories());
+    foreach (DirectoryInfo directory in dir.GetDirectories())
+      this.GetDirList(directory, dirList);
+  }
+
+  public void ChangeFileTheme(bool reset = true)
+  {
+    FileStream output = new FileStream(this.fileThemeVal, FileMode.OpenOrCreate);
+    BinaryWriter binaryWriter = new BinaryWriter((Stream) output);
+    binaryWriter.Write((byte) 220);
+    binaryWriter.Write(this.myTheme);
+    binaryWriter.Write(this.ucThemeLocal1.isLunbo);
+    binaryWriter.Write(this.ucThemeLocal1.myLunBoTimer);
+    binaryWriter.Write(this.ucThemeLocal1.lunBoCount);
+    binaryWriter.Write(this.ucThemeLocal1.lunBoArray[0]);
+    binaryWriter.Write(this.ucThemeLocal1.lunBoArray[1]);
+    binaryWriter.Write(this.ucThemeLocal1.lunBoArray[2]);
+    binaryWriter.Write(this.ucThemeLocal1.lunBoArray[3]);
+    binaryWriter.Write(this.ucThemeLocal1.lunBoArray[4]);
+    binaryWriter.Write(this.ucThemeLocal1.lunBoArray[5]);
+    binaryWriter.Write(this.myLddVal);
+    binaryWriter.Flush();
+    binaryWriter.Close();
+    binaryWriter.Dispose();
+    output.Close();
+    output.Dispose();
+    if (!reset)
+      return;
+    this.ucThemeLocal1.Reset_Button();
+  }
+
+  private void Theme_Click(bool bl, bool resetButton = true)
+  {
+    if (!bl)
+      return;
+    this.ChangeFileTheme(resetButton);
+  }
+
+  public Bitmap ByteToBitmap(byte[] buffer)
+  {
+    MemoryStream memoryStream = new MemoryStream(buffer);
+    memoryStream.Position = 0L;
+    Image bitmap = Image.FromStream((Stream) memoryStream);
+    memoryStream.Close();
+    memoryStream.Dispose();
+    return (Bitmap) bitmap;
+  }
+
+  public byte[] BitmapToByte(Bitmap Bit)
+  {
+    MemoryStream memoryStream = new MemoryStream();
+    Bit.Save((Stream) memoryStream, ImageFormat.Png);
+    memoryStream.Position = 0L;
+    byte[] buffer = memoryStream.GetBuffer();
+    memoryStream.Close();
+    memoryStream.Dispose();
+    return buffer;
+  }
+
+  private void ReadSystemConfiguration(string fileName, bool readMyMode = true)
+  {
+    FileStream input = new FileStream(fileName, FileMode.OpenOrCreate);
+    BinaryReader binaryReader = new BinaryReader((Stream) input);
+    try
+    {
+      switch (binaryReader.ReadByte())
+      {
+        case 220:
+          binaryReader.ReadInt32();
+          binaryReader.ReadInt32();
+          bool flag1 = binaryReader.ReadBoolean();
+          this.myXtxx = binaryReader.ReadBoolean();
+          bool flag2 = binaryReader.ReadBoolean();
+          bool flag3 = binaryReader.ReadBoolean();
+          bool flag4 = binaryReader.ReadBoolean();
+          bool flag5 = binaryReader.ReadBoolean();
+          bool flag6 = binaryReader.ReadBoolean();
+          bool flag7 = binaryReader.ReadBoolean();
+          binaryReader.ReadInt32();
+          ArrayList arrayList1 = new ArrayList();
+          ArrayList arrayList2 = new ArrayList();
+          ArrayList arrayList3 = new ArrayList();
+          ArrayList arrayList4 = new ArrayList();
+          ArrayList arrayList5 = new ArrayList();
+          ArrayList arrayList6 = new ArrayList();
+          ArrayList arrayList7 = new ArrayList();
+          ArrayList arrayList8 = new ArrayList();
+          ArrayList arrayList9 = new ArrayList();
+          ArrayList arrayList10 = new ArrayList();
+          ArrayList arrayList11 = new ArrayList();
+          ArrayList arrayList12 = new ArrayList();
+          ArrayList arrayList13 = new ArrayList();
+          ArrayList arrayList14 = new ArrayList();
+          string str = binaryReader.ReadString();
+          Font font1 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+          Color color1 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+          if (flag1 && str.Length > 0)
+          {
+            arrayList2.Add((object) 4);
+            arrayList2.Add((object) 0);
+            arrayList2.Add((object) 0);
+            arrayList2.Add((object) 0);
+            arrayList2.Add((object) 0);
+            arrayList2.Add((object) 0);
+            arrayList2.Add((object) color1);
+            arrayList2.Add((object) font1);
+            arrayList2.Add((object) str);
+            arrayList1.Add((object) arrayList2);
+          }
+          Font font2 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+          Color color2 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+          if (flag2)
+          {
+            arrayList3.Add((object) 0);
+            arrayList3.Add((object) 1);
+            arrayList3.Add((object) 0);
+            arrayList3.Add((object) 0);
+            arrayList3.Add((object) 0);
+            arrayList3.Add((object) 1);
+            arrayList3.Add((object) color2);
+            arrayList3.Add((object) font2);
+            arrayList3.Add((object) "");
+            arrayList1.Add((object) arrayList3);
+          }
+          Font font3 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+          Color color3 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+          if (flag2)
+          {
+            arrayList9.Add((object) 4);
+            arrayList9.Add((object) 0);
+            arrayList9.Add((object) 0);
+            arrayList9.Add((object) 0);
+            arrayList9.Add((object) 0);
+            arrayList9.Add((object) 0);
+            arrayList9.Add((object) color3);
+            arrayList9.Add((object) font3);
+            arrayList9.Add((object) "CPU");
+            arrayList1.Add((object) arrayList9);
+          }
+          Font font4 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+          Color color4 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+          if (flag3)
+          {
+            arrayList4.Add((object) 0);
+            arrayList4.Add((object) 1);
+            arrayList4.Add((object) 0);
+            arrayList4.Add((object) 0);
+            arrayList4.Add((object) 0);
+            arrayList4.Add((object) 3);
+            arrayList4.Add((object) color4);
+            arrayList4.Add((object) font4);
+            arrayList4.Add((object) "");
+            arrayList1.Add((object) arrayList4);
+          }
+          Font font5 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+          Color color5 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+          if (flag3)
+          {
+            arrayList10.Add((object) 4);
+            arrayList10.Add((object) 0);
+            arrayList10.Add((object) 0);
+            arrayList10.Add((object) 0);
+            arrayList10.Add((object) 0);
+            arrayList10.Add((object) 0);
+            arrayList10.Add((object) color5);
+            arrayList10.Add((object) font5);
+            arrayList10.Add((object) "CPU");
+            arrayList1.Add((object) arrayList10);
+          }
+          Font font6 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+          Color color6 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+          if (flag4)
+          {
+            arrayList5.Add((object) 0);
+            arrayList5.Add((object) 1);
+            arrayList5.Add((object) 0);
+            arrayList5.Add((object) 0);
+            arrayList5.Add((object) 0);
+            arrayList5.Add((object) 2);
+            arrayList5.Add((object) color6);
+            arrayList5.Add((object) font6);
+            arrayList5.Add((object) "");
+            arrayList1.Add((object) arrayList5);
+          }
+          Font font7 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+          Color color7 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+          if (flag4)
+          {
+            arrayList11.Add((object) 4);
+            arrayList11.Add((object) 0);
+            arrayList11.Add((object) 0);
+            arrayList11.Add((object) 0);
+            arrayList11.Add((object) 0);
+            arrayList11.Add((object) 0);
+            arrayList11.Add((object) color7);
+            arrayList11.Add((object) font7);
+            arrayList11.Add((object) "CPU");
+            arrayList1.Add((object) arrayList11);
+          }
+          Font font8 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+          Color color8 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+          if (flag5)
+          {
+            arrayList6.Add((object) 0);
+            arrayList6.Add((object) 1);
+            arrayList6.Add((object) 0);
+            arrayList6.Add((object) 0);
+            arrayList6.Add((object) 1);
+            arrayList6.Add((object) 1);
+            arrayList6.Add((object) color8);
+            arrayList6.Add((object) font8);
+            arrayList6.Add((object) "");
+            arrayList1.Add((object) arrayList6);
+          }
+          Font font9 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+          Color color9 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+          if (flag5)
+          {
+            arrayList12.Add((object) 4);
+            arrayList12.Add((object) 0);
+            arrayList12.Add((object) 0);
+            arrayList12.Add((object) 0);
+            arrayList12.Add((object) 0);
+            arrayList12.Add((object) 0);
+            arrayList12.Add((object) color9);
+            arrayList12.Add((object) font9);
+            arrayList12.Add((object) "GPU");
+            arrayList1.Add((object) arrayList12);
+          }
+          Font font10 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+          Color color10 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+          if (flag6)
+          {
+            arrayList7.Add((object) 0);
+            arrayList7.Add((object) 1);
+            arrayList7.Add((object) 0);
+            arrayList7.Add((object) 0);
+            arrayList7.Add((object) 1);
+            arrayList7.Add((object) 3);
+            arrayList7.Add((object) color10);
+            arrayList7.Add((object) font10);
+            arrayList7.Add((object) "");
+            arrayList1.Add((object) arrayList7);
+          }
+          Font font11 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+          Color color11 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+          if (flag6)
+          {
+            arrayList13.Add((object) 4);
+            arrayList13.Add((object) 0);
+            arrayList13.Add((object) 0);
+            arrayList13.Add((object) 0);
+            arrayList13.Add((object) 0);
+            arrayList13.Add((object) 0);
+            arrayList13.Add((object) color11);
+            arrayList13.Add((object) font11);
+            arrayList13.Add((object) "GPU");
+            arrayList1.Add((object) arrayList13);
+          }
+          Font font12 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+          Color color12 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+          if (flag7)
+          {
+            arrayList8.Add((object) 0);
+            arrayList8.Add((object) 1);
+            arrayList8.Add((object) 0);
+            arrayList8.Add((object) 0);
+            arrayList8.Add((object) 1);
+            arrayList8.Add((object) 2);
+            arrayList8.Add((object) color12);
+            arrayList8.Add((object) font12);
+            arrayList8.Add((object) "");
+            arrayList1.Add((object) arrayList8);
+          }
+          Font font13 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+          Color color13 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+          if (flag7)
+          {
+            arrayList14.Add((object) 4);
+            arrayList14.Add((object) 0);
+            arrayList14.Add((object) 0);
+            arrayList14.Add((object) 0);
+            arrayList14.Add((object) 0);
+            arrayList14.Add((object) 0);
+            arrayList14.Add((object) color13);
+            arrayList14.Add((object) font13);
+            arrayList14.Add((object) "GPU");
+            arrayList1.Add((object) arrayList14);
+          }
+          bool flag8 = binaryReader.ReadBoolean();
+          if (readMyMode)
+            this.myBjxs = flag8;
+          bool flag9 = binaryReader.ReadBoolean();
+          if (readMyMode)
+            this.myTpxs = flag9;
+          this.directionB = binaryReader.ReadInt32();
+          int num1 = binaryReader.ReadInt32();
+          if (readMyMode)
+            this.myUIMode = num1;
+          this.myUISubMode = 0;
+          int num2 = binaryReader.ReadInt32();
+          int num3 = binaryReader.ReadInt32();
+          if (arrayList2.Count > 0)
+          {
+            arrayList2[2] = (object) num2;
+            arrayList2[3] = (object) num3;
+          }
+          int num4 = binaryReader.ReadInt32();
+          int num5 = binaryReader.ReadInt32();
+          if (arrayList3.Count > 0)
+          {
+            arrayList3[2] = (object) num4;
+            arrayList3[3] = (object) num5;
+          }
+          int num6 = binaryReader.ReadInt32();
+          int num7 = binaryReader.ReadInt32();
+          if (arrayList9.Count > 0)
+          {
+            arrayList9[2] = (object) num6;
+            arrayList9[3] = (object) num7;
+          }
+          int num8 = binaryReader.ReadInt32();
+          int num9 = binaryReader.ReadInt32();
+          if (arrayList4.Count > 0)
+          {
+            arrayList4[2] = (object) num8;
+            arrayList4[3] = (object) num9;
+          }
+          int num10 = binaryReader.ReadInt32();
+          int num11 = binaryReader.ReadInt32();
+          if (arrayList10.Count > 0)
+          {
+            arrayList10[2] = (object) num10;
+            arrayList10[3] = (object) num11;
+          }
+          int num12 = binaryReader.ReadInt32();
+          int num13 = binaryReader.ReadInt32();
+          if (arrayList5.Count > 0)
+          {
+            arrayList5[2] = (object) num12;
+            arrayList5[3] = (object) num13;
+          }
+          int num14 = binaryReader.ReadInt32();
+          int num15 = binaryReader.ReadInt32();
+          if (arrayList11.Count > 0)
+          {
+            arrayList11[2] = (object) num14;
+            arrayList11[3] = (object) num15;
+          }
+          int num16 = binaryReader.ReadInt32();
+          int num17 = binaryReader.ReadInt32();
+          if (arrayList6.Count > 0)
+          {
+            arrayList6[2] = (object) num16;
+            arrayList6[3] = (object) num17;
+          }
+          int num18 = binaryReader.ReadInt32();
+          int num19 = binaryReader.ReadInt32();
+          if (arrayList12.Count > 0)
+          {
+            arrayList12[2] = (object) num18;
+            arrayList12[3] = (object) num19;
+          }
+          int num20 = binaryReader.ReadInt32();
+          int num21 = binaryReader.ReadInt32();
+          if (arrayList7.Count > 0)
+          {
+            arrayList7[2] = (object) num20;
+            arrayList7[3] = (object) num21;
+          }
+          int num22 = binaryReader.ReadInt32();
+          int num23 = binaryReader.ReadInt32();
+          if (arrayList13.Count > 0)
+          {
+            arrayList13[2] = (object) num22;
+            arrayList13[3] = (object) num23;
+          }
+          int num24 = binaryReader.ReadInt32();
+          int num25 = binaryReader.ReadInt32();
+          if (arrayList8.Count > 0)
+          {
+            arrayList8[2] = (object) num24;
+            arrayList8[3] = (object) num25;
+          }
+          int num26 = binaryReader.ReadInt32();
+          int num27 = binaryReader.ReadInt32();
+          if (arrayList14.Count > 0)
+          {
+            arrayList14[2] = (object) num26;
+            arrayList14[3] = (object) num27;
+          }
+          binaryReader.ReadString();
+          this.ucThemeSetting1.ucBeiJingXianShi1.buttonOnOff_Set(this.myBjxs);
+          this.ucThemeSetting1.ucTouPingXianShi1.buttonOnOff_Set(this.myTpxs);
+          this.ucThemeSetting1.ucXiTongXianShi1.buttonOnOff_Set(this.myXtxx);
+          if (this.myBjxs || this.myTpxs)
+          {
+            this.mySpxs = false;
+            this.ucThemeSetting1.ucShiPingBoFangQi1.buttonOnOff_Set(this.mySpxs);
+          }
+          this.ucScreenImageBK1.ucScreenImage1.SetMyUCScreenImage(this.directionB);
+          int num28 = binaryReader.ReadBoolean() ? 1 : 0;
+          if (arrayList3.Count > 0)
+            arrayList3[1] = (object) num28;
+          if (arrayList4.Count > 0)
+            arrayList4[1] = (object) num28;
+          if (arrayList5.Count > 0)
+            arrayList5[1] = (object) num28;
+          if (arrayList6.Count > 0)
+            arrayList6[1] = (object) num28;
+          if (arrayList7.Count > 0)
+            arrayList7[1] = (object) num28;
+          if (arrayList8.Count > 0)
+            arrayList8[1] = (object) num28;
+          int num29 = binaryReader.ReadInt32();
+          if (readMyMode)
+            this.myMode = num29;
+          this.myYcbk = binaryReader.ReadBoolean();
+          this.JpX = binaryReader.ReadInt32();
+          this.JpY = binaryReader.ReadInt32();
+          this.JpW = binaryReader.ReadInt32();
+          this.JpH = binaryReader.ReadInt32();
+          this.ucThemeSetting1.ucTouPingXianShi1.buttonXSBK_Set(this.myYcbk);
+          this.ucThemeSetting1.ucTouPingXianShi1.textBoxX.Text = this.JpX.ToString();
+          this.ucThemeSetting1.ucTouPingXianShi1.textBoxY.Text = this.JpY.ToString();
+          this.ucThemeSetting1.ucTouPingXianShi1.textBoxW.Text = this.JpW.ToString();
+          this.ucThemeSetting1.ucTouPingXianShi1.textBoxH.Text = this.JpH.ToString();
+          this.textBoxCMM.Text = (string) this.themeArray[this.myTheme];
+          this.myMbxs = binaryReader.ReadBoolean();
+          this.ucThemeSetting1.ucMengBanXianShi1.ButtonOnOff_Set(this.myMbxs);
+          this.ucScreenImageBK1.ucScreenImage1.SetDrawMengBan(this.myMbxs);
+          this.ucScreenImageBK1.ucScreenImage1.XvalMB = binaryReader.ReadInt32();
+          this.ucScreenImageBK1.ucScreenImage1.YvalMB = binaryReader.ReadInt32();
+          bool flag10 = binaryReader.ReadBoolean();
+          bool flag11 = binaryReader.ReadBoolean();
+          bool flag12 = binaryReader.ReadBoolean();
+          int num30 = binaryReader.ReadInt32();
+          int num31 = binaryReader.ReadInt32();
+          ArrayList arrayList15 = new ArrayList();
+          ArrayList arrayList16 = new ArrayList();
+          ArrayList arrayList17 = new ArrayList();
+          int num32 = binaryReader.ReadInt32();
+          int num33 = binaryReader.ReadInt32();
+          int num34 = binaryReader.ReadInt32();
+          int num35 = binaryReader.ReadInt32();
+          if (flag10)
+          {
+            if (flag11)
+            {
+              arrayList15.Add((object) 3);
+              arrayList15.Add((object) num30);
+              arrayList15.Add((object) num32);
+              arrayList15.Add((object) num33);
+              arrayList15.Add((object) 0);
+              arrayList15.Add((object) 0);
+              arrayList1.Insert(0, (object) arrayList15);
+            }
+            if (flag12)
+            {
+              arrayList16.Add((object) 1);
+              arrayList16.Add((object) num31);
+              arrayList16.Add((object) num34);
+              arrayList16.Add((object) num35);
+              arrayList16.Add((object) 0);
+              arrayList16.Add((object) 0);
+              arrayList1.Insert(0, (object) arrayList16);
+            }
+          }
+          Font font14 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+          Color color14 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+          if (arrayList15.Count > 0)
+          {
+            arrayList15.Add((object) color14);
+            arrayList15.Add((object) font14);
+            arrayList15.Add((object) "");
+          }
+          Font font15 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+          Color color15 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+          if (arrayList16.Count > 0)
+          {
+            arrayList16.Add((object) color15);
+            arrayList16.Add((object) font15);
+            arrayList16.Add((object) "");
+          }
+          bool flag13 = binaryReader.ReadBoolean();
+          int num36 = binaryReader.ReadInt32();
+          int num37 = binaryReader.ReadInt32();
+          Font font16 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+          Color color16 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+          if (flag10 && flag13)
+          {
+            arrayList17.Add((object) 2);
+            arrayList17.Add((object) 0);
+            arrayList17.Add((object) num36);
+            arrayList17.Add((object) num37);
+            arrayList17.Add((object) 0);
+            arrayList17.Add((object) 0);
+            arrayList17.Add((object) color16);
+            arrayList17.Add((object) font16);
+            arrayList17.Add((object) "");
+            arrayList1.Insert(0, (object) arrayList17);
+          }
+          this.ucScreenImageBK1.ucScreenImage1.SetDrawXiTong(this.myXtxx);
+          this.ucThemeSetting1.ucXiTongXianShi1.UCXiTongXianShiSet_UCXiTongXianShiSubArray(arrayList1);
+          break;
+        case 221:
+          this.myXtxx = binaryReader.ReadBoolean();
+          int num38 = binaryReader.ReadInt32();
+          ArrayList arrayList18 = new ArrayList();
+          for (int index = 0; index < num38; ++index)
+          {
+            ArrayList arrayList19 = new ArrayList()
+            {
+              (object) binaryReader.ReadInt32(),
+              (object) binaryReader.ReadInt32(),
+              (object) binaryReader.ReadInt32(),
+              (object) binaryReader.ReadInt32(),
+              (object) binaryReader.ReadInt32(),
+              (object) binaryReader.ReadInt32()
+            };
+            Font font17 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+            Color color17 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+            arrayList19.Add((object) color17);
+            arrayList19.Add((object) font17);
+            arrayList19.Add((object) binaryReader.ReadString());
+            arrayList18.Add((object) arrayList19);
+          }
+          bool flag14 = binaryReader.ReadBoolean();
+          if (readMyMode)
+            this.myBjxs = flag14;
+          bool flag15 = binaryReader.ReadBoolean();
+          if (readMyMode)
+            this.myTpxs = flag15;
+          this.directionB = binaryReader.ReadInt32();
+          int num39 = binaryReader.ReadInt32();
+          if (readMyMode)
+            this.myUIMode = num39;
+          this.myUISubMode = 0;
+          this.ucThemeSetting1.ucBeiJingXianShi1.buttonOnOff_Set(this.myBjxs);
+          this.ucThemeSetting1.ucTouPingXianShi1.buttonOnOff_Set(this.myTpxs);
+          this.ucThemeSetting1.ucXiTongXianShi1.buttonOnOff_Set(this.myXtxx);
+          if (this.myBjxs || this.myTpxs)
+          {
+            this.mySpxs = false;
+            this.ucThemeSetting1.ucShiPingBoFangQi1.buttonOnOff_Set(this.mySpxs);
+          }
+          this.ucScreenImageBK1.ucScreenImage1.SetMyUCScreenImage(this.directionB);
+          int num40 = binaryReader.ReadInt32();
+          if (readMyMode)
+            this.myMode = num40;
+          this.myYcbk = binaryReader.ReadBoolean();
+          this.JpX = binaryReader.ReadInt32();
+          this.JpY = binaryReader.ReadInt32();
+          this.JpW = binaryReader.ReadInt32();
+          this.JpH = binaryReader.ReadInt32();
+          this.ucThemeSetting1.ucTouPingXianShi1.buttonXSBK_Set(this.myYcbk);
+          this.ucThemeSetting1.ucTouPingXianShi1.textBoxX.Text = this.JpX.ToString();
+          this.ucThemeSetting1.ucTouPingXianShi1.textBoxY.Text = this.JpY.ToString();
+          this.ucThemeSetting1.ucTouPingXianShi1.textBoxW.Text = this.JpW.ToString();
+          this.ucThemeSetting1.ucTouPingXianShi1.textBoxH.Text = this.JpH.ToString();
+          this.textBoxCMM.Text = (string) this.themeArray[this.myTheme];
+          this.myMbxs = binaryReader.ReadBoolean();
+          this.ucThemeSetting1.ucMengBanXianShi1.ButtonOnOff_Set(this.myMbxs);
+          this.ucScreenImageBK1.ucScreenImage1.SetDrawMengBan(this.myMbxs);
+          this.ucScreenImageBK1.ucScreenImage1.XvalMB = binaryReader.ReadInt32();
+          this.ucScreenImageBK1.ucScreenImage1.YvalMB = binaryReader.ReadInt32();
+          this.ucScreenImageBK1.ucScreenImage1.SetDrawXiTong(this.myXtxx);
+          this.ucThemeSetting1.ucXiTongXianShi1.UCXiTongXianShiSet_UCXiTongXianShiSubArray(arrayList18);
+          break;
+      }
+    }
+    catch
+    {
+    }
+    binaryReader.Close();
+    binaryReader.Dispose();
+    input.Close();
+    input.Dispose();
+  }
+
+  private void Theme_Click_Event(bool bl = true)
+  {
+    if (this.myTheme >= this.themeArray.Count)
+      this.myTheme = 0;
+    FormCZTV.ClearMemoryMy(1000);
+    this.isToTimer = false;
+    this.myTempDeviceJpgYSL = this.myDeviceJpgYSL;
+    this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = (Bitmap) null;
+    if (this.gifPicture != null)
+      this.gifPicture.Dispose();
+    this.gifPicture = (Bitmap) null;
+    this.imageArray.Clear();
+    if (this.imagePicture != null)
+      this.imagePicture.Dispose();
+    this.imagePicture = (Bitmap) null;
+    if (this.ucScreenImageBK1.ucScreenImage1.bitmapMB != null)
+      this.ucScreenImageBK1.ucScreenImage1.bitmapMB.Dispose();
+    this.ucScreenImageBK1.ucScreenImage1.bitmapMB = (Bitmap) null;
+    if (bl)
+    {
+      if (Directory.Exists(this.GifDirectory))
+        Directory.Delete(this.GifDirectory, true);
+      Directory.CreateDirectory(this.GifDirectory);
+      this.CopyDireToDire(this.GifDirectory + this.ThemeML + (string) this.themeArray[this.myTheme], this.GifDirectory);
+    }
+    this.ReadSystemConfiguration($"{this.GifDirectory}{this.ThemeML}{(string) this.themeArray[this.myTheme]}\\config1.dc");
+    this.isGifMode = false;
+    if (System.IO.File.Exists($"{this.GifDirectory}{this.ThemeML}{(string) this.themeArray[this.myTheme]}\\01.png"))
+    {
+      Bitmap Bit = new Bitmap($"{this.GifDirectory}{this.ThemeML}{(string) this.themeArray[this.myTheme]}\\01.png");
+      byte[] buffer = this.BitmapToByte(Bit);
+      Bit.Dispose();
+      Bitmap bitmap = this.ByteToBitmap(buffer);
+      Bitmap bitmapMb = this.ucScreenImageBK1.ucScreenImage1.bitmapMB;
+      this.ucScreenImageBK1.ucScreenImage1.bitmapMB = bitmap;
+      bitmapMb?.Dispose();
+      this.ucScreenImageBK1.ucScreenImage1.WvalMB = bitmap.Width;
+      this.ucScreenImageBK1.ucScreenImage1.HvalMB = bitmap.Height;
+    }
+    if (System.IO.File.Exists($"{this.GifDirectory}{this.ThemeML}{(string) this.themeArray[this.myTheme]}\\00.png"))
+    {
+      Bitmap Bit = new Bitmap($"{this.GifDirectory}{this.ThemeML}{(string) this.themeArray[this.myTheme]}\\00.png");
+      byte[] buffer = this.BitmapToByte(Bit);
+      Bit.Dispose();
+      Bitmap bitmap = this.ByteToBitmap(buffer);
+      this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = bitmap;
+      this.imagePicture = bitmap;
+      this.ImageCount = 100;
+    }
+    else
+    {
+      FileStream input = new FileStream($"{this.GifDirectory}{this.ThemeML}{(string) this.themeArray[this.myTheme]}\\Theme.zt", FileMode.OpenOrCreate);
+      BinaryReader binaryReader = new BinaryReader((Stream) input);
+      try
+      {
+        if (binaryReader.ReadByte() == (byte) 220)
+        {
+          int length = binaryReader.ReadInt32();
+          this.gifDelays = new int[length];
+          for (int index = 0; index < length; ++index)
+            this.gifDelays[index] = binaryReader.ReadInt32();
+          for (int index = 0; index < length; ++index)
+          {
+            int count = binaryReader.ReadInt32();
+            this.imageArray.Add((object) binaryReader.ReadBytes(count));
+          }
+        }
+      }
+      catch
+      {
+      }
+      binaryReader.Close();
+      binaryReader.Dispose();
+      input.Close();
+      input.Dispose();
+      this.isGifMode = true;
+      this.gifCount = 0;
+      this.ImageCount = 0;
+    }
+    this.ucComboBoxA1.SetUCComboBoxMode(this.directionB / 90 + 1);
+    this.buttonMS_Mode();
+    this.InfoCount = 100;
+    this.GetSystemInfo();
+    this.isToTimer = true;
+  }
+
+  private void textBoxCMM_KeyPress(object sender, KeyPressEventArgs e)
+  {
+    if ((new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars())).IndexOf(e.KeyChar) < 0 || char.IsControl(e.KeyChar))
+      return;
+    e.Handled = true;
+  }
+
+  private void buttonBCZT_Click(object sender, EventArgs e)
+  {
+    if (this.ucThemeLocal1.isLunbo)
+      this.ucThemeLocal1.buttonLunbo_Set(false);
+    while (this.textBoxCMM.Text.Length != 0)
+    {
+      if (this.textBoxCMM.Text[this.textBoxCMM.Text.Length - 1] == ' ')
+      {
+        this.textBoxCMM.Text = this.textBoxCMM.Text.Remove(this.textBoxCMM.Text.Length - 1);
+      }
+      else
+      {
+        this.myThemeT = 0;
+        for (int index = 0; index < this.themeArray.Count; ++index)
+        {
+          if (this.textBoxCMM.Text.Equals(this.themeArray[index]))
+          {
+            if (index < 5)
+            {
+              if (Form1.Language == 1)
+              {
+                int num = (int) MessageBox.Show("用户主题名称不能与默认主题重复！");
+                return;
+              }
+              if (Form1.Language == 2)
+              {
+                int num = (int) MessageBox.Show("用戶主題名稱不能與默認主題重複");
+                return;
+              }
+              int num1 = (int) MessageBox.Show("The original theme cannot be Changed");
+              return;
+            }
+            this.myThemeT = index;
+            break;
+          }
+        }
+        if (this.myThemeT == 0)
+        {
+          this.themeArray.Add((object) this.textBoxCMM.Text);
+          this.myThemeT = this.themeArray.Count - 1;
+        }
+        this.isToTimer = false;
+        this.labelZXCG.Show();
+        Application.DoEvents();
+        this.myTheme = this.myThemeT;
+        this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = (Bitmap) null;
+        if (this.imagePicture != null)
+          this.imagePicture.Dispose();
+        this.imagePicture = (Bitmap) null;
+        if (this.ucScreenImageBK1.ucScreenImage1.bitmapMB != null)
+          this.ucScreenImageBK1.ucScreenImage1.bitmapMB.Dispose();
+        this.ucScreenImageBK1.ucScreenImage1.bitmapMB = (Bitmap) null;
+        if (this.gifPicture != null)
+          this.gifPicture.Dispose();
+        this.gifPicture = (Bitmap) null;
+        this.imageArray.Clear();
+        if (Directory.Exists(this.GifDirectory + this.ThemeML + (string) this.themeArray[this.myTheme]))
+          Directory.Delete(this.GifDirectory + this.ThemeML + (string) this.themeArray[this.myTheme], true);
+        Directory.CreateDirectory(this.GifDirectory + this.ThemeML + (string) this.themeArray[this.myTheme]);
+        this.CopyDireToDire(this.GifDirectory, this.GifDirectory + this.ThemeML + (string) this.themeArray[this.myTheme]);
+        string path = $"{this.GifDirectory}{this.ThemeML}{(string) this.themeArray[this.myTheme]}\\Theme.png";
+        if (System.IO.File.Exists(path))
+        {
+          try
+          {
+            System.IO.File.Delete(path);
+          }
+          catch
+          {
+          }
+        }
+        FileStream output = new FileStream($"{this.GifDirectory}{this.ThemeML}{(string) this.themeArray[this.myTheme]}\\config1.dc", FileMode.OpenOrCreate);
+        BinaryWriter binaryWriter = new BinaryWriter((Stream) output);
+        binaryWriter.Write((byte) 221);
+        binaryWriter.Write(this.myXtxx);
+        ArrayList tongXianShiSubArray = this.ucThemeSetting1.ucXiTongXianShi1.UCXiTongXianShiSubArray;
+        binaryWriter.Write(tongXianShiSubArray.Count);
+        for (int index = 0; index < tongXianShiSubArray.Count; ++index)
+        {
+          UCXiTongXianShiSub xiTongXianShiSub = (UCXiTongXianShiSub) tongXianShiSubArray[index];
+          binaryWriter.Write(xiTongXianShiSub.myMode);
+          binaryWriter.Write(xiTongXianShiSub.myModeSub);
+          binaryWriter.Write(xiTongXianShiSub.myX);
+          binaryWriter.Write(xiTongXianShiSub.myY);
+          binaryWriter.Write(xiTongXianShiSub.myMainCount);
+          binaryWriter.Write(xiTongXianShiSub.mySubCount);
+          binaryWriter.Write(xiTongXianShiSub.myFont.Name);
+          binaryWriter.Write(xiTongXianShiSub.myFont.Size);
+          binaryWriter.Write((byte) xiTongXianShiSub.myFont.Style);
+          binaryWriter.Write((byte) xiTongXianShiSub.myFont.Unit);
+          binaryWriter.Write(xiTongXianShiSub.myFont.GdiCharSet);
+          Color color = xiTongXianShiSub.myColor;
+          binaryWriter.Write(color.A);
+          binaryWriter.Write(color.R);
+          binaryWriter.Write(color.G);
+          binaryWriter.Write(color.B);
+          binaryWriter.Write(xiTongXianShiSub.myText);
+        }
+        binaryWriter.Write(this.myBjxs);
+        binaryWriter.Write(this.myTpxs);
+        binaryWriter.Write(this.directionB);
+        binaryWriter.Write(this.myUIMode);
+        binaryWriter.Write(this.myMode);
+        binaryWriter.Write(this.myYcbk);
+        binaryWriter.Write(this.JpX);
+        binaryWriter.Write(this.JpY);
+        binaryWriter.Write(this.JpW);
+        binaryWriter.Write(this.JpH);
+        binaryWriter.Write(this.myMbxs);
+        binaryWriter.Write(this.ucScreenImageBK1.ucScreenImage1.XvalMB);
+        binaryWriter.Write(this.ucScreenImageBK1.ucScreenImage1.YvalMB);
+        binaryWriter.Flush();
+        binaryWriter.Close();
+        binaryWriter.Dispose();
+        output.Close();
+        output.Dispose();
+        Thread.Sleep(100);
+        this.Theme_Click_Event(false);
+        this.labelZXCG.Hide();
+        this.ucThemeLocal1.Reset_Button();
+        FormCZTV.delegateFormCZTV delegateForm = this.delegateForm;
+        if (delegateForm == null)
+          return;
+        delegateForm(128 /*0x80*/, (object) this);
+        return;
+      }
+    }
+    if (Form1.Language == 1)
+    {
+      int num2 = (int) MessageBox.Show("主题名称不能为空！");
+    }
+    else if (Form1.Language == 2)
+    {
+      int num3 = (int) MessageBox.Show("主題名稱不能為空");
+    }
+    else
+    {
+      int num4 = (int) MessageBox.Show("Please enter a name");
+    }
+  }
+
+  private void buttonDaoChu_Click(object sender, EventArgs e)
+  {
+    if (this.ucThemeLocal1.isLunbo)
+      this.ucThemeLocal1.buttonLunbo_Set(false);
+    SaveFileDialog saveFileDialog = new SaveFileDialog();
+    saveFileDialog.Filter = "Theme files (*.tr)|*.tr";
+    saveFileDialog.FilterIndex = 1;
+    saveFileDialog.RestoreDirectory = true;
+    saveFileDialog.FileName = this.textBoxCMM.Text;
+    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+    {
+      FileStream output = new FileStream(saveFileDialog.FileName, FileMode.OpenOrCreate);
+      BinaryWriter binaryWriter = new BinaryWriter((Stream) output);
+      binaryWriter.Write((byte) 221);
+      binaryWriter.Write((byte) 220);
+      binaryWriter.Write((byte) 221);
+      binaryWriter.Write((byte) 220);
+      binaryWriter.Write(this.myXtxx);
+      ArrayList tongXianShiSubArray = this.ucThemeSetting1.ucXiTongXianShi1.UCXiTongXianShiSubArray;
+      binaryWriter.Write(tongXianShiSubArray.Count);
+      for (int index = 0; index < tongXianShiSubArray.Count; ++index)
+      {
+        UCXiTongXianShiSub xiTongXianShiSub = (UCXiTongXianShiSub) tongXianShiSubArray[index];
+        binaryWriter.Write(xiTongXianShiSub.myMode);
+        binaryWriter.Write(xiTongXianShiSub.myModeSub);
+        binaryWriter.Write(xiTongXianShiSub.myX);
+        binaryWriter.Write(xiTongXianShiSub.myY);
+        binaryWriter.Write(xiTongXianShiSub.myMainCount);
+        binaryWriter.Write(xiTongXianShiSub.mySubCount);
+        binaryWriter.Write(xiTongXianShiSub.myFont.Name);
+        binaryWriter.Write(xiTongXianShiSub.myFont.Size);
+        binaryWriter.Write((byte) xiTongXianShiSub.myFont.Style);
+        binaryWriter.Write((byte) xiTongXianShiSub.myFont.Unit);
+        binaryWriter.Write(xiTongXianShiSub.myFont.GdiCharSet);
+        Color color = xiTongXianShiSub.myColor;
+        binaryWriter.Write(color.A);
+        binaryWriter.Write(color.R);
+        binaryWriter.Write(color.G);
+        binaryWriter.Write(color.B);
+        binaryWriter.Write(xiTongXianShiSub.myText);
+      }
+      binaryWriter.Write(this.myBjxs);
+      binaryWriter.Write(this.myTpxs);
+      binaryWriter.Write(this.directionB);
+      binaryWriter.Write(this.myUIMode);
+      binaryWriter.Write(this.myMode);
+      binaryWriter.Write(this.myYcbk);
+      binaryWriter.Write(this.JpX);
+      binaryWriter.Write(this.JpY);
+      binaryWriter.Write(this.JpW);
+      binaryWriter.Write(this.JpH);
+      binaryWriter.Write(this.myMbxs);
+      binaryWriter.Write(this.ucScreenImageBK1.ucScreenImage1.XvalMB);
+      binaryWriter.Write(this.ucScreenImageBK1.ucScreenImage1.YvalMB);
+      for (int index = 0; index < 10240; ++index)
+        binaryWriter.Write((byte) 220);
+      if (System.IO.File.Exists(this.GifDirectory + "\\01.png"))
+      {
+        Bitmap Bit = new Bitmap(this.GifDirectory + "\\01.png");
+        byte[] buffer = this.BitmapToByte(Bit);
+        binaryWriter.Write(buffer.Length);
+        binaryWriter.Write(buffer);
+        Bit.Dispose();
+      }
+      else
+        binaryWriter.Write(0);
+      if (System.IO.File.Exists(this.GifDirectory + "\\00.png"))
+      {
+        Bitmap Bit = new Bitmap(this.GifDirectory + "\\00.png");
+        byte[] buffer = this.BitmapToByte(Bit);
+        binaryWriter.Write(0);
+        binaryWriter.Write(buffer.Length);
+        binaryWriter.Write(buffer);
+        Bit.Dispose();
+      }
+      else
+      {
+        FileStream input = new FileStream(this.GifDirectory + "\\Theme.zt", FileMode.OpenOrCreate);
+        BinaryReader binaryReader = new BinaryReader((Stream) input);
+        try
+        {
+          if (binaryReader.ReadByte() == (byte) 220)
+          {
+            int num = binaryReader.ReadInt32();
+            binaryWriter.Write(num);
+            for (int index = 0; index < num; ++index)
+              binaryWriter.Write(binaryReader.ReadInt32());
+            for (int index = 0; index < num; ++index)
+            {
+              int count = binaryReader.ReadInt32();
+              binaryWriter.Write(count);
+              binaryWriter.Write(binaryReader.ReadBytes(count));
+            }
+          }
+        }
+        catch
+        {
+        }
+        binaryReader.Close();
+        binaryReader.Dispose();
+        input.Close();
+        input.Dispose();
+      }
+      binaryWriter.Flush();
+      binaryWriter.Close();
+      binaryWriter.Dispose();
+      output.Close();
+      output.Dispose();
+    }
+    saveFileDialog.Dispose();
+  }
+
+  private void buttonDaoRu_Click(object sender, EventArgs e)
+  {
+    if (this.ucThemeLocal1.isLunbo)
+      this.ucThemeLocal1.buttonLunbo_Set(false);
+    OpenFileDialog openFileDialog = new OpenFileDialog();
+    openFileDialog.Filter = "Theme files (*.lzt;*.tr)|*.lzt;*.tr";
+    openFileDialog.Title = "Open";
+    if (openFileDialog.ShowDialog() == DialogResult.OK)
+    {
+      FileStream input = new FileStream(openFileDialog.FileName, FileMode.OpenOrCreate);
+      BinaryReader binaryReader = new BinaryReader((Stream) input);
+      try
+      {
+        byte num1 = binaryReader.ReadByte();
+        switch (num1)
+        {
+          case 220:
+            if (binaryReader.ReadByte() != (byte) 220)
+            {
+              binaryReader.Close();
+              binaryReader.Dispose();
+              input.Close();
+              input.Dispose();
+              return;
+            }
+            if (binaryReader.ReadByte() != (byte) 220)
+            {
+              binaryReader.Close();
+              binaryReader.Dispose();
+              input.Close();
+              input.Dispose();
+              return;
+            }
+            if (binaryReader.ReadByte() != (byte) 220)
+            {
+              binaryReader.Close();
+              binaryReader.Dispose();
+              input.Close();
+              input.Dispose();
+              return;
+            }
+            break;
+          case 221:
+            if (binaryReader.ReadByte() != (byte) 220)
+            {
+              binaryReader.Close();
+              binaryReader.Dispose();
+              input.Close();
+              input.Dispose();
+              return;
+            }
+            if (binaryReader.ReadByte() != (byte) 221)
+            {
+              binaryReader.Close();
+              binaryReader.Dispose();
+              input.Close();
+              input.Dispose();
+              return;
+            }
+            if (binaryReader.ReadByte() != (byte) 220)
+            {
+              binaryReader.Close();
+              binaryReader.Dispose();
+              input.Close();
+              input.Dispose();
+              return;
+            }
+            break;
+        }
+        this.isToTimer = false;
+        this.myTempDeviceJpgYSL = this.myDeviceJpgYSL;
+        this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = (Bitmap) null;
+        if (this.gifPicture != null)
+          this.gifPicture.Dispose();
+        this.gifPicture = (Bitmap) null;
+        this.imageArray.Clear();
+        if (this.imagePicture != null)
+          this.imagePicture.Dispose();
+        this.imagePicture = (Bitmap) null;
+        if (this.ucScreenImageBK1.ucScreenImage1.bitmapMB != null)
+          this.ucScreenImageBK1.ucScreenImage1.bitmapMB.Dispose();
+        this.ucScreenImageBK1.ucScreenImage1.bitmapMB = (Bitmap) null;
+        switch (num1)
+        {
+          case 220:
+            binaryReader.ReadInt32();
+            binaryReader.ReadInt32();
+            bool flag1 = binaryReader.ReadBoolean();
+            this.myXtxx = binaryReader.ReadBoolean();
+            bool flag2 = binaryReader.ReadBoolean();
+            bool flag3 = binaryReader.ReadBoolean();
+            bool flag4 = binaryReader.ReadBoolean();
+            bool flag5 = binaryReader.ReadBoolean();
+            bool flag6 = binaryReader.ReadBoolean();
+            bool flag7 = binaryReader.ReadBoolean();
+            binaryReader.ReadInt32();
+            ArrayList arrayList1 = new ArrayList();
+            ArrayList arrayList2 = new ArrayList();
+            ArrayList arrayList3 = new ArrayList();
+            ArrayList arrayList4 = new ArrayList();
+            ArrayList arrayList5 = new ArrayList();
+            ArrayList arrayList6 = new ArrayList();
+            ArrayList arrayList7 = new ArrayList();
+            ArrayList arrayList8 = new ArrayList();
+            ArrayList arrayList9 = new ArrayList();
+            ArrayList arrayList10 = new ArrayList();
+            ArrayList arrayList11 = new ArrayList();
+            ArrayList arrayList12 = new ArrayList();
+            ArrayList arrayList13 = new ArrayList();
+            ArrayList arrayList14 = new ArrayList();
+            string str = binaryReader.ReadString();
+            Font font1 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+            Color color1 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+            if (flag1 && str.Length > 0)
+            {
+              arrayList2.Add((object) 4);
+              arrayList2.Add((object) 0);
+              arrayList2.Add((object) 0);
+              arrayList2.Add((object) 0);
+              arrayList2.Add((object) 0);
+              arrayList2.Add((object) 0);
+              arrayList2.Add((object) color1);
+              arrayList2.Add((object) font1);
+              arrayList2.Add((object) str);
+              arrayList1.Add((object) arrayList2);
+            }
+            Font font2 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+            Color color2 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+            if (flag2)
+            {
+              arrayList3.Add((object) 0);
+              arrayList3.Add((object) 1);
+              arrayList3.Add((object) 0);
+              arrayList3.Add((object) 0);
+              arrayList3.Add((object) 0);
+              arrayList3.Add((object) 1);
+              arrayList3.Add((object) color2);
+              arrayList3.Add((object) font2);
+              arrayList3.Add((object) "");
+              arrayList1.Add((object) arrayList3);
+            }
+            Font font3 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+            Color color3 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+            if (flag2)
+            {
+              arrayList9.Add((object) 4);
+              arrayList9.Add((object) 0);
+              arrayList9.Add((object) 0);
+              arrayList9.Add((object) 0);
+              arrayList9.Add((object) 0);
+              arrayList9.Add((object) 0);
+              arrayList9.Add((object) color3);
+              arrayList9.Add((object) font3);
+              arrayList9.Add((object) "CPU");
+              arrayList1.Add((object) arrayList9);
+            }
+            Font font4 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+            Color color4 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+            if (flag3)
+            {
+              arrayList4.Add((object) 0);
+              arrayList4.Add((object) 1);
+              arrayList4.Add((object) 0);
+              arrayList4.Add((object) 0);
+              arrayList4.Add((object) 0);
+              arrayList4.Add((object) 3);
+              arrayList4.Add((object) color4);
+              arrayList4.Add((object) font4);
+              arrayList4.Add((object) "");
+              arrayList1.Add((object) arrayList4);
+            }
+            Font font5 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+            Color color5 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+            if (flag3)
+            {
+              arrayList10.Add((object) 4);
+              arrayList10.Add((object) 0);
+              arrayList10.Add((object) 0);
+              arrayList10.Add((object) 0);
+              arrayList10.Add((object) 0);
+              arrayList10.Add((object) 0);
+              arrayList10.Add((object) color5);
+              arrayList10.Add((object) font5);
+              arrayList10.Add((object) "CPU");
+              arrayList1.Add((object) arrayList10);
+            }
+            Font font6 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+            Color color6 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+            if (flag4)
+            {
+              arrayList5.Add((object) 0);
+              arrayList5.Add((object) 1);
+              arrayList5.Add((object) 0);
+              arrayList5.Add((object) 0);
+              arrayList5.Add((object) 0);
+              arrayList5.Add((object) 2);
+              arrayList5.Add((object) color6);
+              arrayList5.Add((object) font6);
+              arrayList5.Add((object) "");
+              arrayList1.Add((object) arrayList5);
+            }
+            Font font7 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+            Color color7 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+            if (flag4)
+            {
+              arrayList11.Add((object) 4);
+              arrayList11.Add((object) 0);
+              arrayList11.Add((object) 0);
+              arrayList11.Add((object) 0);
+              arrayList11.Add((object) 0);
+              arrayList11.Add((object) 0);
+              arrayList11.Add((object) color7);
+              arrayList11.Add((object) font7);
+              arrayList11.Add((object) "CPU");
+              arrayList1.Add((object) arrayList11);
+            }
+            Font font8 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+            Color color8 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+            if (flag5)
+            {
+              arrayList6.Add((object) 0);
+              arrayList6.Add((object) 1);
+              arrayList6.Add((object) 0);
+              arrayList6.Add((object) 0);
+              arrayList6.Add((object) 1);
+              arrayList6.Add((object) 1);
+              arrayList6.Add((object) color8);
+              arrayList6.Add((object) font8);
+              arrayList6.Add((object) "");
+              arrayList1.Add((object) arrayList6);
+            }
+            Font font9 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+            Color color9 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+            if (flag5)
+            {
+              arrayList12.Add((object) 4);
+              arrayList12.Add((object) 0);
+              arrayList12.Add((object) 0);
+              arrayList12.Add((object) 0);
+              arrayList12.Add((object) 0);
+              arrayList12.Add((object) 0);
+              arrayList12.Add((object) color9);
+              arrayList12.Add((object) font9);
+              arrayList12.Add((object) "GPU");
+              arrayList1.Add((object) arrayList12);
+            }
+            Font font10 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+            Color color10 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+            if (flag6)
+            {
+              arrayList7.Add((object) 0);
+              arrayList7.Add((object) 1);
+              arrayList7.Add((object) 0);
+              arrayList7.Add((object) 0);
+              arrayList7.Add((object) 1);
+              arrayList7.Add((object) 3);
+              arrayList7.Add((object) color10);
+              arrayList7.Add((object) font10);
+              arrayList7.Add((object) "");
+              arrayList1.Add((object) arrayList7);
+            }
+            Font font11 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+            Color color11 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+            if (flag6)
+            {
+              arrayList13.Add((object) 4);
+              arrayList13.Add((object) 0);
+              arrayList13.Add((object) 0);
+              arrayList13.Add((object) 0);
+              arrayList13.Add((object) 0);
+              arrayList13.Add((object) 0);
+              arrayList13.Add((object) color11);
+              arrayList13.Add((object) font11);
+              arrayList13.Add((object) "GPU");
+              arrayList1.Add((object) arrayList13);
+            }
+            Font font12 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+            Color color12 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+            if (flag7)
+            {
+              arrayList8.Add((object) 0);
+              arrayList8.Add((object) 1);
+              arrayList8.Add((object) 0);
+              arrayList8.Add((object) 0);
+              arrayList8.Add((object) 1);
+              arrayList8.Add((object) 2);
+              arrayList8.Add((object) color12);
+              arrayList8.Add((object) font12);
+              arrayList8.Add((object) "");
+              arrayList1.Add((object) arrayList8);
+            }
+            Font font13 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+            Color color13 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+            if (flag7)
+            {
+              arrayList14.Add((object) 4);
+              arrayList14.Add((object) 0);
+              arrayList14.Add((object) 0);
+              arrayList14.Add((object) 0);
+              arrayList14.Add((object) 0);
+              arrayList14.Add((object) 0);
+              arrayList14.Add((object) color13);
+              arrayList14.Add((object) font13);
+              arrayList14.Add((object) "GPU");
+              arrayList1.Add((object) arrayList14);
+            }
+            this.myBjxs = binaryReader.ReadBoolean();
+            this.myTpxs = binaryReader.ReadBoolean();
+            this.directionB = binaryReader.ReadInt32();
+            this.myUIMode = binaryReader.ReadInt32();
+            this.myUISubMode = 0;
+            int num2 = binaryReader.ReadInt32();
+            int num3 = binaryReader.ReadInt32();
+            if (arrayList2.Count > 0)
+            {
+              arrayList2[2] = (object) num2;
+              arrayList2[3] = (object) num3;
+            }
+            int num4 = binaryReader.ReadInt32();
+            int num5 = binaryReader.ReadInt32();
+            if (arrayList3.Count > 0)
+            {
+              arrayList3[2] = (object) num4;
+              arrayList3[3] = (object) num5;
+            }
+            int num6 = binaryReader.ReadInt32();
+            int num7 = binaryReader.ReadInt32();
+            if (arrayList9.Count > 0)
+            {
+              arrayList9[2] = (object) num6;
+              arrayList9[3] = (object) num7;
+            }
+            int num8 = binaryReader.ReadInt32();
+            int num9 = binaryReader.ReadInt32();
+            if (arrayList4.Count > 0)
+            {
+              arrayList4[2] = (object) num8;
+              arrayList4[3] = (object) num9;
+            }
+            int num10 = binaryReader.ReadInt32();
+            int num11 = binaryReader.ReadInt32();
+            if (arrayList10.Count > 0)
+            {
+              arrayList10[2] = (object) num10;
+              arrayList10[3] = (object) num11;
+            }
+            int num12 = binaryReader.ReadInt32();
+            int num13 = binaryReader.ReadInt32();
+            if (arrayList5.Count > 0)
+            {
+              arrayList5[2] = (object) num12;
+              arrayList5[3] = (object) num13;
+            }
+            int num14 = binaryReader.ReadInt32();
+            int num15 = binaryReader.ReadInt32();
+            if (arrayList11.Count > 0)
+            {
+              arrayList11[2] = (object) num14;
+              arrayList11[3] = (object) num15;
+            }
+            int num16 = binaryReader.ReadInt32();
+            int num17 = binaryReader.ReadInt32();
+            if (arrayList6.Count > 0)
+            {
+              arrayList6[2] = (object) num16;
+              arrayList6[3] = (object) num17;
+            }
+            int num18 = binaryReader.ReadInt32();
+            int num19 = binaryReader.ReadInt32();
+            if (arrayList12.Count > 0)
+            {
+              arrayList12[2] = (object) num18;
+              arrayList12[3] = (object) num19;
+            }
+            int num20 = binaryReader.ReadInt32();
+            int num21 = binaryReader.ReadInt32();
+            if (arrayList7.Count > 0)
+            {
+              arrayList7[2] = (object) num20;
+              arrayList7[3] = (object) num21;
+            }
+            int num22 = binaryReader.ReadInt32();
+            int num23 = binaryReader.ReadInt32();
+            if (arrayList13.Count > 0)
+            {
+              arrayList13[2] = (object) num22;
+              arrayList13[3] = (object) num23;
+            }
+            int num24 = binaryReader.ReadInt32();
+            int num25 = binaryReader.ReadInt32();
+            if (arrayList8.Count > 0)
+            {
+              arrayList8[2] = (object) num24;
+              arrayList8[3] = (object) num25;
+            }
+            int num26 = binaryReader.ReadInt32();
+            int num27 = binaryReader.ReadInt32();
+            if (arrayList14.Count > 0)
+            {
+              arrayList14[2] = (object) num26;
+              arrayList14[3] = (object) num27;
+            }
+            binaryReader.ReadString();
+            this.ucThemeSetting1.ucBeiJingXianShi1.buttonOnOff_Set(this.myBjxs);
+            this.ucThemeSetting1.ucTouPingXianShi1.buttonOnOff_Set(this.myTpxs);
+            this.ucThemeSetting1.ucXiTongXianShi1.buttonOnOff_Set(this.myXtxx);
+            if (this.myBjxs || this.myTpxs)
+            {
+              this.mySpxs = false;
+              this.ucThemeSetting1.ucShiPingBoFangQi1.buttonOnOff_Set(this.mySpxs);
+            }
+            this.ucScreenImageBK1.ucScreenImage1.SetMyUCScreenImage(this.directionB);
+            int num28 = binaryReader.ReadBoolean() ? 1 : 0;
+            if (arrayList3.Count > 0)
+              arrayList3[1] = (object) num28;
+            if (arrayList4.Count > 0)
+              arrayList4[1] = (object) num28;
+            if (arrayList5.Count > 0)
+              arrayList5[1] = (object) num28;
+            if (arrayList6.Count > 0)
+              arrayList6[1] = (object) num28;
+            if (arrayList7.Count > 0)
+              arrayList7[1] = (object) num28;
+            if (arrayList8.Count > 0)
+              arrayList8[1] = (object) num28;
+            this.myMode = binaryReader.ReadInt32();
+            this.myYcbk = binaryReader.ReadBoolean();
+            this.JpX = binaryReader.ReadInt32();
+            this.JpY = binaryReader.ReadInt32();
+            this.JpW = binaryReader.ReadInt32();
+            this.JpH = binaryReader.ReadInt32();
+            this.ucThemeSetting1.ucTouPingXianShi1.buttonXSBK_Set(this.myYcbk);
+            this.ucThemeSetting1.ucTouPingXianShi1.textBoxX.Text = this.JpX.ToString();
+            this.ucThemeSetting1.ucTouPingXianShi1.textBoxY.Text = this.JpY.ToString();
+            this.ucThemeSetting1.ucTouPingXianShi1.textBoxW.Text = this.JpW.ToString();
+            this.ucThemeSetting1.ucTouPingXianShi1.textBoxH.Text = this.JpH.ToString();
+            this.textBoxCMM.Text = (string) this.themeArray[this.myTheme];
+            this.myMbxs = binaryReader.ReadBoolean();
+            this.ucThemeSetting1.ucMengBanXianShi1.ButtonOnOff_Set(this.myMbxs);
+            this.ucScreenImageBK1.ucScreenImage1.SetDrawMengBan(this.myMbxs);
+            this.ucScreenImageBK1.ucScreenImage1.XvalMB = binaryReader.ReadInt32();
+            this.ucScreenImageBK1.ucScreenImage1.YvalMB = binaryReader.ReadInt32();
+            bool flag8 = binaryReader.ReadBoolean();
+            bool flag9 = binaryReader.ReadBoolean();
+            bool flag10 = binaryReader.ReadBoolean();
+            int num29 = binaryReader.ReadInt32();
+            int num30 = binaryReader.ReadInt32();
+            ArrayList arrayList15 = new ArrayList();
+            ArrayList arrayList16 = new ArrayList();
+            ArrayList arrayList17 = new ArrayList();
+            int num31 = binaryReader.ReadInt32();
+            int num32 = binaryReader.ReadInt32();
+            int num33 = binaryReader.ReadInt32();
+            int num34 = binaryReader.ReadInt32();
+            if (flag8)
+            {
+              if (flag9)
+              {
+                arrayList15.Add((object) 3);
+                arrayList15.Add((object) num29);
+                arrayList15.Add((object) num31);
+                arrayList15.Add((object) num32);
+                arrayList15.Add((object) 0);
+                arrayList15.Add((object) 0);
+                arrayList1.Insert(0, (object) arrayList15);
+              }
+              if (flag10)
+              {
+                arrayList16.Add((object) 1);
+                arrayList16.Add((object) num30);
+                arrayList16.Add((object) num33);
+                arrayList16.Add((object) num34);
+                arrayList16.Add((object) 0);
+                arrayList16.Add((object) 0);
+                arrayList1.Insert(0, (object) arrayList16);
+              }
+            }
+            Font font14 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+            Color color14 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+            if (arrayList15.Count > 0)
+            {
+              arrayList15.Add((object) color14);
+              arrayList15.Add((object) font14);
+              arrayList15.Add((object) "");
+            }
+            Font font15 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+            Color color15 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+            if (arrayList16.Count > 0)
+            {
+              arrayList16.Add((object) color15);
+              arrayList16.Add((object) font15);
+              arrayList16.Add((object) "");
+            }
+            bool flag11 = binaryReader.ReadBoolean();
+            int num35 = binaryReader.ReadInt32();
+            int num36 = binaryReader.ReadInt32();
+            Font font16 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+            Color color16 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+            if (flag8 && flag11)
+            {
+              arrayList17.Add((object) 2);
+              arrayList17.Add((object) 0);
+              arrayList17.Add((object) num35);
+              arrayList17.Add((object) num36);
+              arrayList17.Add((object) 0);
+              arrayList17.Add((object) 0);
+              arrayList17.Add((object) color16);
+              arrayList17.Add((object) font16);
+              arrayList17.Add((object) "");
+              arrayList1.Insert(0, (object) arrayList17);
+            }
+            this.ucScreenImageBK1.ucScreenImage1.SetDrawXiTong(this.myXtxx);
+            this.ucThemeSetting1.ucXiTongXianShi1.UCXiTongXianShiSet_UCXiTongXianShiSubArray(arrayList1);
+            for (int index = 0; index < 10240; ++index)
+            {
+              int num37 = (int) binaryReader.ReadByte();
+            }
+            break;
+          case 221:
+            this.myXtxx = binaryReader.ReadBoolean();
+            int num38 = binaryReader.ReadInt32();
+            ArrayList arrayList18 = new ArrayList();
+            for (int index = 0; index < num38; ++index)
+            {
+              ArrayList arrayList19 = new ArrayList()
+              {
+                (object) binaryReader.ReadInt32(),
+                (object) binaryReader.ReadInt32(),
+                (object) binaryReader.ReadInt32(),
+                (object) binaryReader.ReadInt32(),
+                (object) binaryReader.ReadInt32(),
+                (object) binaryReader.ReadInt32()
+              };
+              Font font17 = new Font(binaryReader.ReadString(), binaryReader.ReadSingle(), (FontStyle) binaryReader.ReadByte(), (GraphicsUnit) binaryReader.ReadByte(), binaryReader.ReadByte());
+              Color color17 = Color.FromArgb((int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte(), (int) binaryReader.ReadByte());
+              arrayList19.Add((object) color17);
+              arrayList19.Add((object) font17);
+              arrayList19.Add((object) binaryReader.ReadString());
+              arrayList18.Add((object) arrayList19);
+            }
+            this.myBjxs = binaryReader.ReadBoolean();
+            this.myTpxs = binaryReader.ReadBoolean();
+            this.directionB = binaryReader.ReadInt32();
+            this.myUIMode = binaryReader.ReadInt32();
+            this.myUISubMode = 0;
+            this.ucThemeSetting1.ucBeiJingXianShi1.buttonOnOff_Set(this.myBjxs);
+            this.ucThemeSetting1.ucTouPingXianShi1.buttonOnOff_Set(this.myTpxs);
+            this.ucThemeSetting1.ucXiTongXianShi1.buttonOnOff_Set(this.myXtxx);
+            if (this.myBjxs || this.myTpxs)
+            {
+              this.mySpxs = false;
+              this.ucThemeSetting1.ucShiPingBoFangQi1.buttonOnOff_Set(this.mySpxs);
+            }
+            this.ucScreenImageBK1.ucScreenImage1.SetMyUCScreenImage(this.directionB);
+            this.myMode = binaryReader.ReadInt32();
+            this.myYcbk = binaryReader.ReadBoolean();
+            this.JpX = binaryReader.ReadInt32();
+            this.JpY = binaryReader.ReadInt32();
+            this.JpW = binaryReader.ReadInt32();
+            this.JpH = binaryReader.ReadInt32();
+            this.ucThemeSetting1.ucTouPingXianShi1.buttonXSBK_Set(this.myYcbk);
+            this.ucThemeSetting1.ucTouPingXianShi1.textBoxX.Text = this.JpX.ToString();
+            this.ucThemeSetting1.ucTouPingXianShi1.textBoxY.Text = this.JpY.ToString();
+            this.ucThemeSetting1.ucTouPingXianShi1.textBoxW.Text = this.JpW.ToString();
+            this.ucThemeSetting1.ucTouPingXianShi1.textBoxH.Text = this.JpH.ToString();
+            this.textBoxCMM.Text = (string) this.themeArray[this.myTheme];
+            this.myMbxs = binaryReader.ReadBoolean();
+            this.ucThemeSetting1.ucMengBanXianShi1.ButtonOnOff_Set(this.myMbxs);
+            this.ucScreenImageBK1.ucScreenImage1.SetDrawMengBan(this.myMbxs);
+            this.ucScreenImageBK1.ucScreenImage1.XvalMB = binaryReader.ReadInt32();
+            this.ucScreenImageBK1.ucScreenImage1.YvalMB = binaryReader.ReadInt32();
+            this.ucScreenImageBK1.ucScreenImage1.SetDrawXiTong(this.myXtxx);
+            this.ucThemeSetting1.ucXiTongXianShi1.UCXiTongXianShiSet_UCXiTongXianShiSubArray(arrayList18);
+            for (int index = 0; index < 10240; ++index)
+            {
+              int num39 = (int) binaryReader.ReadByte();
+            }
+            break;
+        }
+        int count1 = binaryReader.ReadInt32();
+        if (count1 > 0)
+        {
+          Bitmap bitmap1 = this.ByteToBitmap(binaryReader.ReadBytes(count1));
+          bitmap1.Save(this.GifDirectory + "\\01.png", ImageFormat.Png);
+          byte[] buffer = this.BitmapToByte(bitmap1);
+          bitmap1.Dispose();
+          Bitmap bitmap2 = this.ByteToBitmap(buffer);
+          this.ucScreenImageBK1.ucScreenImage1.bitmapMB = bitmap2;
+          this.ucScreenImageBK1.ucScreenImage1.WvalMB = bitmap2.Width;
+          this.ucScreenImageBK1.ucScreenImage1.HvalMB = bitmap2.Height;
+        }
+        int num40 = binaryReader.ReadInt32();
+        if (num40 == 0)
+        {
+          try
+          {
+            System.IO.File.Delete(this.GifDirectory + "\\Theme.zt");
+          }
+          catch
+          {
+          }
+          int count2 = binaryReader.ReadInt32();
+          Bitmap bitmap3 = this.ByteToBitmap(binaryReader.ReadBytes(count2));
+          bitmap3.Save(this.GifDirectory + "\\00.png", ImageFormat.Png);
+          byte[] buffer = this.BitmapToByte(bitmap3);
+          bitmap3.Dispose();
+          Bitmap bitmap4 = this.ByteToBitmap(buffer);
+          this.ucScreenImageBK1.ucScreenImage1.bitmapBGK = bitmap4;
+          this.imagePicture = bitmap4;
+          this.ImageCount = 100;
+          if (this.imagePicture.Width != this.ucScreenImageBK1.ucScreenImage1.Width || this.imagePicture.Height != this.ucScreenImageBK1.ucScreenImage1.Height)
+          {
+            switch (Form1.Language)
+            {
+              case 1:
+                int num41 = (int) MessageBox.Show("主题分辨率不符");
+                break;
+              case 2:
+                int num42 = (int) MessageBox.Show("主題分辯率不符");
+                break;
+              default:
+                int num43 = (int) MessageBox.Show("Theme resolution mismatch");
+                break;
+            }
+          }
+        }
+        else
+        {
+          try
+          {
+            System.IO.File.Delete(this.GifDirectory + "\\00.png");
+          }
+          catch
+          {
+          }
+          try
+          {
+            System.IO.File.Delete(this.GifDirectory + "\\Theme.zt");
+          }
+          catch
+          {
+          }
+          FileStream output = new FileStream(this.GifDirectory + "\\Theme.zt", FileMode.OpenOrCreate);
+          BinaryWriter binaryWriter = new BinaryWriter((Stream) output);
+          int length = num40;
+          this.gifDelays = new int[length];
+          for (int index = 0; index < length; ++index)
+            this.gifDelays[index] = binaryReader.ReadInt32();
+          binaryWriter.Write((byte) 220);
+          binaryWriter.Write(this.gifDelays.Length);
+          for (int index = 0; index < this.gifDelays.Length; ++index)
+            binaryWriter.Write(this.gifDelays[index]);
+          for (int index = 0; index < length; ++index)
+          {
+            int count3 = binaryReader.ReadInt32();
+            byte[] buffer = binaryReader.ReadBytes(count3);
+            this.imageArray.Add((object) buffer);
+            binaryWriter.Write(buffer.Length);
+            binaryWriter.Write(buffer);
+          }
+          this.isGifMode = true;
+          this.gifCount = 0;
+          this.ImageCount = 0;
+          binaryWriter.Flush();
+          binaryWriter.Close();
+          binaryWriter.Dispose();
+          output.Close();
+          output.Dispose();
+          Bitmap bitmap = this.ByteToBitmap((byte[]) this.imageArray[0]);
+          if (bitmap.Width != this.ucScreenImageBK1.ucScreenImage1.Width || bitmap.Height != this.ucScreenImageBK1.ucScreenImage1.Height)
+          {
+            switch (Form1.Language)
+            {
+              case 1:
+                int num44 = (int) MessageBox.Show("主题分辨率不符");
+                break;
+              case 2:
+                int num45 = (int) MessageBox.Show("主題分辯率不符");
+                break;
+              default:
+                int num46 = (int) MessageBox.Show("Theme resolution mismatch");
+                break;
+            }
+          }
+          bitmap.Dispose();
+        }
+        this.ucComboBoxA1.SetUCComboBoxMode(this.directionB / 90 + 1);
+        this.buttonMS_Mode();
+        this.isToTimer = true;
+        FileInfo fileInfo = new FileInfo(openFileDialog.FileName);
+        this.textBoxCMM.Text = fileInfo.Name.Substring(0, fileInfo.Name.Length - 4);
+      }
+      catch
+      {
+      }
+      binaryReader.Close();
+      binaryReader.Dispose();
+      input.Close();
+      input.Dispose();
+    }
+    openFileDialog.Dispose();
+  }
+
+  public void DeviceDataReceived(byte[] data)
+  {
+    if (!this.isFanLcd)
+      return;
+    int num = (int) data[5] * 30;
+    this.ucThemeSetting1.ucXiTongXianShi1.fanLcdVal = num;
+    this.ucThemeSetting1.ucXiTongXianShiAdd1.fanLcdVal = num;
+  }
+
+  private void buttonHelp_Click(object sender, EventArgs e)
+  {
+    try
+    {
+      Process.Start(Application.StartupPath + "\\LCDHelp.pdf");
+    }
+    catch
+    {
+    }
+  }
+
+  private void buttonLDD_Set(int val)
+  {
+    this.myLddVal = val;
+    this.ucScreenImageBK1.ucScreenImage1.myLddVal = this.myLddVal;
+    switch (val)
+    {
+      case 0:
+        this.buttonLDD.BackgroundImage = (Image) Resources.PL0;
+        break;
+      case 1:
+        this.buttonLDD.BackgroundImage = (Image) Resources.PL1;
+        break;
+      case 2:
+        this.buttonLDD.BackgroundImage = (Image) Resources.PL2;
+        break;
+      case 3:
+        this.buttonLDD.BackgroundImage = (Image) Resources.PL3;
+        break;
+    }
+  }
+
+  private void buttonLDD_Click(object sender, EventArgs e)
+  {
+    this.myLddVal = (this.myLddVal + 1) % 4;
+    if (this.myLddVal == 0)
+      this.myLddVal = 1;
+    this.buttonLDD_Set(this.myLddVal);
+    this.ChangeFileTheme(false);
+  }
+
+  protected override void Dispose(bool disposing)
+  {
+    if (disposing && this.components != null)
+      this.components.Dispose();
+    base.Dispose(disposing);
+  }
+
+  private void InitializeComponent()
+  {
+    ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof (FormCZTV));
+    this.buttonPower = new Button();
+    this.textBoxCMM = new TextBox();
+    this.buttonBCZT = new Button();
+    this.buttonDaoChu = new Button();
+    this.buttonDaoRu = new Button();
+    this.buttonBDZT = new Button();
+    this.buttonYDZT = new Button();
+    this.buttonZTSZ = new Button();
+    this.labelZXCG = new Label();
+    this.buttonDWXS = new Button();
+    this.buttonHelp = new Button();
+    this.buttonYDMB = new Button();
+    this.ucBoFangQiKongZhi1 = new UCBoFangQiKongZhi();
+    this.ucImageCut1 = new UCImageCut();
+    this.ucVideoCut1 = new UCVideoCut();
+    this.ucComboBoxA3 = new UCComboBoxA();
+    this.ucComboBoxA1 = new UCComboBoxA();
+    this.ucComboBoxA2 = new UCComboBoxA();
+    this.ucThemeSetting1 = new UCThemeSetting();
+    this.ucThemeWeb1 = new UCThemeWeb();
+    this.ucThemeLocal1 = new UCThemeLocal();
+    this.ucThemeMask1 = new UCThemeMask();
+    this.ucScreenImageBK1 = new UCScreenImageBK();
+    this.buttonLDD = new Button();
+    this.SuspendLayout();
+    this.buttonPower.BackColor = Color.Transparent;
+    this.buttonPower.BackgroundImage = (Image) Resources.Alogout默认;
+    this.buttonPower.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonPower.FlatAppearance.BorderSize = 0;
+    this.buttonPower.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonPower.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonPower.FlatStyle = FlatStyle.Flat;
+    this.buttonPower.Location = new Point(1212, 24);
+    this.buttonPower.Margin = new Padding(0);
+    this.buttonPower.Name = "buttonPower";
+    this.buttonPower.Size = new Size(40, 40);
+    this.buttonPower.TabIndex = 137;
+    this.buttonPower.UseVisualStyleBackColor = false;
+    this.buttonPower.Click += new EventHandler(this.buttonPower_Click);
+    this.buttonPower.MouseEnter += new EventHandler(this.buttonPower_MouseEnter);
+    this.buttonPower.MouseLeave += new EventHandler(this.buttonPower_MouseLeave);
+    this.textBoxCMM.BackColor = Color.FromArgb(35, 34, 39);
+    this.textBoxCMM.BorderStyle = BorderStyle.None;
+    this.textBoxCMM.Font = new Font("微软雅黑", 9f, FontStyle.Regular, GraphicsUnit.Point, (byte) 134);
+    this.textBoxCMM.ForeColor = Color.White;
+    this.textBoxCMM.ImeMode = ImeMode.NoControl;
+    this.textBoxCMM.Location = new Point(278, 684);
+    this.textBoxCMM.MaxLength = 10;
+    this.textBoxCMM.Name = "textBoxCMM";
+    this.textBoxCMM.Size = new Size(102, 16 /*0x10*/);
+    this.textBoxCMM.TabIndex = 669;
+    this.textBoxCMM.TextAlign = HorizontalAlignment.Center;
+    this.textBoxCMM.KeyPress += new KeyPressEventHandler(this.textBoxCMM_KeyPress);
+    this.buttonBCZT.BackColor = Color.Transparent;
+    this.buttonBCZT.BackgroundImage = (Image) Resources.P保存主题;
+    this.buttonBCZT.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonBCZT.FlatAppearance.BorderSize = 0;
+    this.buttonBCZT.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonBCZT.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonBCZT.FlatStyle = FlatStyle.Flat;
+    this.buttonBCZT.Location = new Point(383, 680);
+    this.buttonBCZT.Margin = new Padding(0);
+    this.buttonBCZT.Name = "buttonBCZT";
+    this.buttonBCZT.Size = new Size(24, 24);
+    this.buttonBCZT.TabIndex = 670;
+    this.buttonBCZT.UseVisualStyleBackColor = false;
+    this.buttonBCZT.Click += new EventHandler(this.buttonBCZT_Click);
+    this.buttonDaoChu.BackColor = Color.Transparent;
+    this.buttonDaoChu.BackgroundImage = (Image) Resources.P导出;
+    this.buttonDaoChu.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonDaoChu.FlatAppearance.BorderSize = 0;
+    this.buttonDaoChu.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonDaoChu.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonDaoChu.FlatStyle = FlatStyle.Flat;
+    this.buttonDaoChu.Location = new Point(412, 680);
+    this.buttonDaoChu.Margin = new Padding(0);
+    this.buttonDaoChu.Name = "buttonDaoChu";
+    this.buttonDaoChu.Size = new Size(40, 24);
+    this.buttonDaoChu.TabIndex = 671;
+    this.buttonDaoChu.UseVisualStyleBackColor = false;
+    this.buttonDaoChu.Click += new EventHandler(this.buttonDaoChu_Click);
+    this.buttonDaoRu.BackColor = Color.Transparent;
+    this.buttonDaoRu.BackgroundImage = (Image) Resources.P导入;
+    this.buttonDaoRu.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonDaoRu.FlatAppearance.BorderSize = 0;
+    this.buttonDaoRu.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonDaoRu.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonDaoRu.FlatStyle = FlatStyle.Flat;
+    this.buttonDaoRu.Location = new Point(453, 680);
+    this.buttonDaoRu.Margin = new Padding(0);
+    this.buttonDaoRu.Name = "buttonDaoRu";
+    this.buttonDaoRu.Size = new Size(40, 24);
+    this.buttonDaoRu.TabIndex = 672;
+    this.buttonDaoRu.UseVisualStyleBackColor = false;
+    this.buttonDaoRu.Click += new EventHandler(this.buttonDaoRu_Click);
+    this.buttonBDZT.BackColor = Color.Transparent;
+    this.buttonBDZT.BackgroundImage = (Image) Resources.P本地主题a;
+    this.buttonBDZT.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonBDZT.Enabled = false;
+    this.buttonBDZT.FlatAppearance.BorderSize = 0;
+    this.buttonBDZT.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonBDZT.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonBDZT.FlatStyle = FlatStyle.Flat;
+    this.buttonBDZT.Location = new Point(542, 90);
+    this.buttonBDZT.Margin = new Padding(0);
+    this.buttonBDZT.Name = "buttonBDZT";
+    this.buttonBDZT.Size = new Size(50, 38);
+    this.buttonBDZT.TabIndex = 673;
+    this.buttonBDZT.UseVisualStyleBackColor = false;
+    this.buttonBDZT.Click += new EventHandler(this.buttonBDZT_Click);
+    this.buttonYDZT.BackColor = Color.Transparent;
+    this.buttonYDZT.BackgroundImage = (Image) Resources.P云端背景;
+    this.buttonYDZT.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonYDZT.Enabled = false;
+    this.buttonYDZT.FlatAppearance.BorderSize = 0;
+    this.buttonYDZT.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonYDZT.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonYDZT.FlatStyle = FlatStyle.Flat;
+    this.buttonYDZT.Location = new Point(682, 90);
+    this.buttonYDZT.Margin = new Padding(0);
+    this.buttonYDZT.Name = "buttonYDZT";
+    this.buttonYDZT.Size = new Size(50, 38);
+    this.buttonYDZT.TabIndex = 674;
+    this.buttonYDZT.UseVisualStyleBackColor = false;
+    this.buttonYDZT.Visible = false;
+    this.buttonYDZT.Click += new EventHandler(this.buttonYDZT_Click);
+    this.buttonZTSZ.BackColor = Color.Transparent;
+    this.buttonZTSZ.BackgroundImage = (Image) Resources.P主题设置;
+    this.buttonZTSZ.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonZTSZ.Enabled = false;
+    this.buttonZTSZ.FlatAppearance.BorderSize = 0;
+    this.buttonZTSZ.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonZTSZ.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonZTSZ.FlatStyle = FlatStyle.Flat;
+    this.buttonZTSZ.Location = new Point(882, 90);
+    this.buttonZTSZ.Margin = new Padding(0);
+    this.buttonZTSZ.Name = "buttonZTSZ";
+    this.buttonZTSZ.Size = new Size(50, 38);
+    this.buttonZTSZ.TabIndex = 675;
+    this.buttonZTSZ.UseVisualStyleBackColor = false;
+    this.buttonZTSZ.Click += new EventHandler(this.buttonZTSZ_Click);
+    this.labelZXCG.BackColor = Color.Transparent;
+    this.labelZXCG.FlatStyle = FlatStyle.Flat;
+    this.labelZXCG.Font = new Font("微软雅黑", 12f, FontStyle.Regular, GraphicsUnit.Point, (byte) 134);
+    this.labelZXCG.ForeColor = Color.White;
+    this.labelZXCG.Location = new Point(765, 28);
+    this.labelZXCG.Margin = new Padding(0);
+    this.labelZXCG.Name = "labelZXCG";
+    this.labelZXCG.Size = new Size(374, 27);
+    this.labelZXCG.TabIndex = 685;
+    this.labelZXCG.Text = "执行中";
+    this.labelZXCG.TextAlign = ContentAlignment.MiddleCenter;
+    this.labelZXCG.Visible = false;
+    this.buttonDWXS.BackColor = Color.Transparent;
+    this.buttonDWXS.BackgroundImage = (Image) Resources.P点选框;
+    this.buttonDWXS.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonDWXS.FlatAppearance.BorderSize = 0;
+    this.buttonDWXS.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonDWXS.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonDWXS.FlatStyle = FlatStyle.Flat;
+    this.buttonDWXS.Location = new Point(237, 1000);
+    this.buttonDWXS.Margin = new Padding(0);
+    this.buttonDWXS.Name = "buttonDWXS";
+    this.buttonDWXS.Size = new Size(14, 14);
+    this.buttonDWXS.TabIndex = 686;
+    this.buttonDWXS.UseVisualStyleBackColor = false;
+    this.buttonDWXS.Visible = false;
+    this.buttonHelp.BackColor = Color.Transparent;
+    this.buttonHelp.BackgroundImage = (Image) Resources.P帮助;
+    this.buttonHelp.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonHelp.FlatAppearance.BorderSize = 0;
+    this.buttonHelp.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonHelp.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonHelp.FlatStyle = FlatStyle.Flat;
+    this.buttonHelp.Location = new Point(1162, 24);
+    this.buttonHelp.Margin = new Padding(0);
+    this.buttonHelp.Name = "buttonHelp";
+    this.buttonHelp.Size = new Size(40, 40);
+    this.buttonHelp.TabIndex = 689;
+    this.buttonHelp.UseVisualStyleBackColor = false;
+    this.buttonHelp.Click += new EventHandler(this.buttonHelp_Click);
+    this.buttonYDMB.BackColor = Color.Transparent;
+    this.buttonYDMB.BackgroundImage = (Image) Resources.p云端主题;
+    this.buttonYDMB.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonYDMB.Enabled = false;
+    this.buttonYDMB.FlatAppearance.BorderSize = 0;
+    this.buttonYDMB.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonYDMB.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonYDMB.FlatStyle = FlatStyle.Flat;
+    this.buttonYDMB.Location = new Point(612, 90);
+    this.buttonYDMB.Margin = new Padding(0);
+    this.buttonYDMB.Name = "buttonYDMB";
+    this.buttonYDMB.Size = new Size(50, 38);
+    this.buttonYDMB.TabIndex = 690;
+    this.buttonYDMB.UseVisualStyleBackColor = false;
+    this.buttonYDMB.Visible = false;
+    this.buttonYDMB.Click += new EventHandler(this.buttonYDMB_Click);
+    this.ucBoFangQiKongZhi1.BackColor = Color.Transparent;
+    this.ucBoFangQiKongZhi1.BackgroundImage = (Image) componentResourceManager.GetObject("ucBoFangQiKongZhi1.BackgroundImage");
+    this.ucBoFangQiKongZhi1.BackgroundImageLayout = ImageLayout.None;
+    this.ucBoFangQiKongZhi1.Location = new Point(16 /*0x10*/, 650);
+    this.ucBoFangQiKongZhi1.Margin = new Padding(0);
+    this.ucBoFangQiKongZhi1.Name = "ucBoFangQiKongZhi1";
+    this.ucBoFangQiKongZhi1.Size = new Size(500, 56);
+    this.ucBoFangQiKongZhi1.TabIndex = 693;
+    this.ucBoFangQiKongZhi1.Visible = false;
+    this.ucImageCut1.BackColor = Color.Transparent;
+    this.ucImageCut1.BackgroundImage = (Image) Resources.P0图片裁减320320;
+    this.ucImageCut1.BackgroundImageLayout = ImageLayout.Stretch;
+    this.ucImageCut1.Location = new Point(16 /*0x10*/, 88);
+    this.ucImageCut1.Margin = new Padding(0);
+    this.ucImageCut1.Name = "ucImageCut1";
+    this.ucImageCut1.Size = new Size(500, 702);
+    this.ucImageCut1.TabIndex = 684;
+    this.ucImageCut1.Visible = false;
+    this.ucVideoCut1.BackColor = Color.Transparent;
+    this.ucVideoCut1.BackgroundImage = (Image) componentResourceManager.GetObject("ucVideoCut1.BackgroundImage");
+    this.ucVideoCut1.BackgroundImageLayout = ImageLayout.None;
+    this.ucVideoCut1.Location = new Point(16 /*0x10*/, 88);
+    this.ucVideoCut1.Margin = new Padding(0);
+    this.ucVideoCut1.Name = "ucVideoCut1";
+    this.ucVideoCut1.Size = new Size(500, 702);
+    this.ucVideoCut1.TabIndex = 692;
+    this.ucVideoCut1.Visible = false;
+    this.ucComboBoxA3.BackColor = Color.Transparent;
+    this.ucComboBoxA3.Font = new Font("宋体", 9f, FontStyle.Regular, GraphicsUnit.Point, (byte) 134);
+    this.ucComboBoxA3.Location = new Point(152, 1000);
+    this.ucComboBoxA3.Margin = new Padding(0);
+    this.ucComboBoxA3.Name = "ucComboBoxA3";
+    this.ucComboBoxA3.Size = new Size(108, 24);
+    this.ucComboBoxA3.TabIndex = 668;
+    this.ucComboBoxA3.Visible = false;
+    this.ucComboBoxA1.BackColor = Color.Transparent;
+    this.ucComboBoxA1.Font = new Font("宋体", 9f, FontStyle.Regular, GraphicsUnit.Point, (byte) 134);
+    this.ucComboBoxA1.Location = new Point(39, 680);
+    this.ucComboBoxA1.Margin = new Padding(0);
+    this.ucComboBoxA1.Name = "ucComboBoxA1";
+    this.ucComboBoxA1.Size = new Size(108, 24);
+    this.ucComboBoxA1.TabIndex = 666;
+    this.ucComboBoxA2.BackColor = Color.Transparent;
+    this.ucComboBoxA2.Font = new Font("宋体", 9f, FontStyle.Regular, GraphicsUnit.Point, (byte) 134);
+    this.ucComboBoxA2.Location = new Point(425, 1000);
+    this.ucComboBoxA2.Margin = new Padding(0);
+    this.ucComboBoxA2.Name = "ucComboBoxA2";
+    this.ucComboBoxA2.Size = new Size(108, 24);
+    this.ucComboBoxA2.TabIndex = 667;
+    this.ucComboBoxA2.Visible = false;
+    this.ucThemeSetting1.BackColor = Color.Transparent;
+    this.ucThemeSetting1.BackgroundImage = (Image) Resources.P0主题设置;
+    this.ucThemeSetting1.BackgroundImageLayout = ImageLayout.Zoom;
+    this.ucThemeSetting1.Location = new Point(532, 128 /*0x80*/);
+    this.ucThemeSetting1.Margin = new Padding(0);
+    this.ucThemeSetting1.Name = "ucThemeSetting1";
+    this.ucThemeSetting1.Size = new Size(732, 661);
+    this.ucThemeSetting1.TabIndex = 676;
+    this.ucThemeSetting1.Visible = false;
+    this.ucThemeWeb1.BackColor = Color.Transparent;
+    this.ucThemeWeb1.BackgroundImage = (Image) Resources.p0云端背景;
+    this.ucThemeWeb1.BackgroundImageLayout = ImageLayout.None;
+    this.ucThemeWeb1.Location = new Point(532, 128 /*0x80*/);
+    this.ucThemeWeb1.Margin = new Padding(0);
+    this.ucThemeWeb1.Name = "ucThemeWeb1";
+    this.ucThemeWeb1.Size = new Size(732, 652);
+    this.ucThemeWeb1.TabIndex = 688;
+    this.ucThemeWeb1.Visible = false;
+    this.ucThemeLocal1.BackColor = Color.Transparent;
+    this.ucThemeLocal1.BackgroundImage = (Image) Resources.P0本地主题;
+    this.ucThemeLocal1.BackgroundImageLayout = ImageLayout.None;
+    this.ucThemeLocal1.Location = new Point(532, 128 /*0x80*/);
+    this.ucThemeLocal1.Margin = new Padding(0);
+    this.ucThemeLocal1.Name = "ucThemeLocal1";
+    this.ucThemeLocal1.Size = new Size(732, 652);
+    this.ucThemeLocal1.TabIndex = 687;
+    this.ucThemeMask1.BackColor = Color.Transparent;
+    this.ucThemeMask1.BackgroundImage = (Image) Resources.p0云端主题;
+    this.ucThemeMask1.BackgroundImageLayout = ImageLayout.None;
+    this.ucThemeMask1.Location = new Point(532, 128 /*0x80*/);
+    this.ucThemeMask1.Margin = new Padding(0);
+    this.ucThemeMask1.Name = "ucThemeMask1";
+    this.ucThemeMask1.Size = new Size(732, 652);
+    this.ucThemeMask1.TabIndex = 691;
+    this.ucThemeMask1.Visible = false;
+    this.ucScreenImageBK1.BackColor = Color.Transparent;
+    this.ucScreenImageBK1.BackgroundImage = (Image) Resources.P预览320X240;
+    this.ucScreenImageBK1.BackgroundImageLayout = ImageLayout.Stretch;
+    this.ucScreenImageBK1.Location = new Point(16 /*0x10*/, 88);
+    this.ucScreenImageBK1.Margin = new Padding(0);
+    this.ucScreenImageBK1.Name = "ucScreenImageBK1";
+    this.ucScreenImageBK1.Size = new Size(500, 500);
+    this.ucScreenImageBK1.TabIndex = 683;
+    this.buttonLDD.BackColor = Color.Transparent;
+    this.buttonLDD.BackgroundImage = (Image) Resources.PL2;
+    this.buttonLDD.BackgroundImageLayout = ImageLayout.Stretch;
+    this.buttonLDD.FlatAppearance.BorderSize = 0;
+    this.buttonLDD.FlatAppearance.MouseDownBackColor = Color.Transparent;
+    this.buttonLDD.FlatAppearance.MouseOverBackColor = Color.Transparent;
+    this.buttonLDD.FlatStyle = FlatStyle.Flat;
+    this.buttonLDD.Location = new Point(157, 680);
+    this.buttonLDD.Margin = new Padding(0);
+    this.buttonLDD.Name = "buttonLDD";
+    this.buttonLDD.Size = new Size(52, 24);
+    this.buttonLDD.TabIndex = 694;
+    this.buttonLDD.UseVisualStyleBackColor = false;
+    this.buttonLDD.Visible = false;
+    this.buttonLDD.Click += new EventHandler(this.buttonLDD_Click);
+    this.AutoScaleMode = AutoScaleMode.Inherit;
+    this.BackColor = Color.White;
+    this.BackgroundImage = (Image) Resources.P0CZTV;
+    this.BackgroundImageLayout = ImageLayout.None;
+    this.ClientSize = new Size(1274, 800);
+    this.Controls.Add((Control) this.ucBoFangQiKongZhi1);
+    this.Controls.Add((Control) this.ucImageCut1);
+    this.Controls.Add((Control) this.ucVideoCut1);
+    this.Controls.Add((Control) this.ucComboBoxA3);
+    this.Controls.Add((Control) this.ucComboBoxA1);
+    this.Controls.Add((Control) this.buttonYDMB);
+    this.Controls.Add((Control) this.buttonHelp);
+    this.Controls.Add((Control) this.labelZXCG);
+    this.Controls.Add((Control) this.buttonZTSZ);
+    this.Controls.Add((Control) this.buttonYDZT);
+    this.Controls.Add((Control) this.buttonBDZT);
+    this.Controls.Add((Control) this.buttonDaoRu);
+    this.Controls.Add((Control) this.buttonDaoChu);
+    this.Controls.Add((Control) this.buttonBCZT);
+    this.Controls.Add((Control) this.textBoxCMM);
+    this.Controls.Add((Control) this.ucComboBoxA2);
+    this.Controls.Add((Control) this.buttonPower);
+    this.Controls.Add((Control) this.buttonDWXS);
+    this.Controls.Add((Control) this.ucThemeSetting1);
+    this.Controls.Add((Control) this.ucThemeWeb1);
+    this.Controls.Add((Control) this.ucThemeLocal1);
+    this.Controls.Add((Control) this.ucThemeMask1);
+    this.Controls.Add((Control) this.ucScreenImageBK1);
+    this.Controls.Add((Control) this.buttonLDD);
+    this.DoubleBuffered = true;
+    this.FormBorderStyle = FormBorderStyle.None;
+    this.Icon = (Icon) componentResourceManager.GetObject("$this.Icon");
+    this.Location = new Point(180, 0);
+    this.MaximizeBox = false;
+    this.MinimizeBox = false;
+    this.Name = nameof (FormCZTV);
+    this.Text = "FormTV";
+    this.MouseDown += new MouseEventHandler(this.FormCZTV_MouseDown);
+    this.MouseMove += new MouseEventHandler(this.FormCZTV_MouseMove);
+    this.MouseUp += new MouseEventHandler(this.FormCZTV_MouseUp);
+    this.ResumeLayout(false);
+    this.PerformLayout();
+  }
+
+  public delegate void delegateFormCZTV(int cmd, object info = null, object data = null, object data1 = null);
+
+  private enum DeviceCap
+  {
+    VERTRES = 10, // 0x0000000A
+    PHYSICALWIDTH = 110, // 0x0000006E
+    SCALINGFACTORX = 114, // 0x00000072
+    DESKTOPVERTRES = 117, // 0x00000075
+  }
+}
