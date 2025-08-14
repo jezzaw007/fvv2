@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: C:\Program Files (x86)\TRCCCAPEN\TRCC.exe-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9717D09A-37DC-4C23-AA39-5CE15DBFC0FD}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>TRCC</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <ApplicationVersion>2.0.4.0</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>TRCC</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="UsbHid">
+      <HintPath>lib\UsbHid.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Form1.cs" />
+    <Compile Include="FormStart.cs" />
+    <Compile Include="FormSystemInfo.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="UCAbout.cs" />
+    <Compile Include="UCDevice.cs" />
+    <Compile Include="UCSystemInfoOptions.cs" />
+    <Compile Include="Properties\Resources.cs" />
+    <Compile Include="Properties\Settings.cs" />
+    <Compile Include="LED\FormLED.cs" />
+    <Compile Include="KVMALED6\FormKVMALED6.cs" />
+    <Compile Include="DCUserControl\UCBeiJingXianShi.cs" />
+    <Compile Include="DCUserControl\UCBoFangQiKongZhi.cs" />
+    <Compile Include="DCUserControl\UCButton.cs" />
+    <Compile Include="DCUserControl\UCColorA.cs" />
+    <Compile Include="DCUserControl\UCColorB.cs" />
+    <Compile Include="DCUserControl\UCColorC.cs" />
+    <Compile Include="DCUserControl\UCComboBoxC.cs" />
+    <Compile Include="DCUserControl\UCComboBoxB.cs" />
+    <Compile Include="DCUserControl\UCComboBoxA.cs" />
+    <Compile Include="DCUserControl\UCDingYiWenBen.cs" />
+    <Compile Include="DCUserControl\UCDongHuaLianDong.cs" />
+    <Compile Include="DCUserControl\UCImageCut.cs" />
+    <Compile Include="DCUserControl\UCInfoImage.cs" />
+    <Compile Include="DCUserControl\UCJianPanLianDongA.cs" />
+    <Compile Include="DCUserControl\UCJianPanLianDongB.cs" />
+    <Compile Include="DCUserControl\UCJianPanLianDongC.cs" />
+    <Compile Include="DCUserControl\UCLEDHarddiskInfo.cs" />
+    <Compile Include="DCUserControl\UCLEDMemoryInfo.cs" />
+    <Compile Include="DCUserControl\UCMengBanXianShi.cs" />
+    <Compile Include="DCUserControl\UCScreenImage.cs" />
+    <Compile Include="DCUserControl\UCScreenImageBK.cs" />
+    <Compile Include="DCUserControl\UCScreenLED.cs" />
+    <Compile Include="DCUserControl\UCScrollA.cs" />
+    <Compile Include="DCUserControl\UCShiJianXianShi.cs" />
+    <Compile Include="DCUserControl\UCShiPingBoFangQi.cs" />
+    <Compile Include="DCUserControl\UCSystemInfo.cs" />
+    <Compile Include="DCUserControl\UCSystemInfoOptionsOne.cs" />
+    <Compile Include="DCUserControl\UCThemeLocal.cs" />
+    <Compile Include="DCUserControl\UCThemeMask.cs" />
+    <Compile Include="DCUserControl\UCThemeSetting.cs" />
+    <Compile Include="DCUserControl\UCThemeWeb.cs" />
+    <Compile Include="DCUserControl\UCTouPingXianShi.cs" />
+    <Compile Include="DCUserControl\UCVideoCut.cs" />
+    <Compile Include="DCUserControl\UCXiTongXianShi.cs" />
+    <Compile Include="DCUserControl\UCXiTongXianShiAdd.cs" />
+    <Compile Include="DCUserControl\UCXiTongXianShiColor.cs" />
+    <Compile Include="DCUserControl\UCXiTongXianShiSub.cs" />
+    <Compile Include="DCUserControl\UCXiTongXianShiTable.cs" />
+    <Compile Include="DCUserControl\UCXiTongXinXi.cs" />
+    <Compile Include="CZTV\FormCZTV.cs" />
+    <Compile Include="CZTV\FormGetColor.cs" />
+    <Compile Include="CZTV\FormScreenImage.cs" />
+    <Compile Include="CZTV\FormScreenshot.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CZTV\FormCZTV.resx" />
+    <EmbeddedResource Include="CZTV\FormGetColor.resx" />
+    <EmbeddedResource Include="CZTV\FormScreenImage.resx" />
+    <EmbeddedResource Include="CZTV\FormScreenshot.resx" />
+    <EmbeddedResource Include="DCUserControl\UCBeiJingXianShi.resx" />
+    <EmbeddedResource Include="DCUserControl\UCBoFangQiKongZhi.resx" />
+    <EmbeddedResource Include="DCUserControl\UCButton.resx" />
+    <EmbeddedResource Include="DCUserControl\UCColorA.resx" />
+    <EmbeddedResource Include="DCUserControl\UCColorB.resx" />
+    <EmbeddedResource Include="DCUserControl\UCColorC.resx" />
+    <EmbeddedResource Include="DCUserControl\UCComboBoxA.resx" />
+    <EmbeddedResource Include="DCUserControl\UCComboBoxB.resx" />
+    <EmbeddedResource Include="DCUserControl\UCComboBoxC.resx" />
+    <EmbeddedResource Include="DCUserControl\UCDingYiWenBen.resx" />
+    <EmbeddedResource Include="DCUserControl\UCDongHuaLianDong.resx" />
+    <EmbeddedResource Include="DCUserControl\UCImageCut.resx" />
+    <EmbeddedResource Include="DCUserControl\UCInfoImage.resx" />
+    <EmbeddedResource Include="DCUserControl\UCJianPanLianDongA.resx" />
+    <EmbeddedResource Include="DCUserControl\UCJianPanLianDongB.resx" />
+    <EmbeddedResource Include="DCUserControl\UCJianPanLianDongC.resx" />
+    <EmbeddedResource Include="DCUserControl\UCLEDHarddiskInfo.resx" />
+    <EmbeddedResource Include="DCUserControl\UCLEDMemoryInfo.resx" />
+    <EmbeddedResource Include="DCUserControl\UCMengBanXianShi.resx" />
+    <EmbeddedResource Include="DCUserControl\UCScreenImage.resx" />
+    <EmbeddedResource Include="DCUserControl\UCScreenImageBK.resx" />
+    <EmbeddedResource Include="DCUserControl\UCScreenLED.resx" />
+    <EmbeddedResource Include="DCUserControl\UCScrollA.resx" />
+    <EmbeddedResource Include="DCUserControl\UCShiJianXianShi.resx" />
+    <EmbeddedResource Include="DCUserControl\UCShiPingBoFangQi.resx" />
+    <EmbeddedResource Include="DCUserControl\UCSystemInfo.resx" />
+    <EmbeddedResource Include="DCUserControl\UCSystemInfoOptionsOne.resx" />
+    <EmbeddedResource Include="DCUserControl\UCThemeLocal.resx" />
+    <EmbeddedResource Include="DCUserControl\UCThemeMask.resx" />
+    <EmbeddedResource Include="DCUserControl\UCThemeSetting.resx" />
+    <EmbeddedResource Include="DCUserControl\UCThemeWeb.resx" />
+    <EmbeddedResource Include="DCUserControl\UCTouPingXianShi.resx" />
+    <EmbeddedResource Include="DCUserControl\UCVideoCut.resx" />
+    <EmbeddedResource Include="DCUserControl\UCXiTongXianShi.resx" />
+    <EmbeddedResource Include="DCUserControl\UCXiTongXianShiAdd.resx" />
+    <EmbeddedResource Include="DCUserControl\UCXiTongXianShiColor.resx" />
+    <EmbeddedResource Include="DCUserControl\UCXiTongXianShiSub.resx" />
+    <EmbeddedResource Include="DCUserControl\UCXiTongXianShiTable.resx" />
+    <EmbeddedResource Include="DCUserControl\UCXiTongXinXi.resx" />
+    <EmbeddedResource Include="Form1.resx" />
+    <EmbeddedResource Include="FormStart.resx" />
+    <EmbeddedResource Include="FormSystemInfo.resx" />
+    <EmbeddedResource Include="KVMALED6\FormKVMALED6.resx" />
+    <EmbeddedResource Include="LED\FormLED.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx" />
+    <EmbeddedResource Include="UCAbout.resx" />
+    <EmbeddedResource Include="UCDevice.resx" />
+    <EmbeddedResource Include="UCSystemInfoOptions.resx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
